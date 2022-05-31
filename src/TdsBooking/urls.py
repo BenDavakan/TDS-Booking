@@ -15,13 +15,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+
+from TdsBooking import settings
+from hotels.views import hotel_detail
 from . import views
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home_view),
     path('contact/', views.contact_view),
-    path('hotels/', include("hotels.urls"))
+    path('hotels/', include("hotels.urls")),
+    path('hotels/<str:slug>/', hotel_detail, name='hotel')
 
 
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

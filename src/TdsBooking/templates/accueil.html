@@ -1,0 +1,281 @@
+{% extends 'base.html'%}
+{% load static %}
+
+{% block title %}
+<title>Accueil</title>
+{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/nice-select.css' %}">
+
+{% endblock %}
+
+
+{% block content %}
+{% block banniere%}
+<section class="hero" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="hero__text">
+                    
+                    <h2> TDS Booking</h2>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</section>
+<div class="container" style="justify-content: center; display: flex;">
+    <form action="#" class="filter__form w-auto">
+        <div class="filter__form__item filter__form__item--search">
+            
+            <div class="filter__form__input">
+                <input type="text" placeholder="Oû allez-vous?">
+                <span class="icon_search"></span>
+            </div>
+        </div>
+        <div class="filter__form__item">
+            
+            <div class="filter__form__datepicker">
+                <span class="icon_calendar"></span>
+                <input type="text" class="datepicker_pop check__in">
+                <i class="arrow_carrot-down"></i>
+            </div>
+        </div>
+        <div class="filter__form__item">
+            
+            <div class="filter__form__datepicker">
+                <span class="icon_calendar"></span>
+                <input type="text" class="datepicker_pop check__out">
+                <i class="arrow_carrot-down"></i>
+            </div>
+        </div>
+        <div class="filter__form__item filter__form__item--select">
+            
+            <div class="filter__form__select">
+                <span class="icon_group"></span>
+                <select>
+                    <option value="">2 Adult, 1 Children</option>
+                    <option value="">2 Adult</option>
+                    <option value="">1 Adult</option>
+                </select>
+            </div>
+        </div>
+        <button type="submit">Rechercher</button>
+    </form> 
+</div>
+{% endblock %}
+<div class="container my-2">
+    <div >
+        <h2>Nos meilleurs Hôtels</h2>
+    </div>
+    <div class="horizontal-scroll d-flex flex-row "  >
+         <button class="btn-scroll" id="btn-scroll-left" onclick="scrollHorizontally(1)"><i class="fa-solid fa-angle-left"></i></button>
+         <button class="btn-scroll" id="btn-scroll-right" onclick="scrollHorizontally(-1)"><i class="fa-solid fa-angle-right"></i></button>
+         <div class="storys-container d-flex flex-row " >
+            <div class="card mr-2" style="width: 13rem;">
+              <img class="card-img-top" src="/static/img/hotel-1.jpg" alt="Card image cap">
+              <div class="card-body">
+                  <h4>Popo Bitch Hôtel</h4>
+                <p class="card-text">Some quick example</p>
+              </div>
+            </div>
+            <div class="card mr-2" style="width: 13rem;">
+              <img class="card-img-top" src="/static/img/hotel-1.jpg" alt="Card image cap">
+              <div class="card-body">
+                  <h4>Link Hôtel</h4>
+                <p class="card-text">Some quick example</p>
+              </div>
+            </div>
+            <div class="card mr-2" style="width: 13rem;">
+              <img class="card-img-top" src="/static/img/hotel-1.jpg" alt="Card image cap">
+              <div class="card-body">
+                  <h4>Novotel</h4>
+                <p class="card-text">Some quick </p>
+              </div>
+            </div>
+            <div class="card mr-2" style="width: 13rem;">
+              <img class="card-img-top" src="/static/img/hotel-1.jpg" alt="Card image cap">
+              <div class="card-body">
+                  <h4>Novotel</h4>
+                <p class="card-text">Some quick </p>
+              </div>
+            </div>
+            <div class="card mr-2" style="width: 13rem;">
+              <img class="card-img-top" src="/static/img/hotel-1.jpg" alt="Card image cap">
+              <div class="card-body">
+                  <h4>Novotel</h4>
+                <p class="card-text">Some quick </p>
+              </div>
+            </div>
+            <div class="card mr-2" style="width: 13rem;">
+              <img class="card-img-top" src="/static/img/hotel-1.jpg" alt="Card image cap">
+              <div class="card-body">
+                  <h4>Novotel</h4>
+                <p class="card-text">Some quick </p>
+              </div>
+            </div>
+            <div class="card mr-2" style="width: 13rem;">
+              <img class="card-img-top" src="/static/img/hotel-1.jpg" alt="Card image cap">
+              <div class="card-body">
+                  <h4>Novotel</h4>
+                <p class="card-text">Some quick </p>
+              </div>
+            </div>
+            
+         </div>
+    </div>
+</div>
+<br>
+
+<div class="my-2">
+  <div class="container">
+      <h2>Nos meilleurs Restaurants</h2>
+  </div>
+  <div class=" py-4" style="background-color: #0831D4">
+    <div class="container">
+      <div class="horizontal-scroll d-flex flex-row "  >
+        
+        <div class="storys-container d-flex flex-row " >
+           <div class="card mr-2" style="width: 13rem;">
+             <img class="card-img-top" src="/static/img/hotel-1.jpg" alt="Card image cap">
+             <div class="card-body">
+                 <h4>Popo Bitch Hôtel</h4>
+               <p class="card-text">Some quick example</p>
+             </div>
+           </div>
+           <div class="card mr-2" style="width: 13rem;">
+             <img class="card-img-top" src="/static/img/hotel-1.jpg" alt="Card image cap">
+             <div class="card-body">
+                 <h4>Link Hôtel</h4>
+               <p class="card-text">Some quick example</p>
+             </div>
+           </div>
+           <div class="card mr-2" style="width: 13rem;">
+             <img class="card-img-top" src="/static/img/hotel-1.jpg" alt="Card image cap">
+             <div class="card-body">
+                 <h4>Novotel</h4>
+               <p class="card-text">Some quick </p>
+             </div>
+           </div>
+           <div class="card mr-2" style="width: 13rem;">
+             <img class="card-img-top" src="/static/img/hotel-1.jpg" alt="Card image cap">
+             <div class="card-body">
+                 <h4>Novotel</h4>
+               <p class="card-text">Some quick </p>
+             </div>
+           </div>
+           <div class="card mr-2" style="width: 13rem;">
+             <img class="card-img-top" src="/static/img/hotel-1.jpg" alt="Card image cap">
+             <div class="card-body">
+                 <h4>Novotel</h4>
+               <p class="card-text">Some quick </p>
+             </div>
+           </div>
+           <div class="card mr-2" style="width: 13rem;">
+             <img class="card-img-top" src="/static/img/hotel-1.jpg" alt="Card image cap">
+             <div class="card-body">
+                 <h4>Novotel</h4>
+               <p class="card-text">Some quick </p>
+             </div>
+           </div>
+           <div class="card mr-2" style="width: 13rem;">
+             <img class="card-img-top" src="/static/img/hotel-1.jpg" alt="Card image cap">
+             <div class="card-body">
+                 <h4>Novotel</h4>
+               <p class="card-text">Some quick </p>
+             </div>
+           </div>
+           
+        </div>
+   </div>
+    </div>
+  </div>
+</div>
+
+<div class="container my-5">
+  <div >
+      <h2>Nos meilleurs Voitures</h2>
+  </div>
+  <div class="horizontal-scroll d-flex flex-row "  >
+       
+       <div class="storys-container d-flex flex-row " >
+          <div class="card mr-2" style="width: 13rem;">
+            <img class="card-img-top" src="/static/img/hotel-1.jpg" alt="Card image cap">
+            <div class="card-body">
+                <h4>Popo Bitch Hôtel</h4>
+              <p class="card-text">Some quick example</p>
+            </div>
+          </div>
+          <div class="card mr-2" style="width: 13rem;">
+            <img class="card-img-top" src="/static/img/hotel-1.jpg" alt="Card image cap">
+            <div class="card-body">
+                <h4>Link Hôtel</h4>
+              <p class="card-text">Some quick example</p>
+            </div>
+          </div>
+          <div class="card mr-2" style="width: 13rem;">
+            <img class="card-img-top" src="/static/img/hotel-1.jpg" alt="Card image cap">
+            <div class="card-body">
+                <h4>Novotel</h4>
+              <p class="card-text">Some quick </p>
+            </div>
+          </div>
+          <div class="card mr-2" style="width: 13rem;">
+            <img class="card-img-top" src="/static/img/hotel-1.jpg" alt="Card image cap">
+            <div class="card-body">
+                <h4>Novotel</h4>
+              <p class="card-text">Some quick </p>
+            </div>
+          </div>
+          <div class="card mr-2" style="width: 13rem;">
+            <img class="card-img-top" src="/static/img/hotel-1.jpg" alt="Card image cap">
+            <div class="card-body">
+                <h4>Novotel</h4>
+              <p class="card-text">Some quick </p>
+            </div>
+          </div>
+          <div class="card mr-2" style="width: 13rem;">
+            <img class="card-img-top" src="/static/img/hotel-1.jpg" alt="Card image cap">
+            <div class="card-body">
+                <h4>Novotel</h4>
+              <p class="card-text">Some quick </p>
+            </div>
+          </div>
+          <div class="card mr-2" style="width: 13rem;">
+            <img class="card-img-top" src="/static/img/hotel-1.jpg" alt="Card image cap">
+            <div class="card-body">
+                <h4>Novotel</h4>
+              <p class="card-text">Some quick </p>
+            </div>
+          </div>
+          
+       </div>
+  </div>
+</div>
+
+
+<div class="container  d-flex flex-row justify-content-center px-3 my-4" id="counters_2">
+  <div class="text mr-5">
+    <p><span class="counter" data-TargetNum="42000" data-Speed="1500">0</span>+</p>
+    <span>Clients satisfaits</span>
+  </div>
+  <div class="text mr-5">
+    <p><span class="counter" data-TargetNum="6000" data-Speed="1500">0</span>+</p>
+    <span>Hôtels</span>
+  </div>
+  <div class="text mr-5">
+    <p><span class="counter" data-TargetNum="4200" data-Speed="1500">0</span>+</p>
+    <span>Restaurants</span>
+  </div>
+  <div class="text" >
+    <p><span class="counter" data-TargetNum="750" data-Speed="1500">0</span>+</p>
+    <span>Voitures</span>
+  </div>
+</div>
+
+
+
+
+{% endblock %}

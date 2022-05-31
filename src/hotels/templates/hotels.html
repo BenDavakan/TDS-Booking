@@ -1,0 +1,96 @@
+{% extends 'base.html'%}
+{% load static %}
+
+{% block title %}
+<title>Hôtels</title>
+{% endblock %}
+
+{% block style %}<link rel="stylesheet" type="text/css" href="{% static 'css/otl.css' %}">{% endblock %}
+
+
+{% block content %}
+<br>
+<section class="ftco-section">
+    <div class="container">
+      <div class="row">
+          <div class="col-lg-3 sidebar order-md-last ftco-animate">
+              <div class="sidebar-wrap ftco-animate">
+                  <h3 class="heading mb-4">Destination</h3>
+                  <form action="#">
+                      <div class="fields">
+                    <div class="form-group">
+                      <input type="text" class="form-control" placeholder="Oû allez-vous?">
+                    </div>
+                    <div class="form-group">
+                      <div class="select-wrap one-third">
+                      <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                      
+                    </div>
+                    </div>
+                    <div class="form-group">
+                      <input type="text" id="checkin_date" class="form-control checkin_date" placeholder="Date d'arrivée">
+                    </div>
+                    <div class="form-group">
+                      <input type="text" id="checkout_date" class="form-control checkout_date" placeholder="Date de depart">
+                    </div>
+                    <div class="form-group">
+                        <div class="range-slider">
+                            <span>
+                                          <input type="number" value="25000" min="0" max="120000"/>	-
+                                          <input type="number" value="50000" min="0" max="120000"/>
+                                        </span>
+                                        <input value="1000" min="0" max="120000" step="500" type="range"/>
+                                        <input value="50000" min="0" max="120000" step="500" type="range"/>
+                                        </svg>
+                                      </div>
+                    </div>
+                    <div class="form-group">
+                      <input type="submit" value="Rechercher" class="btn btn-primary py-3 px-5">
+                    </div>
+                  </div>
+              </form>
+              </div>
+              
+        </div><!-- END-->
+        <div class="col-lg-9">
+            <div class="row">
+                {% for hotel in hotels %}
+                      <div class="col-sm col-md-6 col-lg-4 ftco-animate">
+                          <div class="destination">
+                              <a href="{{ hotel.get_absolute_url }}" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url(img/hotel-1.jpg);">
+                                <img src="{% static 'img/hotel-1.jpg' %}" alt="">
+                              </a>
+                              <div class="text p-3">
+                                  <div class="d-flex">
+                                      <div class="one">
+                                          <h3><a href="{{ hotel.get_absolute_url }}">{{ hotel.nom }}</a></h3>
+                                          
+                                      </div>
+                                      
+                                  </div>
+                                  
+                                  <hr>
+                                  <p class="bottom-area d-flex">
+                                      <span><i class="icon-map-o"></i> Miami, Fl</span> 
+                                      <span class="ml-auto"><a href="#">Book Now</a></span>
+                                  </p>
+                              </div>
+                          </div>
+                      </div>
+
+                {% endfor %}
+            </div>
+
+            <div class="row mt-5">
+                
+              </div>
+        </div> <!-- .col-md-8 -->
+      </div>
+    </div>
+</section>
+
+
+
+  
+
+{% endblock %}

@@ -1,8 +1,16 @@
-from django.http import HttpResponse
+
+from django.shortcuts import get_object_or_404, render
+
+from hotels.models import Chambre, Hotel
 
 
-# Create your views here.
+def hotels_view(request):
+    hotels = Hotel.objects.all()
+
+    return render(request, 'hotels.html', context={"hotels": hotels})
 
 
-def index(request):
-    return HttpResponse('<h1>La Page Des HÔTELS</h1><br><a href="/">Home</a>')
+def hotel_detail(request, slug):
+    hotel = get_object_or_404(Hotel, slug=slug)
+
+    return render(request, 'detail_hotel.html', context={"hotel": hotel})
