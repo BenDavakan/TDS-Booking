@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'hotels',
     'restaurants',
+    'widget_tweaks',
+
 
 ]
 

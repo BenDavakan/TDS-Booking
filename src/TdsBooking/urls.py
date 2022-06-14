@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import include, path
 
 from TdsBooking import settings
-from hotels.views import hotel_detail
+from hotels.views import hotel_detail, chambre_detail
 from . import views
 from django.conf.urls.static import static
 
@@ -26,7 +26,12 @@ urlpatterns = [
     path('', views.home_view),
     path('contact/', views.contact_view),
     path('hotels/', include("hotels.urls")),
-    path('hotels/<str:slug>/', hotel_detail, name='hotel')
+    path('hotels/<str:slug>/', hotel_detail, name='hotel'),
+    path('hotels/<str:slug>/chambre/<int:number>/', chambre_detail, name='chambre'),
+    path('connexion/', views.connexion_view),
+    
+    path('inscription/', views.inscription_view),
+    path('a-propos/', views.a_propos_view),
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

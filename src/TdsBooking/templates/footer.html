@@ -1,46 +1,23 @@
 {% load static %}
-<footer class="footer set-bg" data-setbg="/static/img/footer-bg.jpg" style="background-image: url(/static/img/footer-bg.jpg)">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="logo__carousel owl-carousel">
-                    <div class="logo__carousel__item">
-                        <a href="#"><img src="img/logo/logo-1.png" alt=""></a>
-                    </div>
-                    <div class="logo__carousel__item">
-                        <a href="#"><img src="img/logo/logo-2.png" alt=""></a>
-                    </div>
-                    <div class="logo__carousel__item">
-                        <a href="#"><img src="img/logo/logo-3.png" alt=""></a>
-                    </div>
-                    <div class="logo__carousel__item">
-                        <a href="#"><img src="img/logo/logo-4.png" alt=""></a>
-                    </div>
-                    <div class="logo__carousel__item">
-                        <a href="#"><img src="img/logo/logo-5.png" alt=""></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<footer class="footer set-bg" data-setbg="/static/img/footer-bg.jpg" >
+    
     <div class="container">
         <div class="footer__content">
             <div class="row">
                 <div class="col-lg-3 col-md-6 col-sm-6">
                     <div class="footer__about">
                         <div class="footer__logo">
-                            <a href="#"><img src="{% static 'img/logo.png' %}" alt=""></a>
+                            <a href="#"><img src="{% static 'img/logo1.png' %}" alt=""></a>
                         </div>
                         <h4>(+229) 21-33-57-30</h4>
                         <ul>
-                            
                             <li>support@tdsbooking.bj</li>
                         </ul>
                         <div class="footer__social">
-                            <a href="#"><i class="fa fa-facebook"></i></a>
-                            <a href="#"><i class="fa fa-twitter"></i></a>
-                            <a href="#"><i class="fa fa-linkedin"></i></a>
-                            <a href="#"><i class="fa fa-youtube-play"></i></a>
+                            <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                            <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                            <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+                            
                         </div>
                     </div>
                 </div>
@@ -48,15 +25,15 @@
                     <div class="footer__widget">
                         <h4>Navigation</h4>
                         <ul>
-                            <li><a href="#">Accueil</a></li>
-                            <li><a href="#">Hôtels</a></li>
+                            <li><a href="/">Accueil</a></li>
+                            <li><a href="/hotels">Hôtels</a></li>
                             <li><a href="#">Restaurants</a></li>
                             
                             <li><a href="#">Partenariat</a></li>
                         </ul>
                         <ul>
-                            <li><a href="#">Se connecter</a></li>
-                            <li><a href="#">Contact</a></li>
+                            <li><a href="/connexion">Se connecter</a></li>
+                            <li><a href="/contact">Contact</a></li>
                             <li><a href="#">À propos</a></li>
                             
                         </ul>

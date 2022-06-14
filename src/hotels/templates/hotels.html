@@ -58,12 +58,12 @@
                       <div class="col-sm col-md-6 col-lg-4 ftco-animate">
                           <div class="destination">
                               <a href="{{ hotel.get_absolute_url }}" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url(img/hotel-1.jpg);">
-                                <img src="{% static 'img/hotel-1.jpg' %}" alt="">
+                                <img src="{% static 'img/hotel-2.jpg' %}" alt="">
                               </a>
                               <div class="text p-3">
                                   <div class="d-flex">
                                       <div class="one">
-                                          <h3><a href="{{ hotel.get_absolute_url }}">{{ hotel.nom }}</a></h3>
+                                          <h3><a href="{{ hotel.get_absolute_url }}">{{ hotel.name }}</a></h3>
                                           
                                       </div>
                                       
@@ -71,7 +71,7 @@
                                   
                                   <hr>
                                   <p class="bottom-area d-flex">
-                                      <span><i class="icon-map-o"></i> Miami, Fl</span> 
+                                      <span><i class="icon-map-o"></i>{{ hotel.ville }}</span> 
                                       <span class="ml-auto"><a href="#">Book Now</a></span>
                                   </p>
                               </div>
@@ -80,10 +80,31 @@
 
                 {% endfor %}
             </div>
+            <nav class="mb-3" aria-label="...">
+            
+            <ul class="pagination justify-content-center">
+              {% if hotels.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page={{ hotels.previous_page_number }}"><span aria-hidden="true">&laquo;</span></a></li>
+              {% else %}
+                <li class="page-item"><span class="page-link">&laquo;</span></li>
+              {% endif %}
+              {% for i in hotels.paginator.page_range %}
+                {% if hotels.number == i %}
+                  <li class=" page-item active"><span class="page-link">{{ i }} <span class="sr-only">(current)</span></span></li>
+                {% else %}
+                  <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                {% endif %}
+              {% endfor %}
+              {% if hotels.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{ hotels.next_page_number }}">&raquo;</a></li>
+              {% else %}
+                <li class=" page-item disabled"><span class="page-link">&raquo;</span></li>
+              {% endif %}
+            </ul>
+        
 
-            <div class="row mt-5">
-                
-              </div>
+           </nav> 
+    
         </div> <!-- .col-md-8 -->
       </div>
     </div>

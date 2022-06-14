@@ -7,12 +7,10 @@
 <div class="offcanvas-menu-overlay"></div>
 <div class="offcanvas-menu-wrapper">
     <div class="offcanvas__logo">
-        <a href="./index.html"><img src="img/logo.png" alt=""></a>
+        <a href="./index.html"><img src="{% static '/static/img/logo1.png'%}" alt=""></a>
     </div>
     <div id="mobile-menu-wrap"></div>
-    <div class="offcanvas__btn__widget">
-        <a href="#">Book Now <span class="arrow_right"></span></a>
-    </div>
+    
     <div class="offcanvas__widget">
         <ul>
             <li><span class="icon_pin_alt"></span> 96 Ernser Vista Suite 437, NY, US</li>
@@ -30,8 +28,9 @@
     </div>
     <div class="offcanvas__auth">
         <ul>
-            <li><a href="#">Login</a></li>
-            <li><a href="#">Register</a></li>
+            <li><a href="/a-propos">À propos</a></li>
+            <li><a href="/contact">Contact</a></li>
+            <li><a href="/connexion/">Se connecter</a></li>
         </ul>
     </div>
 </div>
@@ -49,9 +48,9 @@
                   <div class="header__top__right">
                       <div class="header__top__auth">
                           <ul>
-                            <li><a href="#">À propos</a></li>
+                            <li><a href="/a-propos">À propos</a></li>
                               <li><a href="/contact">Contact</a></li>
-                              <li><a href="#">Se connecter</a></li>
+                              <li><a href="/connexion/">Se connecter</a></li>
                           </ul>
                       </div>
                       <div class="header__top__language">
@@ -69,9 +68,9 @@
   <div class="header__nav__option" >
       <div class="container">
           <div class="row">
-              <div class="col-lg-2">
-                  <div class="header__logo">
-                      <a href="./index.html"><img src="{% static 'img/logo.png'%}" alt=""></a>
+              <div class="col-lg-2 d-flex align-items-center">
+                  <div class="header__logo ">
+                      <a href="/"><img src="{% static 'img/logo1.png'%}" alt=""></a>
                   </div>
               </div>
               <div class="col-lg-10">
