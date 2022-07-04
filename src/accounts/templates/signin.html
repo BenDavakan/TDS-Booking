@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block title %}
+<title>Connexion</title>
+{% endblock %}
+{% block style %}
+<style>
+
+
+.btn_c {
+padding: 20px 40px;
+line-height:10px;
+color:#fff;
+font-size: 20px;
+background:#0831D4;
+text-decoration: none;
+position: relative;
+transition: all ease .6s;
+overflow:hidden;
+display: inline-block;
+border-radius:6.35px;
+
+}
+
+.btn_c span {
+z-index:1;
+position:relative;
+}
+.btn_c:after {
+transform: scale(0);
+background: #FFB913;
+position: absolute;
+right:-200px;
+bottom:-200px;
+content:'';
+border-radius: 100%;
+transition: all ease .6s;
+width: 400px;
+height: 400px;
+
+}
+
+.btn_c:hover:after {
+  transform:scale(1);
+  transition: all ease .6s;
+  color: white;
+}
+
+.btn-log{
+  border-radius:100%;
+  width:37px;
+  height:37px;
+  text-align:center;
+  display:inline-block;
+  background-color: #ffff;
+  border: none;
+  box-shadow: -1px -1px 3px 1px rgb(189, 188, 188);
+  color: #0831D4;
+}
+
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="vh-100">
+    <div class="container-fluid h-custom">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-md-9 col-lg-6 col-xl-5">
+          <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+            class="img-fluid" alt="Sample image">
+        </div>
+        <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+          <form method="POST">
+            {% if error %}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+              <strong>{{ error }}</strong> 
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+          {% endif %}
+            
+           
+            
+            <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
+              <p class="lead fw-normal mb-0 me-3">Se connecter avec</p>
+              <div class="ml-2">
+                <button type="button" class="btn-log  btn-floating mx-1" >
+                  <i class="fa-brands fa-facebook-f"></i>
+                </button>
+    
+                <button type="button" class="btn-log  btn-floating mx-1" > 
+                  <i class="fa-brands fa-google"></i>
+                </button>
+    
+                <button type="button" class="btn-log  btn-floating mx-1" >
+                  <i class="fab fa-linkedin-in"></i>
+                </button>
+              </div>
+            </div>
+  
+            <div class="divider d-flex align-items-center my-4">
+              <p class="text-center fw-bold mx-3 mb-0">ou</p>
+            </div>
+           
+            {% csrf_token %} 
+
+            <div class="form-outline mb-4">
+              
+                {% render_field form.email  id="form3Example3" placeholder="Email" class="form-control form-control-lg" %}
+              
+            </div>
+  
+            
+            <div class="form-outline mb-3">
+              
+                {% render_field form.password  id="form3Example3" placeholder="Mot de passe" class="form-control form-control-lg" %}
+              
+            </div>
+  
+            <div class="d-flex justify-content-between align-items-center">
+              <!-- Checkbox -->
+              <div class="form-check mb-0">
+                <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3" />
+                <label class="form-check-label" for="form2Example3">
+                  Se souvenir de moi
+                </label>
+              </div>
+              <a href="#!" class="text-body">Mot de passe oublié?</a>
+            </div>
+  
+            <div class=" text-lg-start mt-2 pt-2">
+              <button type="submit" class="btn_c btn btn-lg"
+                style="padding-left: 2.5rem; padding-right: 2.5rem;"><span>Connexion</span></button>
+              <p class="small fw-bold mt-2 pt-1 mb-0">Vous n'avez pas de compte? <a href="{% url 'inscription' %}"
+                  class="link-danger">S'inscrire</a></p>
+            </div>
+  
+          </form>
+        </div>
+      </div>
+    </div>
+  
+  </section>
+
+
+{% endblock %}

@@ -2,7 +2,7 @@ from xml.dom.pulldom import parseString
 from django.contrib import admin
 
 # Register your models here.
-from hotels.models import Category, Chambre, Hotel, Image_Chambre, Image_Hotel
+from hotels.models import Category, Chambre, Equipement, Hotel, Image_Chambre, Image_Hotel, Reservation
 
 
 class ImageHotel(admin.StackedInline):
@@ -13,14 +13,20 @@ class ImageChambre(admin.StackedInline):
     model = Image_Chambre
 
 
+class EquipChambre(admin.StackedInline):
+    model = Equipement
+
+
 @admin.register(Hotel)
 class HotelAdmin(admin.ModelAdmin):
     list_display = (
         "name",
-        "description",
+        "ville",
         "email",
+        "tel_1",
+
     )
-    search_fields = ('name',)
+    search_fields = ('name', 'ville')
 
     inlines = [ImageHotel]
 
@@ -35,14 +41,16 @@ class ChambreAdmin(admin.ModelAdmin):
         "hotel",
         "number",
         "overnight",
-        "category"
+        "capacity",
+        "category",
+
     )
-    
-    search_fields = ('name','hotel__field1')
-    
+
+    search_fields = ('number', 'hotel__name', 'category__name')
+
     list_editable = ('overnight',)
 
-    inlines = [ImageChambre]
+    inlines = [ImageChambre, EquipChambre]
 
     class Meta:
         model = Chambre
@@ -52,4 +60,26 @@ class ChambreAdmin(admin.ModelAdmin):
 class CategoryAdmin(admin.ModelAdmin):
     list_display = (
         "name",
+    )
+
+
+@admin.register(Reservation)
+class ReservationAdmin(admin.ModelAdmin):
+    list_display = (
+        "user",
+        "chambre",
+        "check_in",
+        "check_out",
+        "add_at",
+        "status",
+    )
+
+
+@admin.register(Equipement)
+class EquipementAdmin(admin.ModelAdmin):
+    list_display = (
+        "name",
+        "number",
+        "chambre",
+        "add_at",
     )

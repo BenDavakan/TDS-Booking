@@ -7,10 +7,6 @@
 
 {% block style %}
 
-
-
-
-<!-- bootstrap.min css -->
 <link rel="stylesheet" href="{% static '/static/plugins/bootstrap/css/bootstrap.min.css' %}">
 <!-- Icon Font Css -->
 <link rel="stylesheet" href="{% static '/static/plugins/icofont/icofont.min.css' %}">
@@ -19,15 +15,12 @@
 <link rel="stylesheet" href="{% static '/static/plugins/slick-carousel/slick/slick-theme.css' %}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css">
+
 <link href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.css" rel="stylesheet"/>
 <link rel="stylesheet" type="text/css" href="{% static '/css/daterangepicker.css' %}" />
-<!-- Main Stylesheet -->
 <link rel="stylesheet" href="css/style.css">
 <style>
   
-
-
-
  .flex {
      -webkit-box-flex: 1;
      -ms-flex: 1 1 auto;
@@ -89,6 +82,9 @@
   background-color:#f8f9fa;
 }
 
+a {
+  cursor: pointer;
+}
 
 </style>
 {% endblock %}
@@ -110,14 +106,14 @@
         </div>
     </section>
     <div class="container" style="justify-content: center; display: flex;">
-        <form action="#" class="filter__form w-auto">
+        <form action="{% url 'search_hotel' %}" class="filter__form w-auto" method='GET'>
             <div class="filter__form__item filter__form__item--search">
                 
                 <div class="filter__form__input d-flex">
                  
                     <span class="icon_search"><i class="fa-solid fa-location-dot"></i></span>
                  
-                    <input type="text" placeholder="Oû allez-vous?">
+                    <input type="search" name="search" placeholder="Oû allez-vous?">
                     
                 </div>
             </div>
@@ -125,7 +121,7 @@
                 
                 <div class="filter__form__datepicker " >
                     <!-- &nbsp;<span class="icon_calendar" id="date"></span>&nbsp; -->
-                    <input type="text" id="picker" readonly>
+                    <input type="text" id="picker" name="date" readonly>
                 </div> 
 
                 
@@ -137,9 +133,9 @@
                 <div class="filter__form__select">
                     <span class="icon_group"></span>
                     <select>
-                        <option value="">2 Adult, 1 Children</option>
-                        <option value="">2 Adult</option>
-                        <option value="">1 Adult</option>
+                        <option value="">2 Adultes, 1 Enfant</option>
+                        <option value="">2 Adultes</option>
+                        <option value="">1 Adulte</option>
                     </select>
                 </div>
             </div>
@@ -154,141 +150,44 @@
           <span><i class="fa-solid fa-hotel"></i></span>
         </div>
           <h2 style="color:#FFB913;">Nos meilleurs hôtels</h2>
+          
       </div>
       <div class="horizontal-scroll d-flex flex-row "  >
           <!-- <button class="btn-scroll" id="btn-scroll-left" onclick="scrollHorizontally(1)"><i class="fa-solid fa-angle-left"></i></button>
           <button class="btn-scroll" id="btn-scroll-right" onclick="scrollHorizontally(-1)"><i class="fa-solid fa-angle-right"></i></button> -->
-          
+          {% for hotel in hotels %}
           <div class="storys-container d-flex flex-row " >
-              <div class="card " >
-                <img class="card-img-top" src="/static/img/hotel-1.jpg" alt="Card image cap" >
-                <div class="card-body ">
-                    <h5>
-                      <span>Popo Bitch Hôtel</span>
-                    </h5>
-                  <p class="card-text mb-0">Grand Popo</p>
-                  
-                  <div class="row">
-                    <div class="col-6 d-flex flex-row">
-                         <div class="text-center" style="background-color:blue; height: 25px; width: 35px;border-top-left-radius: 5px;border-top-right-radius: 5px;border-bottom-right-radius: 5px;color: white;">
-                           9,5
-                         </div> <span class="ml-1">Fabuleux</span>
-                    </div>
-                    <div class="col-6">
-                      <h6>Dès 15.000 f</h6>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="card " >
-                <img class="card-img-top" src="/static/img/hotel-1.jpg" alt="Card image cap" >
-                <div class="card-body ">
-                    <h5>
-                      <span>Popo Bitch Hôtel</span>
-                    </h5>
-                  <p class="card-text mb-0">Cotonou</p>
-                  
-                  <div class="row">
-                    <div class="col-6 d-flex flex-row">
-                         <div class="text-center" style="background-color:blue; height: 25px; width: 35px;border-top-left-radius: 5px;border-top-right-radius: 5px;border-bottom-right-radius: 5px;color: white;">
-                           9,5
-                         </div> <span class="ml-1">Fabuleux</span>
-                    </div>
-                    <div class="col-6">
-                      <h6>Dès 15.000 f</h6>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="card " >
-                <img class="card-img-top" src="/static/img/hotel-1.jpg" alt="Card image cap" >
-                <div class="card-body ">
-                    <h5>
-                      <span>Popo Bitch Hôtel</span>
-                    </h5>
-                  <p class="card-text mb-0">Lokossa</p>
-                  
-                  <div class="row">
-                    <div class="col-6 d-flex flex-row">
-                         <div class="text-center" style="background-color:blue; height: 25px; width: 35px;border-top-left-radius: 5px;border-top-right-radius: 5px;border-bottom-right-radius: 5px;color: white;">
-                           9,5
-                         </div> <span class="ml-1">Fabuleux</span>
-                    </div>
-                    <div class="col-6">
-                      <h6>Dès 15.000 f</h6>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="card " >
-                <img class="card-img-top" src="/static/img/hotel-1.jpg" alt="Card image cap" >
-                <div class="card-body ">
-                    <h5>
-                      <span>Popo Bitch Hôtel</span>
-                    </h5>
-                  <p class="card-text mb-0">Cotonou</p>
-                  
-                  <div class="row">
-                    <div class="col-6 d-flex flex-row">
-                         <div class="text-center" style="background-color:blue; height: 25px; width: 35px;border-top-left-radius: 5px;border-top-right-radius: 5px;border-bottom-right-radius: 5px;color: white;">
-                           9,5
-                         </div> <span class="ml-1">Fabuleux</span>
-                    </div>
-                    <div class="col-6">
-                      <h6>Dès 15.000 f</h6>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="card " >
-                <img class="card-img-top" src="/static/img/hotel-1.jpg" alt="Card image cap" >
-                <div class="card-body ">
-                    <h5>
-                      <span>Popo Bitch Hôtel</span>
-                    </h5>
-                  <p class="card-text mb-0">Cotonou</p>
-                  
-                  <div class="row">
-                    <div class="col-6 d-flex flex-row">
-                         <div class="text-center" style="background-color:blue; height: 25px; width: 35px;border-top-left-radius: 5px;border-top-right-radius: 5px;border-bottom-right-radius: 5px;color: white;">
-                           9,5
-                         </div> <span class="ml-1">Fabuleux</span>
-                    </div>
-                    <div class="col-6">
-                      <h6>Dès 15.000 f</h6>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="card " >
-                <img class="card-img-top" src="/static/img/hotel-1.jpg" alt="Card image cap" >
-                <div class="card-body ">
-                    <h5>
-                      <span>Popo Bitch Hôtel</span>
-                    </h5>
-                  <p class="card-text mb-0">Cotonou</p>
-                  
-                  <div class="row">
-                    <div class="col-6 d-flex flex-row">
-                         <div class="text-center" style="background-color:blue; height: 25px; width: 35px;border-top-left-radius: 5px;border-top-right-radius: 5px;border-bottom-right-radius: 5px;color: white;">
-                           9,5
-                         </div> <span class="ml-1">Fabuleux</span>
-                    </div>
-                    <div class="col-6">
-                      <h6>Dès 15.000 f</h6>
-                    </div>
-                  </div>
-                </div>
-              </div>
               
-              
-          </div>
+                <div class="card " >
+                    <img class="card-img-top" src="/static/img/hotel-1.jpg" alt="Card image cap" >
+                    <div class="card-body ">
+                        <h5>
+                          <span>{{ hotel.name }}</span>
+                        </h5>
+                      <p class="card-text mb-0">{{ hotel.ville }}</p>
+                      
+                      <div class="row">
+                        <div class="col-6 d-flex flex-row">
+                            <div class="text-center" style="background-color:blue; height: 25px; width: 35px;border-top-left-radius: 5px;border-top-right-radius: 5px;border-bottom-right-radius: 5px;color: white;">
+                              9,5
+                            </div> <span class="ml-1">Fabuleux</span>
+                        </div>
+                        <div class="col-6">
+                          <h6>Dès 15.000 f</h6>
+                        </div>
+                      </div>
+                    </div>
+                  </div> 
+                </div>
+              {% endfor %}
       </div>
       <div class="d-flex justify-content-end" style="color:#0831D4">
-        <span>
-          Voir plus
-        </span> 
-        <span><i class="fa-solid fa-angles-right ml-1"></i></span>
+        <a href="/hotels">
+          <span>
+            Voir plus
+          </span> 
+          <span><i class="fa-solid fa-angles-right ml-1"></i></span>
+        </a>
       </div>
   </div>
   <br>
@@ -520,8 +419,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.js"></script>
 <script type="text/javascript" src="{% static 'js/moment.min.js'%}"></script>
 <script type="text/javascript" src="{% static 'js/daterangepicker.js'%}"></script>
-<script >
 
+<script>
 
 $(document).ready(function() {
  
