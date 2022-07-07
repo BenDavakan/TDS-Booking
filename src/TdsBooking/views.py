@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.db.models import Q
-
-from hotels.models import Hotel
+from django.core.mail import send_mail
+from hotels.models import Hotel, Ville
 
 
 def home_view(request):
@@ -11,7 +11,21 @@ def home_view(request):
 
 
 def contact_view(request):
-    return render(request, 'contact.html')
+    if request.method == "POST":
+        name = request.POST.get('name', '')
+        email = request.POST.get('email', '')
+        subject = request.POST.get('subject', '')
+        message = request.POST.get('message', '')
+
+        send_mail(
+            subject,
+            message,
+            email,
+            ['bdkmailpro@gmail.com'],
+            fail_silently=False,
+        )
+
+    return render(request, 'contact.html', {})
 
 
 def a_propos_view(request):
@@ -25,11 +39,11 @@ def search_hotel(request):
     t = date.split("-")
     t1 = t[0]
     t2 = t[1]
-    request.session['date1'] = t1
-    request.session['date2'] = t2
+    request.session['date01'] = t1
+    request.session['date02'] = t2
 
     hotels = Hotel.objects.filter(
-        Q(ville__iexact=search) | Q(name__icontains=search))
+        Q(ville__name=search) | Q(name__icontains=search))
     hotels_number = hotels.count()
     message = f' {hotels_number} hotels trouvés'
 

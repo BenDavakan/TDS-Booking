@@ -1,0 +1,41 @@
+{% extends 'base.html'%}
+{% load static %}
+
+{% block title %}
+<title>Hôtels</title>
+{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/otl.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.css" integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="anonymous" />
+{% endblock %}
+
+
+{% block content %}
+<div class="container mb-5" style="height: 380px;">
+    <div class="row mt-md-5">
+        <div class="col-md-12">
+            <div class="alert alert-info text-center" role="alert">
+                Veuillez patienter pendant que nous vous dirigeons vers le service de paiement ...
+            </div>
+        </div>
+        <div class="col-md-12 d-flex justify-content-center my-5">
+            <div class="progress " style="width: 250px;">
+                <div class="progress-bar progress-bar-striped progress-bar-animated " role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%; background-color: rgb(141, 137, 137);"></div>
+            </div>
+        </div>
+        <div class="col-md-12 d-flex justify-content-center mb-5">
+            <button type="button" class="btn btn-primary btn-sm">Payer maintenant</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+
+<script>
+  
+  
+</script>
+
+{% endblock script %}

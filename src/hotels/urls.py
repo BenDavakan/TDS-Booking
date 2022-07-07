@@ -8,4 +8,5 @@ urlpatterns = [
          chambre_detail, name='chambre'),
     path('<str:slug>/chambre-<int:number>/reservation/',
          reservation_hotel, name='reservation'),
+
 ]

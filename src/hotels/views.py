@@ -2,10 +2,12 @@ import string
 import random
 from django.core.paginator import Paginator
 from datetime import date
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from accounts.models import CustomUser, MyUserManager
-from hotels.models import Chambre, Equipement, Hotel, Reservation
+from hotels.models import Chambre, Equipement, Hotel, Reservation, Ville
 
+import datetime
 
 from django.contrib import messages
 from django.template.loader import render_to_string
@@ -13,6 +15,14 @@ from django.core.mail import EmailMessage
 from django.conf import settings
 
 from pprint import pprint
+
+
+def villes_view(request):
+    villes = Ville.objects.all()
+
+    x = Hotel.objects.filter(ville__name='Parakou').count()
+
+    return render(request, 'villes.html', {'villes': villes, 'x': x})
 
 
 def hotels_view(request):
@@ -46,14 +56,18 @@ def chambre_detail(request, slug, number):
 def reservation_hotel(request, slug, number):
     chambre = Chambre.objects.get(number=number)
     hotel = Hotel.objects.get(slug=slug)
+    a = request.session.get('date01')
+    b = request.session.get('date02')
 
     if request.method == "POST":
-        date1 = request.session.get('date1')
-        date2 = request.session.get('date2')
+
         datea = date(2022, 10, 1)
         dateb = date(2022, 10, 11)
         date0 = dateb - datea
-        print(date0.days)
+
+        dt = datetime.date.today().strftime("%Y")
+        print(dt)
+
         check_in = request.POST.get('check_in')
         check_out = request.POST.get('check_out')
         if request.user.is_authenticated:
@@ -71,8 +85,13 @@ def reservation_hotel(request, slug, number):
                 password += random.choice(characters)
             print(password)
             if CustomUser.objects.filter(email=email).exists():
-                messages.info(
-                    request, "L'email est déja pris!! Réessayez avez un autre.")
+                user = CustomUser.objects.get(email=email)
+                Reservation.objects.create(
+                    user_id=user.id, chambre_id=chambre.id, check_in='2022-10-22', check_out='2022-10-27')
+                if request.POST.get('check', True):
+                    return redirect('home')
+                else:
+                    return redirect('home')
             else:
                 user = CustomUser.objects.create_user(
                     first_name=first_name, last_name=last_name, email=email, password=password, tel=tel,)
@@ -89,5 +108,10 @@ def reservation_hotel(request, slug, number):
 
         Reservation.objects.create(
             user_id=user.id, chambre_id=chambre.id, check_in='2022-10-22', check_out='2022-10-27')
+        return redirect('transition')
 
-    return render(request, 'reservation_hotel.html', context={"chambre": chambre, "hotel": hotel})
+    return render(request, 'reservation_hotel.html', context={"chambre": chambre, "hotel": hotel, "date1": a, "date2": b})
+
+
+def transition(request):
+    return render(request, 'transition.html', {})

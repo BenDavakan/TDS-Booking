@@ -8,6 +8,26 @@ from django.core.validators import FileExtensionValidator
 # Create your models here.
 
 
+class Pays (models.Model):
+    name = models.CharField(max_length=100)
+    date_added = models.DateTimeField(auto_now=True, blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+
+
+class Ville (models.Model):
+    pays = models.ForeignKey(Pays, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+    date_added = models.DateTimeField(auto_now=True, blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+
+    def one_ville(self, id):
+        return id
+
+
 class Hotel(models.Model):
     name = models.CharField(max_length=100)
     slug = models.SlugField(blank=True)
@@ -17,7 +37,8 @@ class Hotel(models.Model):
     email = models.EmailField()
     adress = models.CharField(max_length=100, blank=True, null=True)
     star_nbr = models.PositiveIntegerField()
-    ville = models.CharField(max_length=100)
+    ville = models.ForeignKey(
+        Ville, related_name='categorie', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now=True, blank=True, null=True)
     video = models.FileField(upload_to='videos_uploaded', null=True, blank=True,
                              validators=[FileExtensionValidator(allowed_extensions=['MOV', 'avi', 'mp4', 'webm', 'mkv'])])
@@ -98,8 +119,19 @@ class Reservation(models.Model):
     status = models.CharField(choices=STATUS, max_length=200, default='EC')
 
 
+class Availability(models.Model):
+    chambre = models.ForeignKey(Chambre, on_delete=models.CASCADE)
+    check_in = models.DateField()
+    check_out = models.DateField()
+    STATUS = [
+        ('D', 'Disponible'),
+        ('ID', 'Indisponible'),
+    ]
+    status = models.CharField(choices=STATUS, max_length=15, default='D')
+
+
 class Payement(models.Model):
-    montant = models.PositiveIntegerField()
+    montant = models.PositiveIntegerField(default=0)
     reservation = models.ForeignKey(Reservation, on_delete=models.CASCADE)
 
 

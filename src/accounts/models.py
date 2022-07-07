@@ -17,19 +17,25 @@ class MyUserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, password=None):
-        user = self.create_user(email, password=password)
+    def create_superuser(self, email, first_name=None, last_name=None, tel=None, password=None):
+
+        user = self.create_user(
+            email=self.normalize_email(email),
+            password=password,
+            first_name=first_name,
+            last_name=last_name,
+            tel=tel,
+        )
         user.is_staff = True
         user.is_admin = True
         user.is_superuser = True
-
-        user.save()
+        user.save(using=self._db)
         return user
 
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
+    first_name = models.CharField(max_length=100, blank=True, null=True)
+    last_name = models.CharField(max_length=100, blank=True, null=True)
     email = models.EmailField(unique=True)
     tel = models.IntegerField(blank=True, null=True)
     is_active = models.BooleanField(default=True)

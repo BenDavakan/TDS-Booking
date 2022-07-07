@@ -7,6 +7,7 @@
 
 {% block style %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/otl.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.css" integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="anonymous" />
 {% endblock %}
 
 
@@ -30,22 +31,12 @@
                     </div>
                     </div>
                     <div class="form-group">
-                      <input type="text" id="checkin_date" class="form-control checkin_date" placeholder="Date d'arrivée">
+                      <input type="text" id="datepicker" class="form-control checkin_date" placeholder="Date d'arrivée" readonly>
                     </div>
                     <div class="form-group">
-                      <input type="text" id="checkout_date" class="form-control checkout_date" placeholder="Date de depart">
+                      <input type="text" id="datepicker1" class="form-control checkout_date" placeholder="Date de depart" readonly>
                     </div>
-                    <div class="form-group">
-                        <div class="range-slider">
-                            <span>
-                                          <input type="number" value="25000" min="0" max="120000"/>	-
-                                          <input type="number" value="50000" min="0" max="120000"/>
-                                        </span>
-                                        <input value="1000" min="0" max="120000" step="500" type="range"/>
-                                        <input value="50000" min="0" max="120000" step="500" type="range"/>
-                                        </svg>
-                                      </div>
-                    </div>
+                    
                     <div class="form-group">
                       <input type="submit" value="Rechercher" class="btn btn-primary py-3 px-5">
                     </div>
@@ -58,21 +49,21 @@
             <div class="row">
                 {% for hotel in hotels %}
                       <div class="col-sm col-md-6 col-lg-4 ftco-animate">
-                          <div class="destination">
+                          <div class="destination mb-3" style="border-radius: 4px;box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;">
                               <a href="{{ hotel.get_absolute_url }}" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url(img/hotel-1.jpg);">
-                                <img src="{% static 'img/hotel-2.jpg' %}" alt="">
+                                <img src="{% static 'img/hotel-2.jpg' %}" style="border-top-left-radius: 4px;border-top-right-radius: 4px"  alt="">
                               </a>
-                              <div class="text p-3">
+                              <div class="text p-2">
                                   <div class="d-flex">
                                       <div class="one">
-                                          <h3><a href="{% url 'hotel' hotel.slug %}">{{ hotel.name|truncatechars:20 }}</a></h3>
+                                          <h4><a href="{% url 'hotel' hotel.slug %}">{{ hotel.name|truncatechars:20 }}</a></h4>
                                           
                                       </div>
                                       
                                   </div>
                                   
                                   <hr>
-                                  <p class="bottom-area d-flex">
+                                  <p class="bottom-area d-flex mb-1">
                                       <span><i class="icon-map-o"></i>{{ hotel.ville }}</span> 
                                       <span class="ml-auto"><a href="{{ hotel.get_absolute_url }}">Reserver</a></span>
                                   </p>
@@ -113,7 +104,27 @@
 </section>
 
 
-
-  
-
 {% endblock %}
+
+{% block script %}
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.js" integrity="sha256-/7FLTdzP6CfC1VBAj/rsp3Rinuuu9leMRGd354hvk0k=" crossorigin="anonymous"></script>
+<script>
+  $(function () {
+    $("#datepicker").datepicker({
+      autoApply: true,
+      format:'dd/mm/yyyy',
+    });
+  });
+
+  $(function () {
+    $("#datepicker1").datepicker({
+      dayNamesMin: [ "Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa" ],
+      monthNames: [ "Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Decembre" ],
+      format:'dd/mm/yyyy',
+    }).val();
+  });
+  
+</script>
+
+{% endblock script %}

@@ -150,6 +150,7 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'bdkmailpro@gmail.com'
 EMAIL_HOST_PASSWORD = 'mnmhrdntynnydols'
+EMAIL_SSL = False
 
 
 # Default primary key field type

@@ -36,8 +36,7 @@
 </div>
 
 
-
-<header class="header"  style="position: sticky; bottom: auto; top: 0%; z-index: 9999">
+<header class="header" >
         <div class="header__top">
             <div class="container">
                 <div class="row">
@@ -65,7 +64,7 @@
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" >
                                           <a class="dropdown-item" href="#" style="color: black;">Profil</a>
                                           {% if user.is_superuser == True %}
-                                          <a class="dropdown-item" href="/admin" style="color: black;">Dashboard</a>
+                                          <a class="dropdown-item" href="/admin" style="color: black;" target="_blank">Dashboard</a>
                                           {% endif %}
                                           <a class="dropdown-item" href="{% url 'deconnexion' %}" style="color: black;">Deconnexion</a>
                                         </div>
@@ -81,7 +80,7 @@
                                   <option value="">Français</option> 
                                   <option value="">English</option>  
                                 </select>
-                            </div>
+                            </img>
                         </div>
                     </div>
                 </div>

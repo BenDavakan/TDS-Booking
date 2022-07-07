@@ -123,18 +123,24 @@ ol li {
 				</div>
 			</div>
 			<div class="col-lg-3">
-				<div class="row">
-					<div class="col-12 ">
+				
+					<div class="col-12 px-0">
 						<div>
 							<h4>Visite en video</h4>
 						</div>
 						<div class="embed-responsive embed-responsive-16by9 z-depth-1-half">
 							<iframe width="560" height="315" src="https://www.youtube.com/embed/98qiqE019As?start=140" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 						</div>
+						<div class="d-flex mt-2">
+							<h5>Nuité : </h5> <span class="ml-1" style="color: red">{{ chambre.overnight }} f CFA</span>
+						</div>
+						
+						
+						<a name="" id="" class="btn btn-primary mt-2" href="{% url 'reservation' hotel.slug chambre.number %}" role="button">Reserver</a>
 					</div>
-					<a name="" id="" class="btn btn-primary" href="{% url 'reservation' hotel.slug chambre.number %}" role="button">Reserver</a>
 					
-				</div>
+					
+				
 			</div>
 			
 		</div>

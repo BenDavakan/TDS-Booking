@@ -1,6 +1,7 @@
 {% extends 'base.html'%}
 {% load static %}
 {% block style %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.17/css/intlTelInput.css" integrity="sha512-gxWow8Mo6q6pLa1XH/CcH8JyiSDEtiwJV78E+D+QP0EVasFs8wKXq16G8CLD4CJ2SnonHr4Lm/yY2fSI2+cbmw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 {% endblock style %}
 {% block content %}
@@ -25,19 +26,19 @@
 					<div class="card-body">
 						<div class="mb-3">
 							<label for="prenoms" class="form-label">Prénoms</label>
-							<input type="text" name="first_name" class="form-control" id="prenoms" placeholder="Prénoms" value="{{ request.user.first_name }}">
+							<input type="text" name="first_name" class="form-control" id="prenoms" placeholder="Prénoms" value="{{ request.user.first_name }}" required>
 						</div>
 						<div class="mb-3">
 							<label for="nom" class="form-label">Nom</label>
-							<input type="text" name="last_name" class="form-control" id="nom" placeholder="Nom" value="{{ request.user.last_name }}">
+							<input type="text" name="last_name" class="form-control" id="nom" placeholder="Nom" value="{{ request.user.last_name }}" required>
 						</div>
 						<div class="mb-3">
 							<label for="email" class="form-label">Email</label>
-							<input type="email" name="email" class="form-control" id="email" placeholder="Email" value="{{ request.user.email }}">
+							<input type="email" name="email" class="form-control" id="email" placeholder="Email" value="{{ request.user.email }}" required>
 						</div>
-						<div class="mb-3">
+						<div class="mb-3 d-block">
 							<label for="tel" class="form-label">Tel</label>
-							<input type="number" name="tel" class="form-control" id="tel" placeholder="Tel" value="{{ request.user.tel }}">
+							<input type="tel" name="tel" class="form-control" id="tel">
 						</div>
 						{{ request.chambre.name }}
 					</div>
@@ -62,20 +63,20 @@
 					<div class="card-body">
 						<div class="pl-2" style="height:50px; border:rgba(53, 52, 52, 0.137) 1px solid; border-bottom: none; display:flex; align-items: center;">
 							<div class="form-check " >
-								<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-								<label class="form-check-label" for="flexRadioDefault1"> <span><i class="fa-solid fa-credit-card"></i></span> Carte de paiement ou MoMo</label>
+								<input class="form-check-input" type="radio" name="check" value="kkiapay" id="flexRadioDefault1" checked>
+								<label class="form-check-label" for="flexRadioDefault1"> <span><i class="fa-solid fa-credit-card"></i></span> Carte de paiement ou Mobile Money</label>
 							</div>
 						</div>
 						<div class="pl-2" style="height:50px; border:rgb(53, 52, 52, 0.137) 1px solid;  display:flex; align-items: center;">
 							<div class="form-check " >
-								<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+								<input class="form-check-input" type="radio" name="check" value="paypal" id="flexRadioDefault2" >
 								<label class="form-check-label" for="flexRadioDefault2"> <span><i class="fa-brands fa-cc-paypal"></i></span> Paypal</label>
 							</div>
 						</div>
 						
 					</div>
 				</div>
-				<div class="card">
+				<div class="card mt-2">
 					<h5 class="card-header">Conditions d'Annulation</h5>
 					<div class="card-body">
 						{% lorem 1 %}
@@ -87,7 +88,8 @@
 						<hr>
 						<h5 class="mb-1">Conditions de réservation</h5>
 						<p>
-							En cliquant sur « Confirmer et payer maintenant », vous confirmez avoir lu et accepté nos conditions d’utilisation , la politique de confidentialité et les conseils aux voyageurs du ministère des Affaires étrangères .
+							En cliquant sur « Confirmer et payer maintenant », vous confirmez avoir lu et accepté nos 
+							<a href="">conditions d’utilisation </a>, la <a href="#">politique de confidentialité</a> et les <a href="#">conseils aux voyageurs du ministère des Affaires étrangères</a> .
 						</p>
 						<p>
 							<button type="submit" class="btn btn-primary btn-lg">Confirmation</button>
@@ -96,7 +98,7 @@
 				</div>
 		   </form>
 		</div>
-		<div class="col-4">
+		<div class="col-4 ">
 			<div class="card p-2" style="width: 100%;">
 				<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
 					<div class="carousel-inner">
@@ -120,14 +122,108 @@
 					</a>
 				  </div>
 				<div class="">
-				  <h5 class="card-title">{{ hotel.name }}</h5>
-				  <p class="card-text">{{ hotel.adress }}</p>
-				  
+				  <h4 class="">{{ hotel.name }}</h4>
+				  <p class="">{{ hotel.adress }}</p>
+				  <div class="d-flex">
+					<h5 class="">Arrivée :</h5>
+					<p class="ml-1 mb-0">{{ date1 }}</p>
+				  </div>
+				  <div class="d-flex">
+					<h5 class="">Départ :</h5>
+					<p class="ml-1 mb-0">{{ date2 }}</p>
+				  </div>
+				  <p class="mt-1 mb-0">Séjour de 2 nuits</p>
 				</div>
-			  </div>
+			</div>
+			<div class="card my-2">
+				<h5 class="card-header " style="background: #fff;"> Details du prix</h5>
+				<div class="card-body">
+					<div class="d-flex justify-content-between">
+						<p>1 chambre x 1 nuit</p>						
+						<p>{{ chambre.overnight }} F CFA</p>						
+
+					</div>
+					
+					<div class="d-flex justify-content-between">
+						<p>Taxes et frais</p>
+						<p>0 F CFA</p>
+						
+					</div>
+					
+					<hr>
+					
+					<div class="d-flex justify-content-between">
+						<h4>Total</h4>
+						<h4>{{ chambre.overnight }} F CFA</h4>
+
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
 
 
 {% endblock %}
+
+
+{% block script %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.17/js/intlTelInput.min.js" integrity="sha512-1NlRc/n6l/Gl7K7u9g6Z9kxZsKqcJV5uWM/Tv/WCjxDBqUSlxlgHgQI4Z17RW7BdNJjgLj0l6x0kGd0DOvu4AQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script>
+	function getIp(callback) {
+		fetch('https://ipinfo.io/json?token=9299d29dc5c97f', { headers: { 'Accept': 'application/json' }})
+		  .then((resp) => resp.json())
+		  .catch(() => {
+			return {
+			  country: 'us',
+			};
+		  })
+		  .then((resp) => callback(resp.country));
+	   };
+	   
+	const phoneInputField = document.querySelector("#tel");
+	const phoneInput = window.intlTelInput(phoneInputField, {
+	  initialCountry: "auto",
+      geoIpLookup: getIp,
+	  preferredCountries: ["us"],
+	  utilsScript:
+		"https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+	});
+
+	const info = document.querySelector(".alert-info");
+    const error = document.querySelector(".alert-error");
+
+	function process(event) {
+	event.preventDefault();
+
+	phoneInput.getNumber();
+
+	const data = new URLSearchParams();
+    data.append("phone", phoneNumber);
+
+	fetch("http://tds-tel-input-1990.twil.io/lookup", {
+	method: "POST",
+	body: data,
+	})
+	.then((response) => response.json())
+	.then((json) => {
+		if (json.success) {
+		info.style.display = "";
+		info.innerHTML = `Phone number in E.164 format: <strong>${phoneNumber}</strong>`;
+		} else {
+		console.log(json.error);
+		error.style.display = "";
+		error.innerHTML = `Invalid phone number.`;
+		}
+	})
+	.catch((err) => {
+		error.style.display = "";
+		error.innerHTML = `Something went wrong: ${err}`;
+	});
+
+	}
+
+  </script>
+{% endblock  %}
+	
