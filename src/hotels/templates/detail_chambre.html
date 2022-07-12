@@ -1,5 +1,6 @@
 {% extends 'base.html'%}
 {% load static %}
+{% load humanize %}
 {% block style %}
  <style>
 
@@ -132,7 +133,7 @@ ol li {
 							<iframe width="560" height="315" src="https://www.youtube.com/embed/98qiqE019As?start=140" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 						</div>
 						<div class="d-flex mt-2">
-							<h5>Nuité : </h5> <span class="ml-1" style="color: red">{{ chambre.overnight }} f CFA</span>
+							<h5>Nuité : </h5> <span class="ml-1" style="color: red">{{ chambre.overnight | intcomma }} f CFA</span>
 						</div>
 						
 						

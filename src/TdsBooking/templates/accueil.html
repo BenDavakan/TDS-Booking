@@ -444,9 +444,13 @@ $(document).ready(function() {
 });
 
 $('#picker').daterangepicker({
+  
   autoApply: true,
   startDate: moment(),
-  endDate: moment()
+  endDate: moment(),
+  locale: {
+    format: 'DD MMM YY',
+  }
 });
 
 

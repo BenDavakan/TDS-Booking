@@ -2,7 +2,7 @@ from xml.dom.pulldom import parseString
 from django.contrib import admin
 
 # Register your models here.
-from hotels.models import Availability, Category, Chambre, Equipement, Hotel, Image_Chambre, Image_Hotel, Reservation, Ville
+from hotels.models import Availability, CategorieEquipementHotel, Category, Chambre, Equipement, Equipement_Hotel, Hotel, Image_Chambre, Image_Hotel, Reservation, Ville
 
 
 class ImageHotel(admin.StackedInline):
@@ -88,8 +88,10 @@ class ReservationAdmin(admin.ModelAdmin):
         "chambre",
         "check_in",
         "check_out",
-        "add_at",
+        "payment_method",
+        "amount",
         "status",
+        "add_at",
     )
 
 
@@ -99,5 +101,23 @@ class EquipementAdmin(admin.ModelAdmin):
         "name",
         "number",
         "chambre",
+        "add_at",
+    )
+
+
+@admin.register(CategorieEquipementHotel)
+class CategorieEquipementHotelAdmin(admin.ModelAdmin):
+    list_display = (
+        "name",
+        "add_at",
+    )
+
+
+@admin.register(Equipement_Hotel)
+class EquipementHotelAdmin(admin.ModelAdmin):
+    list_display = (
+        "name",
+        "number",
+        "hotel",
         "add_at",
     )

@@ -78,7 +78,7 @@ class Chambre(models.Model):
     slug = models.SlugField(blank=True)
     description = models.TextField(blank=True)
     number = models.IntegerField()
-    overnight = models.DecimalField(max_digits=10, decimal_places=0)
+    overnight = models.PositiveIntegerField()
     area = models.PositiveIntegerField()
     category = models.ForeignKey(
         Category, related_name='categorie', on_delete=models.CASCADE)
@@ -108,15 +108,23 @@ class Reservation(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              on_delete=models.CASCADE)
     chambre = models.ForeignKey(Chambre, on_delete=models.CASCADE)
+    amount = models.PositiveIntegerField(blank=True, null=True)
+    MODE = [
+        ('CC', 'Carte de Crédit'),
+        ('MOMO', 'Mobile Money'),
+        ('P', 'Paypal'),
+    ]
+    payment_method = models.CharField(
+        choices=MODE, max_length=200, default='CC')
     check_in = models.DateField()
     check_out = models.DateField()
-    add_at = models.DateTimeField(auto_now=True, blank=True, null=True)
     STATUS = [
         ('EC', 'En cours'),
         ('AN', 'Annulé'),
         ('P', 'Payé'),
     ]
     status = models.CharField(choices=STATUS, max_length=200, default='EC')
+    add_at = models.DateTimeField(auto_now=True, blank=True, null=True)
 
 
 class Availability(models.Model):
@@ -131,8 +139,28 @@ class Availability(models.Model):
 
 
 class Payement(models.Model):
-    montant = models.PositiveIntegerField(default=0)
     reservation = models.ForeignKey(Reservation, on_delete=models.CASCADE)
+    add_at = models.DateTimeField(auto_now=True, blank=True, null=True)
+
+
+class CategorieEquipementHotel(models.Model):
+    name = models.CharField(max_length=100)
+    add_at = models.DateTimeField(auto_now=True, blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+
+
+class Equipement_Hotel(models.Model):
+    name = models.CharField(max_length=100)
+    number = models.PositiveIntegerField()
+    category = models.ForeignKey(
+        CategorieEquipementHotel, on_delete=models.CASCADE)
+    hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE)
+    add_at = models.DateTimeField(auto_now=True, blank=True, null=True)
+
+    def __str__(self):
+        return self.name
 
 
 class Equipement(models.Model):
@@ -140,6 +168,9 @@ class Equipement(models.Model):
     number = models.PositiveIntegerField()
     chambre = models.ForeignKey(Chambre, on_delete=models.CASCADE)
     add_at = models.DateTimeField(auto_now=True, blank=True, null=True)
+
+    def __str__(self):
+        return self.name
 
 
 class Image_Hotel(models.Model):

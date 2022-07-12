@@ -1,5 +1,6 @@
 {% extends 'base.html'%}
 {% load static %}
+{% load humanize %}
 {% block style %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.17/css/intlTelInput.css" integrity="sha512-gxWow8Mo6q6pLa1XH/CcH8JyiSDEtiwJV78E+D+QP0EVasFs8wKXq16G8CLD4CJ2SnonHr4Lm/yY2fSI2+cbmw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
@@ -36,9 +37,9 @@
 							<label for="email" class="form-label">Email</label>
 							<input type="email" name="email" class="form-control" id="email" placeholder="Email" value="{{ request.user.email }}" required>
 						</div>
-						<div class="mb-3 d-block">
+						<div class="mb-3">
 							<label for="tel" class="form-label">Tel</label>
-							<input type="tel" name="tel" class="form-control" id="tel">
+							<input type="tel" name="tel" class="form-control w-100" id="tel">
 						</div>
 						{{ request.chambre.name }}
 					</div>
@@ -63,13 +64,19 @@
 					<div class="card-body">
 						<div class="pl-2" style="height:50px; border:rgba(53, 52, 52, 0.137) 1px solid; border-bottom: none; display:flex; align-items: center;">
 							<div class="form-check " >
-								<input class="form-check-input" type="radio" name="check" value="kkiapay" id="flexRadioDefault1" checked>
-								<label class="form-check-label" for="flexRadioDefault1"> <span><i class="fa-solid fa-credit-card"></i></span> Carte de paiement ou Mobile Money</label>
+								<input class="form-check-input" type="radio" name="check" value="CC" id="flexRadioDefault1" checked>
+								<label class="form-check-label" for="flexRadioDefault1"> <span><i class="fa-solid fa-credit-card"></i></span> Carte de paiement </label>
+							</div>
+						</div>
+						<div class="pl-2" style="height:50px; border:rgba(53, 52, 52, 0.137) 1px solid; border-bottom: none; display:flex; align-items: center;">
+							<div class="form-check " >
+								<input class="form-check-input" type="radio" name="check" value="MOMO" id="flexRadioDefault1" >
+								<label class="form-check-label" for="flexRadioDefault1"> <span><i class="fa-solid fa-credit-card"></i></span> Mobile Money</label>
 							</div>
 						</div>
 						<div class="pl-2" style="height:50px; border:rgb(53, 52, 52, 0.137) 1px solid;  display:flex; align-items: center;">
 							<div class="form-check " >
-								<input class="form-check-input" type="radio" name="check" value="paypal" id="flexRadioDefault2" >
+								<input class="form-check-input" type="radio" name="check" value="P" id="flexRadioDefault2" >
 								<label class="form-check-label" for="flexRadioDefault2"> <span><i class="fa-brands fa-cc-paypal"></i></span> Paypal</label>
 							</div>
 						</div>
@@ -132,15 +139,16 @@
 					<h5 class="">Départ :</h5>
 					<p class="ml-1 mb-0">{{ date2 }}</p>
 				  </div>
-				  <p class="mt-1 mb-0">Séjour de 2 nuits</p>
+				  <p class="mt-1 mb-0">Séjour de {{ sejour }} jours</p>
+				  <p class="mt-1 mb-0">Nuité : {{ chambre.overnight | intcomma }} F CFA</p>
 				</div>
 			</div>
 			<div class="card my-2">
 				<h5 class="card-header " style="background: #fff;"> Details du prix</h5>
 				<div class="card-body">
 					<div class="d-flex justify-content-between">
-						<p>1 chambre x 1 nuit</p>						
-						<p>{{ chambre.overnight }} F CFA</p>						
+						<p>1 chambre x {{ sejour }} nuit</p>						
+						<p>{{ amount | intcomma }} F CFA</p>					
 
 					</div>
 					
@@ -154,7 +162,7 @@
 					
 					<div class="d-flex justify-content-between">
 						<h4>Total</h4>
-						<h4>{{ chambre.overnight }} F CFA</h4>
+						<h4>{{ amount | intcomma}} F CFA</h4>
 
 					</div>
 				</div>
@@ -176,7 +184,7 @@
 		  .then((resp) => resp.json())
 		  .catch(() => {
 			return {
-			  country: 'us',
+			  country: 'bj',
 			};
 		  })
 		  .then((resp) => callback(resp.country));
@@ -186,7 +194,7 @@
 	const phoneInput = window.intlTelInput(phoneInputField, {
 	  initialCountry: "auto",
       geoIpLookup: getIp,
-	  preferredCountries: ["us"],
+	  preferredCountries: ["bj"],
 	  utilsScript:
 		"https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
 	});

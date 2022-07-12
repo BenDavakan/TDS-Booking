@@ -1,4 +1,4 @@
-#!/home/ben/Documents/TDS/TDS-Booking/.env/bin/python3.10
+#!/home/ben/Documents/TDS/TDS-Booking/.env/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys

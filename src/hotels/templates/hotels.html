@@ -13,7 +13,7 @@
 
 {% block content %}
 <br>
-<section class="ftco-section">
+<section class="ftco-section ">
     <div class="container">
       <div class="row">
           <div class="col-lg-3 sidebar order-md-last ftco-animate">
@@ -42,7 +42,7 @@
                     </div>
                   </div>
               </form>
-              </div>
+            </div>
               
         </div><!-- END-->
         <div class="col-lg-9">
@@ -113,7 +113,7 @@
   $(function () {
     $("#datepicker").datepicker({
       autoApply: true,
-      format:'dd/mm/yyyy',
+      format:'DD MM YYYY',
     });
   });
 
@@ -121,7 +121,7 @@
     $("#datepicker1").datepicker({
       dayNamesMin: [ "Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa" ],
       monthNames: [ "Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Decembre" ],
-      format:'dd/mm/yyyy',
+      format:'dd MM YYYY',
     }).val();
   });
   

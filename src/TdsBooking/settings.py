@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'restaurants',
     'widget_tweaks',
     'accounts',
+    'django.contrib.humanize',
 
 
 ]
