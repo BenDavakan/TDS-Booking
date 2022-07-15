@@ -1,0 +1,60 @@
+{% load static %}
+<div id="preloder">
+    <div class="loader"></div>
+</div> 
+
+
+
+<header class="header" >
+        <div class="header__top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-7">
+                        <ul class="header__top__widget">
+                            <li><span class="icon_pin_alt mb-0"></span> </li>
+                            <li><span class="icon_phone mb-0"></span> </li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="header__top__right">
+                            <div class="header__top__auth">
+                                <ul>
+                                  
+                                   
+                                    
+                                    {% if user.is_authenticated == True %}
+                                    
+                                    <li class="dropdown show" >
+                                        <a class=" dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <span class="mr-1"><i class="fa-solid fa-user"></i></span>
+                                          {{ request.user.first_name }}
+                                        </a>
+                                      
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" >
+                                          <a class="dropdown-item" href="{% url 'profil' %}" style="color: black;">Profil</a>
+                                          {% if user.is_superuser == True %}
+                                          <a class="dropdown-item" href="/admin" style="color: black;" target="_blank">Dashboard</a>
+                                          {% endif %}
+                                          <a class="dropdown-item" href="{% url 'deconnexion' %}" style="color: black;">Deconnexion</a>
+                                        </div>
+                                      </li>
+                                    {% else %}
+                                    <li><a href="{% url 'connexion' %}">Se connecter</a></li>
+                                    {% endif %}
+                                </ul>
+                            </div>
+                            <div class="header__top__language">
+                                <img src="{% static 'img/lan.png'%}" alt="">
+                                <select class="w-auto" style="border: none; background-color: transparent;">
+                                  <option value="">Français</option> 
+                                  <option value="">English</option>  
+                                </select>
+                            </img>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+</header>
+

@@ -4,8 +4,9 @@ import random
 import dateparser
 from django.core.paginator import Paginator
 from datetime import date
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse
 from accounts.models import CustomUser, MyUserManager
 from hotels.models import Chambre, Equipement, Equipement_Hotel, Hotel, Reservation, Ville
 
@@ -66,7 +67,7 @@ def reservation_hotel(request, slug, number):
     x2 = dateparser.parse(b)
     sejour = (x2 - x1).days
     amount = chambre.overnight * sejour
-    user = "ben"
+    user = ""
     if request.method == "POST":
 
         first_name = request.POST.get('first_name')
@@ -79,9 +80,6 @@ def reservation_hotel(request, slug, number):
             password += random.choice(characters)
         if CustomUser.objects.filter(email=email).exists():
             user = CustomUser.objects.get(email=email)
-            reserv = Reservation.objects.create(
-                user_id=user.id, chambre_id=chambre.id, amount=amount, check_in=x1, check_out=x2, payment_method=mode)
-            print(reserv.payment_method)
 
         else:
             user = CustomUser.objects.create_user(
@@ -97,14 +95,14 @@ def reservation_hotel(request, slug, number):
             mail.fail_silently = False
             mail.send()
 
-            reserv = Reservation.objects.create(
-                user_id=user.id, chambre_id=chambre.id, check_in=x1, check_out=x2, amount=amount, payment_method=mode)
-            print(reserv.payment_method)
+        reserv = Reservation.objects.create(
+            user_id=user.id, chambre_id=chambre.id, check_in=x1, check_out=x2, amount=amount)
 
-        return redirect('transition')
-    print(user)
+        return HttpResponseRedirect(reverse('transition', args=[reserv.id, request.POST.get('check')]))
+
     return render(request, 'reservation_hotel.html', context={"chambre": chambre, "hotel": hotel, "date1": a, "date2": b, "amount": amount, "sejour": sejour, })
 
 
-def transition(request):
-    return render(request, 'transition.html', {})
+def transition(request, number, type):
+    reserv = Reservation.objects.get(id=number)
+    return render(request, 'transition.html', {'type_paiement': type, 'reservation': reserv})

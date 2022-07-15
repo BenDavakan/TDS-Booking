@@ -1,0 +1,283 @@
+{% extends 'accounts/base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block title %}
+<title>Profil</title>
+{% endblock %}
+
+
+{% block style %}
+
+       
+
+
+
+{% endblock %}
+
+
+{% block content %}
+
+{% if user.is_authenticated %}
+<header id="topnav">
+   
+    <!-- MENU Start -->
+    <div class="navbar-custom">
+        <div class="container-fluid">
+            <div id="navigation">
+                <!-- Navigation Menu-->
+                <ul class="navigation-menu">
+
+                    <li class="has-submenu">
+                        <a href="{% url 'profil' %}"><i class="dripicons-meter"></i>Dashboard</a>
+                    </li>
+
+                    <li class="has-submenu">
+                        <a href="#"><i class="dripicons-briefcase"></i>User Interface</a>
+                        <ul class="submenu megamenu">
+                            <li>
+                                <ul>
+                                    <li><a href="ui-alerts.html">Alerts</a></li>
+                                    <li><a href="ui-buttons.html">Buttons</a></li>
+                                    <li><a href="ui-badge.html">Badge</a></li>
+                                    <li><a href="ui-cards.html">Cards</a></li>
+                                    <li><a href="ui-dropdowns.html">Dropdowns</a></li>
+                                    <li><a href="ui-tabs-accordions.html">Tabs & Accordions</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <ul>
+                                    <li><a href="ui-modals.html">Modals</a></li>
+                                    <li><a href="ui-images.html">Images</a></li>
+                                    <li><a href="ui-progressbars.html">Progress Bars</a></li>
+                                    <li><a href="ui-navs.html">Navs</a></li>
+                                    <li><a href="ui-pagination.html">Pagination</a></li>
+                                    <li><a href="ui-popover-tooltips.html">Popover & Tooltips</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <ul>
+                                    <li><a href="ui-carousel.html">Carousel</a></li>
+                                    <li><a href="ui-video.html">Video</a></li>
+                                    <li><a href="ui-typography.html">Typography</a></li>
+                                    <li><a href="ui-grid.html">Grid</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="has-submenu">
+                        <a href="#"><i class="dripicons-broadcast"></i>Advanced UI</a>
+                        <ul class="submenu">
+                            <li><a href="advanced-alertify.html">Alertify</a></li>
+                            <li><a href="advanced-rating.html">Rating</a></li>
+                            <li><a href="advanced-nestable.html">Nestable</a></li>
+                            <li><a href="advanced-rangeslider.html">Range Slider</a></li>
+                            <li><a href="advanced-sweet-alert.html">Sweet-Alert</a></li>
+                            <li><a href="advanced-lightbox.html">Lightbox</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="has-submenu">
+                        <a href="#"><i class="dripicons-view-thumb"></i>Components</a>
+                        <ul class="submenu">
+                            <li class="has-submenu">
+                                <a href="#">Forms</a>
+                                <ul class="submenu">
+                                    <li><a href="form-elements.html">Form Elements</a></li>
+                                    <li><a href="form-validation.html">Form Validation</a></li>
+                                    <li><a href="form-advanced.html">Form Advanced</a></li>
+                                    <li><a href="form-editors.html">Form Editors</a></li>
+                                    <li><a href="form-uploads.html">Form File Upload</a></li>
+                                    <li><a href="form-mask.html">Form Mask</a></li>
+                                    <li><a href="form-summernote.html">Summernote</a></li>
+                                    <li><a href="form-xeditable.html">Form Xeditable</a></li>
+                                </ul>
+                            </li>
+                            <li class="has-submenu">
+                                <a href="#">Icons</a>
+                                <ul class="submenu">
+                                    <li><a href="icons-material.html">Material Design</a></li>
+                                    <li><a href="icons-ion.html">Ion Icons</a></li>
+                                    <li><a href="icons-fontawesome.html">Font Awesome</a></li>
+                                    <li><a href="icons-themify.html">Themify Icons</a></li>
+                                    <li><a href="icons-dripicons.html">Dripicons</a></li>
+                                    <li><a href="icons-typicons.html">Typicons Icons</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="calendar.html">Calendar</a>
+                            </li>
+                            <li class="has-submenu">
+                                <a href="#">Tables </a>
+                                <ul class="submenu">
+                                    <li><a href="tables-basic.html">Basic Tables</a></li>
+                                    <li><a href="tables-datatable.html">Data Table</a></li>
+                                    <li><a href="tables-responsive.html">Responsive Table</a></li>
+                                    <li><a href="tables-editable.html">Editable Table</a></li>
+                                </ul>
+                            </li>
+                            <li class="has-submenu">
+                                <a href="#">Maps</a>
+                                <ul class="submenu">
+                                    <li><a href="maps-google.html"> Google Map</a></li>
+                                    <li><a href="maps-vector.html"> Vector Map</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="has-submenu">
+                        <a href="#"><i class="dripicons-graph-bar"></i>Charts</a>
+                        <ul class="submenu">
+                            <li><a href="charts-morris.html">Morris Chart</a></li>
+                            <li><a href="charts-chartist.html">Chartist Chart</a></li>
+                            <li><a href="charts-chartjs.html">Chartjs Chart</a></li>
+                            <li><a href="charts-flot.html">Flot Chart</a></li>
+                            <li><a href="charts-c3.html">C3 Chart</a></li>
+                            <li><a href="charts-other.html">Jquery Knob Chart</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="has-submenu">
+                        <a href="#"><i class="dripicons-copy"></i>Pages</a>
+                        <ul class="submenu megamenu">
+                            <li>
+                                <ul>
+                                    <li><a href="pages-pricing.html">Pricing</a></li>
+                                    <li><a href="pages-invoice.html">Invoice</a></li>
+                                    <li><a href="pages-timeline.html">Timeline</a></li>
+                                    <li><a href="pages-faqs.html">FAQs</a></li>
+                                    <li><a href="pages-blank.html">Blank Page</a></li>
+                                    <li><a href="pages-login.html">Login</a></li>
+                                    <li><a href="pages-register.html">Register</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <ul>
+                                    <li><a href="pages-recoverpw.html">Recover Password</a></li>
+                                    <li><a href="pages-lock-screen.html">Lock Screen</a></li>
+                                    <li><a href="pages-404.html">Error 404</a></li>
+                                    <li><a href="pages-500.html">Error 500</a></li>
+                                    <li><a href="pages-maintenance.html">Maintenance</a></li>
+                                    <li><a href="pages-comingsoon.html">Coming Soon</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="has-submenu">
+                        <a href="#"><i class="dripicons-copy"></i>Profil</a>
+                    </li>
+                   
+
+
+
+                </ul>
+                <!-- End navigation menu -->
+            </div> <!-- end #navigation -->
+        </div> <!-- end container -->
+    </div> <!-- end navbar-custom -->
+</header>
+ <div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="page-title-box">
+                <div class="btn-group float-right">
+                    <ol class="breadcrumb hide-phone p-0 m-0">
+                        <li class="breadcrumb-item"><a href="#">Tds Booking</a></li>
+                        <li class="breadcrumb-item active">Profil</li>
+                    </ol>
+                </div>
+                <h4 class="page-title">Profil</h4>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-3 ">
+          <div class="nav flex-column nav-pills bg-light h-auto p-2" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+            <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Informations personnelles</a>
+            
+            <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Profile</a>
+            
+            <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Messages</a>
+            
+            <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</a>
+          </div>
+        </div>
+        <div class="col-9">
+          <div class="tab-content" id="v-pills-tabContent">
+            <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card m-b-30">
+                        <div class="card-body">
+
+                            <h2 class="mt-0 header-title">Informations personnelles</h2>
+                            <p class="text-muted m-b-30 font-14">
+                                lorem ipsum dolor sit amet, consectetur adip
+                            </p>
+
+                            <div class="">
+                                <div class="row">
+                                    <div class="col-5">Nom </div>
+                                    <div class="col-7">DAVAKAN</div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-5">Prénom</div>
+                                    <div class="col-7">Ben</div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-5">Email</div>
+                                    <div class="col-7">Ben@gmail.com</div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-5">Numéro de Téléphone </div>
+                                    <div class="col-7">97662516</div>
+                                </div> 
+                                <hr>
+                                <div class="row">
+                                    <div class="col-5">Date de Naissance</div>
+                                    <div class="col-7">-</div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-5">Nationalité </div>
+                                    <div class="col-7">-</div>
+                                </div> 
+                                <hr>
+                                <div class="row">
+                                    <div class="col-5">Genre </div>
+                                    <div class="col-7">Masculin</div>
+                                </div>
+                                
+                            </div>
+
+                        </div>
+                    </div>
+                 </div> <!-- end col -->  
+            </div></div>
+            <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">{% lorem 2 %}</div>
+            <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">{% lorem 5 %}</div>
+            <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+                {% lorem 7 %}
+            </div>
+          </div>
+        </div>
+      </div>
+</div>
+
+
+{% else %}
+    <p>Veillez vous connecter pour avoir accès à votre profile.</p>
+{% endif %}
+
+{% endblock %}
+
+{% block script %}
+        
+{% endblock %}

@@ -109,13 +109,6 @@ class Reservation(models.Model):
                              on_delete=models.CASCADE)
     chambre = models.ForeignKey(Chambre, on_delete=models.CASCADE)
     amount = models.PositiveIntegerField(blank=True, null=True)
-    MODE = [
-        ('CC', 'Carte de Crédit'),
-        ('MOMO', 'Mobile Money'),
-        ('P', 'Paypal'),
-    ]
-    payment_method = models.CharField(
-        choices=MODE, max_length=200, default='CC')
     check_in = models.DateField()
     check_out = models.DateField()
     STATUS = [
@@ -126,21 +119,27 @@ class Reservation(models.Model):
     status = models.CharField(choices=STATUS, max_length=200, default='EC')
     add_at = models.DateTimeField(auto_now=True, blank=True, null=True)
 
-
-class Availability(models.Model):
-    chambre = models.ForeignKey(Chambre, on_delete=models.CASCADE)
-    check_in = models.DateField()
-    check_out = models.DateField()
-    STATUS = [
-        ('D', 'Disponible'),
-        ('ID', 'Indisponible'),
-    ]
-    status = models.CharField(choices=STATUS, max_length=15, default='D')
+    def __str__(self):
+        return self.chambre.name
 
 
 class Payement(models.Model):
     reservation = models.ForeignKey(Reservation, on_delete=models.CASCADE)
+    MODE = [
+        ('card', 'Carte de Crédit'),
+        ('momo', 'Mobile Money'),
+        ('paypal', 'Paypal'),
+    ]
+    payment_method = models.CharField(
+        choices=MODE, max_length=200, default='card')
+    transaction_id = models.CharField(max_length=700)
     add_at = models.DateTimeField(auto_now=True, blank=True, null=True)
+
+
+class Availability(models.Model):
+    reservation = models.ForeignKey(Reservation, on_delete=models.CASCADE)
+    payment = models.ForeignKey(Payement, on_delete=models.CASCADE)
+    status = models.BooleanField(default=True)
 
 
 class CategorieEquipementHotel(models.Model):

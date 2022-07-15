@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from accounts.forms import SignupForm, SigninForm
+from accounts.forms import EditProfileForm, SignupForm, SigninForm
 from accounts.models import CustomUser
 
 
@@ -50,3 +50,11 @@ def connexion_view(request):
 def deconnexion(request):
     logout(request)
     return redirect('home')
+
+
+def profil_view(request):
+    return render(request, 'profil.html', {'user': request.user})
+
+
+def edit_profile(request):
+    return render(request, 'edit_profil.html', {})

@@ -1,7 +1,9 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.db.models import Q
 from django.core.mail import send_mail
-from hotels.models import Hotel, Ville
+from django.urls import reverse
+from hotels.models import Hotel, Payement, Ville
 
 
 def home_view(request):
@@ -51,3 +53,14 @@ def search_hotel(request):
         message = f'{hotels_number} hotel trouvé'
 
     return render(request, 'search_hotel.html', {'hotels': hotels, 'message': message, 'date': date, 't1': t1, 't2': t2})
+
+
+def paiement_process(request, number, type):
+
+    transaction_id = request.GET['transaction_id']
+
+    paiement = Payement.objects.create(transaction_id=transaction_id, payment_method=type,
+                                       reservation_id=number)
+    print(paiement)
+
+    return HttpResponseRedirect(reverse('home'))

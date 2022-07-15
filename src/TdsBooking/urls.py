@@ -1,4 +1,4 @@
-"""TdsBooking URL Configuration
+""" TdsBooking URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.0/topics/http/urls/
@@ -30,6 +30,8 @@ urlpatterns = [
     path('a-propos/', views.a_propos_view, name='a-propos'),
     path('search_hotel/', views.search_hotel, name='search_hotel'),
     path('villes/', villes_view, name='villes'),
-    path('transition/', transition, name='transition'),
+    path('transition/<int:number>/<str:type>/', transition, name='transition'),
+    path('paiement/<int:number>/<str:type>/paiement-process/',
+         views.paiement_process, name='paiement_process'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
