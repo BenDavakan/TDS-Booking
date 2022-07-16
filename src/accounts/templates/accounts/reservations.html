@@ -1,0 +1,117 @@
+{% extends 'accounts/base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block title %}
+<title>Reservations</title>
+{% endblock %}
+
+
+{% block style %}
+
+
+<!-- DataTables -->
+<link href="{% static 'accounts/assets/plugins/datatables/dataTables.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'accounts/assets/plugins/datatables/buttons.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+<!-- Responsive datatable examples -->
+<link href="{% static 'accounts/assets/plugins/datatables/responsive.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+
+<link href="{% static 'accounts/assets/css/reservations/style.css' %}" rel="stylesheet" type="text/css">
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="page-title-box">
+                <div class="btn-group float-right">
+                    <ol class="breadcrumb hide-phone p-0 m-0">
+                        <li class="breadcrumb-item"><a href="#">Tds Booking</a></li>
+                        <li class="breadcrumb-item active">Reservations</li>
+                    </ol>
+                </div>
+                <h4 class="page-title">Reservations</h4>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="row">
+        <div class="col-12">
+            <div class="card m-b-30">
+                <div class="card-body">
+
+                    <h4 class="mt-0 header-title">Mes reservations </h4>
+                    <p class="text-muted m-b-30 font-14">
+                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam, accusamus optio temporibus libero, amet sunt aliquam debitis aliquid magnam provident magni nostrum vel velit quo eaque quasi pariatur ad quibusdam.
+                    </p>
+
+                    <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                        <thead>
+                        <tr>
+                            <th>Hotel</th>
+                            <th>Chambre</th>
+                            <th>Ville</th>
+                            <th>Avrrivé</th>
+                            <th>Départ</th>
+                            <th>Montant</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+
+
+                        <tbody>
+                        
+
+                        {% for reserv in reservations  %}
+                            <tr>
+                                <td>{{ reserv.chambre.hotel.name }}</td>
+                                <td>{{ reserv.chambre.number }}</td>
+                                <td>{{ reserv.chambre.hotel.ville }}</td>
+                                <td>{{ reserv.check_in }}</td>
+                                <td>{{ reserv.check_out }}</td>
+                                <td>{{ reserv.amount }}</td>
+                                <td>{{ reserv.status }}</td>
+                                <td>{{ reserv.add_at }}</td>
+                                <td>Voir plus</td>
+                            </tr>
+                            
+                        {% endfor %}
+                        
+                        
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div> <!-- end col -->
+    </div>
+    
+</div>
+
+
+
+{% endblock %}
+
+{% block script %}
+   
+     <!-- Required datatable js -->
+     <script src="{% static 'accounts/assets/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+     <script src="{% static 'accounts/assets/plugins/datatables/dataTables.bootstrap4.min.js' %}"></script>
+   
+
+     <!-- Responsive examples -->
+     <script src="{% static 'accounts/assets/plugins/datatables/dataTables.responsive.min.js' %}"></script>
+     <script src="{% static 'accounts/assets/plugins/datatables/responsive.bootstrap4.min.js' %}"></script>
+
+     <!-- Datatable init js -->
+     <script src="{% static 'accounts/assets/pages/datatables.init.js' %}"></script>
+
+
+        
+{% endblock %}

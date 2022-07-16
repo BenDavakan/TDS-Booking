@@ -10,5 +10,7 @@ urlpatterns = [
     path('deconnexion/', views.deconnexion, name='deconnexion'),
     path('profil/', views.profil_view, name='profil'),
     path('edit-profil/', views.edit_profile, name='edit-profil'),
+    path('reservations/', views.mes_reservations, name='reservations'),
+    path('paiements/', views.mes_paiements, name='paiements'),
 
 ]

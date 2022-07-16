@@ -6,6 +6,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from accounts.forms import EditProfileForm, SignupForm, SigninForm
 from accounts.models import CustomUser
+from hotels.models import Payement, Reservation
 
 
 def inscription_view(request):
@@ -58,3 +59,18 @@ def profil_view(request):
 
 def edit_profile(request):
     return render(request, 'edit_profil.html', {})
+
+
+def mes_reservations(request):
+    user = request.user
+    reservations = Reservation.objects.filter(user=user.id)
+
+    return render(request, 'accounts/reservations.html', {'reservations': reservations})
+
+
+def mes_paiements(request):
+    user = request.user
+
+    paiements = Payement.objects.filter(reservation__user=user)
+
+    return render(request, 'accounts/paiements.html', {'paiements': paiements})
