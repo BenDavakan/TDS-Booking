@@ -1,0 +1,119 @@
+{% extends 'accounts/base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block title %}
+<title>Reservations</title>
+{% endblock %}
+
+
+{% block style %}
+
+
+<!-- DataTables -->
+<link href="{% static 'accounts/assets/plugins/datatables/dataTables.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'accounts/assets/plugins/datatables/buttons.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+<!-- Responsive datatable examples -->
+<link href="{% static 'accounts/assets/plugins/datatables/responsive.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+
+<link href="{% static 'accounts/assets/css/reservations/style.css' %}" rel="stylesheet" type="text/css">
+
+{% endblock %}
+
+
+{% block content %}
+
+
+
+<div class="container">
+    <h4 class="mt-3 mb-1">Détails de la réservation</h4>
+    
+    <div class="row">
+        <div class="col-9">
+
+            <div class="card m-b-30">
+                <div class="card-body">
+
+                    <h4 class="mt-0 header-title"> {{ reservation.chambre.hotel.name }}</h4>
+                    <p class="text-muted m-b-30 font-14">Align terms and descriptions
+                        horizontally by using our grid system’s predefined classes (or semantic
+                        mixins). For longer terms, you can optionally add a  class to
+                        truncate the text with an ellipsis.</p>
+
+                    <dl class="row mb-0">
+                        <dt class="col-sm-4">Numéro de la réservation</dt>
+                        <dd class="col-sm-8">3422.606.831</dd>
+
+                        <dt class="col-sm-4">Code confidentiel </dt>
+                        <dd class="col-sm-8">5684</dd>
+                        
+                        <dt class="col-sm-4">Statut </dt>
+                        <dd class="col-sm-8">{{ reservation.status }}</dd>
+                        
+
+                        <dt class="col-sm-4">Arrivée</dt>
+                        <dd class="col-sm-8">{{ reservation.check_in }}</dd>
+                        
+                        <dt class="col-sm-4">Depart</dt>
+                        <dd class="col-sm-8">{{ reservation.check_out }}</dd>
+
+                    </dl>
+                    
+                </div>
+
+            </div>
+
+        </div>
+        <div class="col-3">
+
+            <div class="card m-b-30">
+                <div class="card-body">
+
+                    <h4 class="mt-0 header-title"> {{ reservation.chambre.hotel.name }}</h4>
+                    <p class="text-muted m-b-30 font-14">Align terms and descriptions
+                        horizontally by using our grid system’s predefined classes (or semantic
+                        mixins). For longer terms, you can optionally add a  class to
+                        truncate the text with an ellipsis.</p>
+
+                    
+                    {% if reservation.status == "AN" %}
+                    
+                    <p> Annulé</p>
+                    {% else %}
+                    <a href="{% url 'annul_reservation' reservation.id %}">
+                        <button >Annuler</button>
+                    </a>
+                    {% endif %}
+                        
+                    
+                    
+                </div>
+
+            </div>
+
+        </div>
+         <!-- end col -->
+    </div>
+</div>
+
+
+
+{% endblock content %}
+
+{% block script %}
+   
+     <!-- Required datatable js -->
+     <script src="{% static 'accounts/assets/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+     <script src="{% static 'accounts/assets/plugins/datatables/dataTables.bootstrap4.min.js' %}"></script>
+   
+
+     <!-- Responsive examples -->
+     <script src="{% static 'accounts/assets/plugins/datatables/dataTables.responsive.min.js' %}"></script>
+     <script src="{% static 'accounts/assets/plugins/datatables/responsive.bootstrap4.min.js' %}"></script>
+
+     <!-- Datatable init js -->
+     <script src="{% static 'accounts/assets/pages/datatables.init.js' %}"></script>
+
+
+        
+{% endblock %}

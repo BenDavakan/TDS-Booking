@@ -5,7 +5,16 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.core.exceptions import ValidationError
 
-from accounts.models import CustomUser
+from accounts.models import CustomUser, Profile
+
+
+@admin.register(Profile)
+class ProfileAdmin(admin.ModelAdmin):
+    list_display = (
+        'user',
+        'gender',
+        'country'
+    )
 
 
 class UserCreationForm(forms.ModelForm):

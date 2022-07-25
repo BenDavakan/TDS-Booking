@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block title %}
-<title>Paiements</title>
+<title>Reservations</title>
 {% endblock %}
 
 
@@ -44,7 +44,7 @@
             <div class="card m-b-30">
                 <div class="card-body">
 
-                    <h4 class="mt-0 header-title">Mes Paiements</h4>
+                    <h4 class="mt-0 header-title">Mes reservations </h4>
                     <p class="text-muted m-b-30 font-14">
                         Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam, accusamus optio temporibus libero, amet sunt aliquam debitis aliquid magnam provident magni nostrum vel velit quo eaque quasi pariatur ad quibusdam.
                     </p>
@@ -55,7 +55,7 @@
                             <th>Hotel</th>
                             <th>Chambre</th>
                             <th>Ville</th>
-                            <th>Mode de paiement</th>
+                            <th>Avrrivé</th>
                             <th>Départ</th>
                             <th>Montant</th>
                             <th>Status</th>
@@ -78,7 +78,7 @@
                                 <td>{{ reserv.amount }}</td>
                                 <td>{{ reserv.status }}</td>
                                 <td>{{ reserv.add_at }}</td>
-                                <td>Voir plus</td>
+                                <td><a href="{% url 'reservation' reserv.id %}">Voir plus</a></td>
                             </tr>
                             
                         {% endfor %}

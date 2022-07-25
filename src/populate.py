@@ -67,6 +67,7 @@ def populate(N):
 if __name__ == '__main__':
     print("Populating Script!")
     
+    add_equipement(6500)
     
-    add_equipement(6000)
+    
     print("Populating Complete!")

@@ -5,6 +5,9 @@ from django.contrib.auth.models import PermissionsMixin
 
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 # Create your models here.
+from django.core.validators import FileExtensionValidator
+
+from hotels.models import Hotel
 
 
 class MyUserManager(BaseUserManager):
@@ -62,6 +65,16 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 class Profile(models.Model):
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    country = models.CharField(max_length=50, blank=True, null=True)
+    gender = models.CharField(max_length=100, blank=True, null=True)
+    birthdate = models.DateField(null=True, blank=True)
+    profile_pic = models.ImageField(upload_to="images/", validators=[
+                                    FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'webp'])], blank=True, null=True)
+    created_at = models.DateTimeField(null=True, blank=True)
+    update_on = models.DateTimeField(null=True, blank=True)
+
+    def __str__(self):
+        return self.user.first_name
 
 
 def post_save_receiver(sender, instance, created, **kwargs):
@@ -70,3 +83,9 @@ def post_save_receiver(sender, instance, created, **kwargs):
 
 
 post_save.connect(post_save_receiver, sender=settings.AUTH_USER_MODEL)
+
+
+class HotelManager (models.Model):
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    hotel = models.OneToOneField(Hotel, on_delete=models.CASCADE)

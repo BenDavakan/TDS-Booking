@@ -1,11 +1,14 @@
-from django.shortcuts import render, redirect
+from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404, render, redirect
+from kkiapay import Kkiapay
 
 # Create your views here.
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from django.urls import reverse
 from accounts.forms import EditProfileForm, SignupForm, SigninForm
-from accounts.models import CustomUser
+from accounts.models import CustomUser, Profile
 from hotels.models import Payement, Reservation
 
 
@@ -34,6 +37,7 @@ def inscription_view(request):
 
 def connexion_view(request):
     if request.method == "POST":
+
         email = request.POST['email']
         password = request.POST['password']
         user = authenticate(request, email=email, password=password)
@@ -58,14 +62,43 @@ def profil_view(request):
 
 
 def edit_profile(request):
-    return render(request, 'edit_profil.html', {})
+    user = request.user
+    profil = Profile.objects.get(user=user.id)
+    profil.gender = "Masculin"
+    profil.save()
+
+    print(profil.gender)
+
+    return render(request, 'edit_profil.html', {'profil': profil})
 
 
 def mes_reservations(request):
     user = request.user
     reservations = Reservation.objects.filter(user=user.id)
 
-    return render(request, 'accounts/reservations.html', {'reservations': reservations})
+    return render(request, 'accounts/mes_reservations.html', {'reservations': reservations})
+
+
+def detail_reservation(request, id):
+
+    reservation = get_object_or_404(Reservation, id=id)
+
+    return render(request, 'accounts/detail_reservation.html', {'reservation': reservation})
+
+
+def detail_paiement(request, id):
+    paiement = get_object_or_404(Payement, id=id)
+
+    return render(request, 'accounts/detail_paiement.html', {'paiement': paiement})
+
+
+def annul_reservation(request, id):
+
+    reservation = Reservation.objects.get(pk=id)
+    reservation.status = "AN"
+    reservation.save()
+
+    return HttpResponseRedirect(reverse('reservation', args=[id]))
 
 
 def mes_paiements(request):
@@ -73,4 +106,4 @@ def mes_paiements(request):
 
     paiements = Payement.objects.filter(reservation__user=user)
 
-    return render(request, 'accounts/paiements.html', {'paiements': paiements})
+    return render(request, 'accounts/mes_paiements.html', {'paiements': paiements})

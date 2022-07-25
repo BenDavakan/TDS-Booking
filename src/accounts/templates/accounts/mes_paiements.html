@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block title %}
-<title>Reservations</title>
+<title>Paiements</title>
 {% endblock %}
 
 
@@ -30,10 +30,10 @@
                 <div class="btn-group float-right">
                     <ol class="breadcrumb hide-phone p-0 m-0">
                         <li class="breadcrumb-item"><a href="#">Tds Booking</a></li>
-                        <li class="breadcrumb-item active">Reservations</li>
+                        <li class="breadcrumb-item active">Paiements</li>
                     </ol>
                 </div>
-                <h4 class="page-title">Reservations</h4>
+                <h4 class="page-title">Paiements</h4>
             </div>
         </div>
     </div>
@@ -44,7 +44,7 @@
             <div class="card m-b-30">
                 <div class="card-body">
 
-                    <h4 class="mt-0 header-title">Mes reservations </h4>
+                    <h4 class="mt-0 header-title">Mes Paiements</h4>
                     <p class="text-muted m-b-30 font-14">
                         Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam, accusamus optio temporibus libero, amet sunt aliquam debitis aliquid magnam provident magni nostrum vel velit quo eaque quasi pariatur ad quibusdam.
                     </p>
@@ -54,11 +54,9 @@
                         <tr>
                             <th>Hotel</th>
                             <th>Chambre</th>
-                            <th>Ville</th>
-                            <th>Avrrivé</th>
-                            <th>Départ</th>
+                            <th>Mode de paiement</th>
                             <th>Montant</th>
-                            <th>Status</th>
+                            <th>Transaction</th>
                             <th>Date</th>
                             <th>Action</th>
                         </tr>
@@ -67,18 +65,15 @@
 
                         <tbody>
                         
-
-                        {% for reserv in reservations  %}
+                        {% for paiem in paiements  %}
                             <tr>
-                                <td>{{ reserv.chambre.hotel.name }}</td>
-                                <td>{{ reserv.chambre.number }}</td>
-                                <td>{{ reserv.chambre.hotel.ville }}</td>
-                                <td>{{ reserv.check_in }}</td>
-                                <td>{{ reserv.check_out }}</td>
-                                <td>{{ reserv.amount }}</td>
-                                <td>{{ reserv.status }}</td>
-                                <td>{{ reserv.add_at }}</td>
-                                <td>Voir plus</td>
+                                <td>{{ paiem.reservation.chambre.hotel }}</td>
+                                <td>{{ paiem.reservation.chambre.number }}</td>
+                                <td>{{ paiem.payment_method }}</td>
+                                <td>{{ paiem.reservation.amount }}</td>
+                                <td>{{ paiem.transaction_id }}</td>
+                                <td>{{ paiem.add_at }}</td>
+                                <td><a href="{% url 'paiement' paiem.id %}">Voir plus</a></td>
                             </tr>
                             
                         {% endfor %}

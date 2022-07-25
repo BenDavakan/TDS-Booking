@@ -12,12 +12,16 @@
 
 {% block content %}
 <br>
+
+{% comment %} {% for available_room in  available_rooms %}
+  {{ available_room }}  ({{ available_room.hotel.ville }}) <br>
+{% endfor %} {% endcomment %}
 <section class="ftco-section">
     <div class="container">
       <div class="row">
           <div class="col-lg-3 sidebar order-md-last ftco-animate">
               <div class="sidebar-wrap ftco-animate">
-                  <h3 class="heading mb-4">Destination {{ date }}</h3>
+                  <h3 class="heading mb-4">Destination</h3>
                   <form action="#">
                     
 
@@ -49,8 +53,8 @@
         <div class="col-lg-9">
             <p> {{ message }} </p>
             <div class="row">
-                {% for hotel in hotels %}
-                      <div class="col-sm col-md-6 col-lg-4 ftco-animate">
+                {% for av in available_rooms %}
+                      <div class="col-sm col-md-6 col-lg-4 ftco-animate ">
                           <div class="destination" style="border-radius: 4px;box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;">
                               <a href="{{ hotel.get_absolute_url }}" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url(img/hotel-1.jpg);">
                                 <img src="{% static 'img/hotel-2.jpg' %}" style="border-top-left-radius: 4px;border-top-right-radius: 4px" alt="">
@@ -58,15 +62,17 @@
                               <div class="text p-3">
                                   <div class="d-flex">
                                       <div class="one">
-                                          <h4><a href="{% url 'hotel' hotel.slug %}">{{ hotel.name|truncatechars:20 }}</a></h4>
+                                          <h4><a href="">{{ av.hotel.name|truncatechars:20 }}</a></h4>
+                                          {% comment %} <h4><a href="{% url 'hotel' hotel.slug %}">{{ av.hotel.name|truncatechars:20 }}</a></h4> {% endcomment %}
                                       </div>
                                       
                                   </div>
                                   
                                   <hr>
                                   <p class="bottom-area d-flex mb-1">
-                                      <span><i class="icon-map-o"></i>{{ hotel.ville }}</span> 
-                                      <span class="ml-auto"><a href="{% url 'hotel' hotel.slug %}">Reserver</a></span>
+                                      <span><i class="icon-map-o"></i>{{ av.hotel.ville }}</span> 
+                                      <span class="ml-auto"><a href="">Reserver</a></span>
+                                      {% comment %} <span class="ml-auto"><a href="{% url 'hotel' hotel.slug %}">Reserver</a></span> {% endcomment %}
                                   </p>
                               </div>
                           </div>

@@ -39,11 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'hotels',
+    'hotels.helpers',
     'restaurants',
     'widget_tweaks',
     'accounts',
     'django.contrib.humanize',
-
 
 ]
 

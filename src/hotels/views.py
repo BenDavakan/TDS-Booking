@@ -19,6 +19,8 @@ from django.conf import settings
 
 from pprint import pprint
 
+from hotels.helpers.availability import check_availability
+
 
 def villes_view(request):
     villes = Ville.objects.all()
@@ -84,6 +86,7 @@ def reservation_hotel(request, slug, number):
         else:
             user = CustomUser.objects.create_user(
                 first_name=first_name, last_name=last_name, email=email, password=password, tel=tel,)
+            print(password)
             template = render_to_string('email_template.html', {
                 'first_name': first_name, 'last_name': last_name, 'password': password, 'email': email})
             mail = EmailMessage(
@@ -97,6 +100,17 @@ def reservation_hotel(request, slug, number):
 
         reserv = Reservation.objects.create(
             user_id=user.id, chambre_id=chambre.id, check_in=x1, check_out=x2, amount=amount)
+
+        template = render_to_string('email_confirmation_template.html', {
+            'first_name': first_name, 'last_name': last_name})
+        mail = EmailMessage(
+            'TDS Booking | Confiramtion',
+            template,
+            settings.EMAIL_HOST_USER,
+            [email],
+        )
+        mail.fail_silently = False
+        mail.send()
 
         return HttpResponseRedirect(reverse('transition', args=[reserv.id, request.POST.get('check')]))
 

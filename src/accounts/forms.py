@@ -1,6 +1,7 @@
 from django import forms
 
-from accounts.models import CustomUser
+from accounts.models import CustomUser, Profile
+from hotels.models import Reservation
 
 
 class SignupForm(forms.Form):
@@ -17,11 +18,7 @@ class SigninForm(forms.Form):
 
 
 class EditProfileForm(forms.ModelForm):
-    class Meta:
-        model = CustomUser
-        fields = (
-            'first_name',
-            'last_name',
-            'email',
-            'tel'
-        )
+    first_name = forms.CharField(max_length=20)
+    last_name = forms.CharField(max_length=20)
+    email = forms.EmailField()
+    

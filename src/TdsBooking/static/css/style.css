@@ -235,7 +235,7 @@ ol {
   Header
 -----------------------*/
 .header__top{
-	background-color:#0831D4;
+	background-color: #2169ec;
 }
 
 .header__top__widget {
@@ -505,7 +505,7 @@ ol {
 }
 
 .filter__form {
-	background: #0831D4;
+	background: #2169ec;
 	display: -webkit-box;
 	display: -ms-flexbox;
 	display: flex;
