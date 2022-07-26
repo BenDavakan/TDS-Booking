@@ -56,7 +56,6 @@
                             <th>Chambre</th>
                             <th>Mode de paiement</th>
                             <th>Montant</th>
-                            <th>Transaction</th>
                             <th>Date</th>
                             <th>Action</th>
                         </tr>
@@ -71,8 +70,7 @@
                                 <td>{{ paiem.reservation.chambre.number }}</td>
                                 <td>{{ paiem.payment_method }}</td>
                                 <td>{{ paiem.reservation.amount }}</td>
-                                <td>{{ paiem.transaction_id }}</td>
-                                <td>{{ paiem.add_at }}</td>
+                                <td>{{ paiem.add_at|date:"D d M Y, H:i" }}</td>
                                 <td><a href="{% url 'paiement' paiem.id %}">Voir plus</a></td>
                             </tr>
                             

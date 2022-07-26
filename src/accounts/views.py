@@ -89,7 +89,11 @@ def detail_reservation(request, id):
 def detail_paiement(request, id):
     paiement = get_object_or_404(Payement, id=id)
 
-    return render(request, 'accounts/detail_paiement.html', {'paiement': paiement})
+    k = Kkiapay('286874f0fedb11eca56ad905c440058f',
+                'tpk_28689c01fedb11eca56ad905c440058f', 'tsk_28689c02fedb11eca56ad905c440058f', sandbox=True)
+    transaction = k.verify_transaction(paiement.transaction_id)
+    print(transaction)
+    return render(request, 'accounts/detail_paiement.html', {'paiement': paiement, 'transaction': transaction, })
 
 
 def annul_reservation(request, id):

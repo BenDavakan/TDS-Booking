@@ -73,11 +73,11 @@
                                 <td>{{ reserv.chambre.hotel.name }}</td>
                                 <td>{{ reserv.chambre.number }}</td>
                                 <td>{{ reserv.chambre.hotel.ville }}</td>
-                                <td>{{ reserv.check_in }}</td>
-                                <td>{{ reserv.check_out }}</td>
+                                <td>{{ reserv.check_in|date:"d M Y" }}</td>
+                                <td>{{ reserv.check_out|date:"d M Y" }}</td>
                                 <td>{{ reserv.amount }}</td>
                                 <td>{{ reserv.status }}</td>
-                                <td>{{ reserv.add_at }}</td>
+                                <td>{{ reserv.add_at |date:"D d M Y, H:i" }}</td>
                                 <td><a href="{% url 'reservation' reserv.id %}">Voir plus</a></td>
                             </tr>
                             

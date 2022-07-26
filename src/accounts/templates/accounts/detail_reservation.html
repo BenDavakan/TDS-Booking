@@ -52,10 +52,10 @@
                         
 
                         <dt class="col-sm-4">Arrivée</dt>
-                        <dd class="col-sm-8">{{ reservation.check_in }}</dd>
+                        <dd class="col-sm-8">{{ reservation.check_in|date:"D d M Y" }}</dd>
                         
                         <dt class="col-sm-4">Depart</dt>
-                        <dd class="col-sm-8">{{ reservation.check_out }}</dd>
+                        <dd class="col-sm-8">{{ reservation.check_out|date:"D d M Y" }}</dd>
 
                     </dl>
                     
