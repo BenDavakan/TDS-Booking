@@ -1,3 +1,4 @@
+from curses.ascii import NUL
 import decimal
 import string
 import random
@@ -42,12 +43,17 @@ def hotels_view(request):
 
 def hotel_detail(request, slug):
     hotel = get_object_or_404(Hotel, slug=slug)
+    t1 = request.session.get('date01')
+    t2 = request.session.get('date02')
+    room_list = Chambre.objects.filter(hotel=hotel.id)
+    available_rooms = []
+    for room in room_list:
+        if check_availability(room, t1, t2):
+            available_rooms.append(room)
 
-    # chambres = Chambre.objects.filter(hotel=hotel.id)
-    chambres = Chambre.objects.filter(hotel=hotel.id)
     equipements = Equipement_Hotel.objects.filter(hotel=hotel.id)
 
-    return render(request, 'detail_hotel.html', context={"hotel": hotel, "chambres": chambres, "equipements": equipements})
+    return render(request, 'detail_hotel.html', context={"hotel": hotel, "chambres": available_rooms, "equipements": equipements})
 
 
 def chambre_detail(request, slug, number):
@@ -59,7 +65,16 @@ def chambre_detail(request, slug, number):
     return render(request, 'detail_chambre.html', context={"chambre": chambre, "hotel": hotel, "equipements": equipements})
 
 
+def scret_key_generator(size=6, chars=string.ascii_uppercase + string.digits):
+    return ''.join(random.choice(chars) for _ in range(size))
+
+
 def reservation_hotel(request, slug, number):
+
+    key = scret_key_generator()
+    while Reservation.objects.filter(secret_key=key).exists():
+        key = scret_key_generator()
+
     chambre = Chambre.objects.get(number=number)
     hotel = Hotel.objects.get(slug=slug)
     a = request.session.get('date01')
@@ -76,17 +91,20 @@ def reservation_hotel(request, slug, number):
         last_name = request.POST.get('last_name')
         email = request.POST.get('email')
         tel = request.POST.get('tel')
+
         password = ''
         characters = list(string.ascii_letters + string.digits + "!@#$%&()")
+
         for i in range(8):
             password += random.choice(characters)
+
         if CustomUser.objects.filter(email=email).exists():
             user = CustomUser.objects.get(email=email)
 
         else:
             user = CustomUser.objects.create_user(
                 first_name=first_name, last_name=last_name, email=email, password=password, tel=tel,)
-            print(password)
+
             template = render_to_string('email_template.html', {
                 'first_name': first_name, 'last_name': last_name, 'password': password, 'email': email})
             mail = EmailMessage(
@@ -99,7 +117,7 @@ def reservation_hotel(request, slug, number):
             mail.send()
 
         reserv = Reservation.objects.create(
-            user_id=user.id, chambre_id=chambre.id, check_in=x1, check_out=x2, amount=amount)
+            user_id=user.id, secret_key=key, chambre_id=chambre.id, check_in=x1, check_out=x2, amount=amount)
 
         template = render_to_string('email_confirmation_template.html', {
             'first_name': first_name, 'last_name': last_name})

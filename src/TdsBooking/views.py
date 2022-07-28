@@ -49,21 +49,22 @@ def search_hotel(request):
 
     room_list = Chambre.objects.filter(hotel__ville=ville)
 
-    available_rooms = []
+    # available_rooms = []
+    available_hotels = []
     for room in room_list:
         if check_availability(room, t1, t2):
-            available_rooms.append(room)
+            available_hotels.append(room.hotel)
 
     # hotels = Hotel.objects.filter(
     #     Q(ville__name=search) | Q(name__icontains=search))
-    # hotels_number = hotels.count()
-    # message = f' {hotels_number} hotels trouvés'
+    hotels_number = len(set(available_hotels))
+    message = f' {hotels_number} hotels trouvés'
 
-    # if hotels_number == 1 or hotels_number == 0:
-    #     message = f'{hotels_number} hotel trouvé'
+    if hotels_number == 1 or hotels_number == 0:
+        message = f'{hotels_number} hotel trouvé'
 
     # return render(request, 'search_hotel.html', {'hotels': hotels, 'message': message, 'date': date, 't1': t1, 't2': t2})
-    return render(request, 'search_hotel.html', {'available_rooms': available_rooms})
+    return render(request, 'search_hotel.html', {'available_hotels': set(available_hotels), 'message': message, })
 
 
 def paiement_process(request, number, type):

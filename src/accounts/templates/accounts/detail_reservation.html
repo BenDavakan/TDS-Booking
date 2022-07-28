@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block title %}
-<title>Reservations</title>
+<title>Reservation</title>
 {% endblock %}
 
 
@@ -11,12 +11,12 @@
 
 
 <!-- DataTables -->
-<link href="{% static 'accounts/assets/plugins/datatables/dataTables.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
-<link href="{% static 'accounts/assets/plugins/datatables/buttons.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'accounts/horizontal/assets/plugins/datatables/dataTables.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'accounts/horizontal/assets/plugins/datatables/buttons.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
 <!-- Responsive datatable examples -->
-<link href="{% static 'accounts/assets/plugins/datatables/responsive.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'accounts/horizontal/assets/plugins/datatables/responsive.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
 
-<link href="{% static 'accounts/assets/css/reservations/style.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'accounts/horizontal/assets/css/reservations/style.css' %}" rel="stylesheet" type="text/css">
 
 {% endblock %}
 
@@ -42,10 +42,10 @@
 
                     <dl class="row mb-0">
                         <dt class="col-sm-4">Numéro de la réservation</dt>
-                        <dd class="col-sm-8">3422.606.831</dd>
+                        <dd class="col-sm-8">{{ reservation.id }}</dd>
 
                         <dt class="col-sm-4">Code confidentiel </dt>
-                        <dd class="col-sm-8">5684</dd>
+                        <dd class="col-sm-8">{{ reservation.secret_key }}</dd>
                         
                         <dt class="col-sm-4">Statut </dt>
                         <dd class="col-sm-8">{{ reservation.status }}</dd>
@@ -80,10 +80,34 @@
                     
                     <p> Annulé</p>
                     {% else %}
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                        Annuler
+                    </button>
                     <a href="{% url 'annul_reservation' reservation.id %}">
-                        <button >Annuler</button>
+                        
                     </a>
                     {% endif %}
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Avertissement</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            </div>
+                            <div class="modal-body">
+                            Étes vous sure d'annuler votre réservation ??
+                            </div>
+                            <div class="modal-footer">
+                            <button type="button" class="btn btn-primary">OUI</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">NON</button>
+                            
+                            </div>
+                        </div>
+                        </div>
+                    </div>
                         
                     
                     
@@ -103,16 +127,19 @@
 {% block script %}
    
      <!-- Required datatable js -->
-     <script src="{% static 'accounts/assets/plugins/datatables/jquery.dataTables.min.js' %}"></script>
-     <script src="{% static 'accounts/assets/plugins/datatables/dataTables.bootstrap4.min.js' %}"></script>
+     <script src="{% static 'accounts/horizontal/assets/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+     <script src="{% static 'accounts/horizontal/assets/plugins/datatables/dataTables.bootstrap4.min.js' %}"></script>
    
 
      <!-- Responsive examples -->
-     <script src="{% static 'accounts/assets/plugins/datatables/dataTables.responsive.min.js' %}"></script>
-     <script src="{% static 'accounts/assets/plugins/datatables/responsive.bootstrap4.min.js' %}"></script>
+     <script src="{% static 'accounts/horizontal/assets/plugins/datatables/dataTables.responsive.min.js' %}"></script>
+     <script src="{% static 'accounts/horizontal/assets/plugins/datatables/responsive.bootstrap4.min.js' %}"></script>
 
      <!-- Datatable init js -->
-     <script src="{% static 'accounts/assets/pages/datatables.init.js' %}"></script>
+     <script src="{% static 'accounts/horizontal/assets/pages/datatables.init.js' %}"></script>
+
+
+      
 
 
         

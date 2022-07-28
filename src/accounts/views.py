@@ -111,3 +111,11 @@ def mes_paiements(request):
     paiements = Payement.objects.filter(reservation__user=user)
 
     return render(request, 'accounts/mes_paiements.html', {'paiements': paiements})
+
+
+def dashboard_admin(request):
+    return render(request, 'accounts/admin/dashboard_admin.html')
+
+
+def manager_view(request):
+    return render(request, 'accounts/manager/index.html')
