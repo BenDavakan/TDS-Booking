@@ -8,6 +8,11 @@
 {% block style %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/otl.css' %}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.css" integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="anonymous" />
+<style>
+  body{
+    background-color: rgb(231, 228, 228);
+  }
+</style>
 {% endblock %}
 
 
@@ -16,9 +21,8 @@
 <section class="ftco-section ">
     <div class="container">
       <div class="row">
-          <div class="col-lg-3 sidebar order-md-last ftco-animate">
+        <div class="col-lg-3 sidebar ftco-animate">
               <div class="sidebar-wrap ftco-animate">
-                  <h3 class="heading mb-4">Destination </h3>
                   <form action="#">
                       <div class="fields">
                     <div class="form-group">
@@ -44,32 +48,26 @@
               </form>
             </div>
               
-        </div><!-- END-->
+        </div>
         <div class="col-lg-9">
             <div class="row">
                 {% for hotel in hotels %}
-                      <div class="col-sm col-md-6 col-lg-4 ftco-animate">
-                          <div class="destination mb-3" style="border-radius: 4px;box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;">
-                              <a href="{{ hotel.get_absolute_url }}" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url(img/hotel-1.jpg);">
-                                <img src="{% static 'img/hotel-2.jpg' %}" style="border-top-left-radius: 4px;border-top-right-radius: 4px"  alt="">
-                              </a>
-                              <div class="text p-2">
-                                  <div class="d-flex">
-                                      <div class="one">
-                                          <h4><a href="{% url 'hotel' hotel.slug %}">{{ hotel.name|truncatechars:20 }}</a></h4>
-                                          
-                                      </div>
-                                      
-                                  </div>
-                                  
-                                  <hr>
-                                  <p class="bottom-area d-flex mb-1">
-                                      <span><i class="icon-map-o"></i>{{ hotel.ville }}</span> 
-                                      <span class="ml-auto"><a href="{{ hotel.get_absolute_url }}">Reserver</a></span>
-                                  </p>
-                              </div>
+                  <div class="col-12 m-0">
+                    <div class="row p-2 mt-4 " style="background-color: white; border-radius: 5px;">
+                        <div class="col-md-4 p-0">
+                          <img class="h-auto" src="{% static 'img/room-5.jpg' %}" style="border-top-left-radius: 5px;border-top-right-radius:
+                            5px;border-bottom-right-radius: 5px;">
+                        </div>
+                        <div class="col-md-5 py-0">
+                          <h4 class="card-title"><a href="{% url 'hotel' hotel.slug %}">{{ hotel.name }}</a></h4>
+                        </div>
+                        <div class="col-md-3 py-0 pr-0">
+                          <div class="row col-12 m-0 p-0 fixed-bottom" style="position:absolute !important">
+                            <a class="btn btn-primary ml-md-auto" href="" role="button">Réserver</a>
                           </div>
-                      </div>
+                        </div>
+                    </div>
+                  </div>
 
                 {% endfor %}
             </div>

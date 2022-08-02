@@ -7,25 +7,23 @@
 
 {% block style %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/otl.css' %}">
+<style>
+  body {
+    background-color: lightgray;
+  }
+</style>
 {% endblock %}
 
 
 {% block content %}
 <br>
 
-{% comment %} {% for available_room in  available_rooms %}
-  {{ available_room }}  ({{ available_room.hotel.ville }}) <br>
-{% endfor %} {% endcomment %}
-<section class="ftco-section">
-    <div class="container">
-      <div class="row">
-          <div class="col-lg-3 sidebar order-md-last ftco-animate">
+  <div class="container">
+    <div class="row">
+          <div class="col-lg-3 sidebar  ftco-animate">
               <div class="sidebar-wrap ftco-animate">
-                  <h3 class="heading mb-4">Destination</h3>
-                  <form action="#">
-                    
-
-                      <div class="fields">
+                <form action="#">
+                  <div class="fields">
                     <div class="form-group">
                       <input type="text" class="form-control" placeholder="Oû allez-vous?">
                     </div>
@@ -33,82 +31,45 @@
                       <div class="select-wrap one-third">
                       <div class="icon"><span class="ion-ios-arrow-down"></span></div>
                       
-                    </div>
-                    </div>
-                    <div class="form-group">
-                      <input type="text" id="checkout_date" class="form-control checkout_date" value='{{ t1 }}'  placeholder="Date de depart">
-                    </div>
-                    <div class="form-group">
-                      <input type="text" id="checkin_date" class="form-control checkin_date" value='{{ t2 }}' placeholder="Date d'arrivée">
-                    </div>
-                    
-                    <div class="form-group">
+                      </div>
+                      </div>
+                      <div class="form-group">
+                        <input type="text" id="checkout_date" class="form-control checkout_date" value='{{ t1 }}'  placeholder="Date de depart">
+                      </div>
+                      <div class="form-group">
+                        <input type="text" id="checkin_date" class="form-control checkin_date" value='{{ t2 }}' placeholder="Date d'arrivée">
+                      </div>
+                      <div class="form-group">
                       <input type="submit" value="Rechercher" class="btn btn-primary py-3 px-5">
                     </div>
                   </div>
-              </form>
+                </form>
               </div>
-              
-        </div><!-- END-->
-        <div class="col-lg-9">
-            <p> {{ message }} </p>
-            <div class="row">
-                {% for av in available_hotels %}
-                  <div class="col-sm col-md-6 col-lg-4 ftco-animate mb-4">
-                    <div class="destination" style="border-radius: 4px;box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;">
-                        <a href="{{ hotel.get_absolute_url }}" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url(img/hotel-1.jpg);">
-                          <img src="{% static 'img/hotel-2.jpg' %}" style="border-top-left-radius: 4px;border-top-right-radius: 4px" alt="">
-                        </a>
-                        <div class="text p-3">
-                            <div class="d-flex">
-                                <div class="one">
-                                    <h4><a href="{% url 'hotel' av.slug %}">{{ av.name|truncatechars:20 }}</a></h4>
-                                    {% comment %} <h4><a href="{% url 'hotel' hotel.slug %}">{{ av.hotel.name|truncatechars:20 }}</a></h4> {% endcomment %}
-                                </div>
-                                
-                            </div>
-                            
-                            <hr>
-                            <p class="bottom-area d-flex mb-1">
-                                <span><i class="icon-map-o"></i>{{ av.ville }}</span> 
-                                <span class="ml-auto"><a href="{% url 'hotel' av.slug %}">Reserver</a></span>
-                                {% comment %} <span class="ml-auto"><a href="{% url 'hotel' hotel.slug %}">Reserver</a></span> {% endcomment %}
-                            </p>
+          </div>
+          <div class="col-lg-9">
+              <p> {{ message }} </p>
+              {% for av in available_hotels %}
+                <div class="col-12 m-0">
+                  <div class="row p-2 mt-4 " style="background-color: white; border-radius: 5px;">
+                      <div class="col-md-4 p-0">
+                        <img class="h-auto" src="{% static 'img/room-5.jpg' %}" style="border-top-left-radius: 5px;border-top-right-radius:
+                          5px;border-bottom-right-radius: 5px;">
+                      </div>
+                      <div class="col-md-5 py-0">
+                        <h4 class="card-title"><a href="{% url 'hotel' av.slug %}">{{ av.name }}</a></h4>
+                      </div>
+                      <div class="col-md-3 py-0 pr-0">
+                        <div class="row col-12 m-0 p-0 fixed-bottom" style="position:absolute !important">
+                          <a class="btn btn-primary ml-md-auto" href="" role="button">Réserver</a>
                         </div>
-                    </div>
+                      </div>
                   </div>
-                {% endfor %}
-            </div>
-            
-            <nav class="mb-3" aria-label="...">
-            
-            {% if hotels_number > 6 %}
-            <ul class="pagination justify-content-center">
-              {% if hotels.has_previous %}
-                <li class="page-item"><a class="page-link" href="?page={{ hotels.previous_page_number }}"><span aria-hidden="true">&laquo;</span></a></li>
-              {% else %}
-                <li class="page-item"><span class="page-link">&laquo;</span></li>
-              {% endif %}
-              {% for i in hotels.paginator.page_range %}
-                {% if hotels.number == i %}
-                  <li class=" page-item active"><span class="page-link">{{ i }} <span class="sr-only">(current)</span></span></li>
-                {% else %}
-                  <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
-                {% endif %}
+                </div>
               {% endfor %}
-              {% if hotels.has_next %}
-                <li class="page-item"><a class="page-link" href="?page={{ hotels.next_page_number }}">&raquo;</a></li>
-              {% else %}
-                <li class=" page-item disabled"><span class="page-link">&raquo;</span></li>
-              {% endif %}
-            </ul>
-             {% endif %}
-           </nav> 
-    
-        </div>
-      </div>
+          </div>  
     </div>
-</section>
+  </div>
+
 
 
 

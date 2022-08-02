@@ -1,4 +1,4 @@
-{% extends 'accounts/base.html' %}
+{% extends 'accounts/manager/base.html' %}
 {% load widget_tweaks %}
 {% load static %}
 
@@ -19,33 +19,22 @@
 {% block content %}
 
 
-
- <div class="container">
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="page-title-box">
-                <div class="btn-group float-right">
-                    <ol class="breadcrumb hide-phone p-0 m-0">
-                        <li class="breadcrumb-item"><a href="#">Tds Booking</a></li>
-                        <li class="breadcrumb-item active">Profil</li>
-                    </ol>
-                </div>
-                <h4 class="page-title">Profil</h4>
-            </div>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="float-right page-breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Drixo</a></li>
+                <li class="breadcrumb-item"><a href="#">Tables</a></li>
+                <li class="breadcrumb-item active">Datatable</li>
+            </ol>
         </div>
+        <h5 class="page-title">Datatable</h5>
     </div>
+</div>
     
     <div class="row">
-        <div class="col-3 ">
-          <div class="nav flex-column nav-pills h-auto p-2" style="background-color: white; border-radius: 5px;" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-            <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Informations personnelles</a>
-            
-            <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-securite" role="tab" aria-controls="v-pills-securite" aria-selected="false">Sécurité</a>
-            
-            <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</a>
-          </div>
-        </div>
-        <div class="col-9">
+        
+        <div class="col-md-12">
           <div class="tab-content" id="v-pills-tabContent">
             <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
             <div class="row">
@@ -217,7 +206,6 @@
           </div>
         </div>
       </div>
-</div>
 
 
 

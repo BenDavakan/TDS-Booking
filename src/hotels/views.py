@@ -3,6 +3,8 @@ import decimal
 import string
 import random
 import dateparser
+from apscheduler.schedulers.blocking import BlockingScheduler
+from django.utils.crypto import get_random_string
 from django.core.paginator import Paginator
 from datetime import date
 from django.http import HttpResponse, HttpResponseRedirect
@@ -42,6 +44,7 @@ def hotels_view(request):
 
 
 def hotel_detail(request, slug):
+
     hotel = get_object_or_404(Hotel, slug=slug)
     t1 = request.session.get('date01')
     t2 = request.session.get('date02')
@@ -74,6 +77,10 @@ def reservation_hotel(request, slug, number):
     key = scret_key_generator()
     while Reservation.objects.filter(secret_key=key).exists():
         key = scret_key_generator()
+
+    token = get_random_string(length=32)
+    while Reservation.objects.filter(token=token).exists():
+        token = get_random_string(length=32)
 
     chambre = Chambre.objects.get(number=number)
     hotel = Hotel.objects.get(slug=slug)
@@ -117,7 +124,7 @@ def reservation_hotel(request, slug, number):
             mail.send()
 
         reserv = Reservation.objects.create(
-            user_id=user.id, secret_key=key, chambre_id=chambre.id, check_in=x1, check_out=x2, amount=amount)
+            user_id=user.id, secret_key=key, token=token, chambre_id=chambre.id, check_in=x1, check_out=x2, amount=amount)
 
         template = render_to_string('email_confirmation_template.html', {
             'first_name': first_name, 'last_name': last_name})

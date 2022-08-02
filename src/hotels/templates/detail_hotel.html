@@ -138,6 +138,36 @@ ol li {
 		{% for equipement in equipements %}
 		    <p>{{ equipement.name }}</p>
 		{% endfor %}
+        
+	
+			<div class=" row bg-light p-4">
+				<div class="col-md-3 d-flex justify-content-center">
+					<div style="border: 1px solid black;">
+						d
+						<input type="" name=""  placeholder="Debut" style="border: none;">
+					</div>
+				</div>
+				<div class="col-md-3 d-flex justify-content-center ">
+					<div style="border: 1px solid black;">
+						d
+						<input type="" name="" value="" placeholder="Départ" style="border: none;">
+					</div>
+					
+				</div>
+				<div class="col-md-3 d-flex justify-content-center">
+					<div style="border: 1px solid black;">
+						d
+						<input type="" name="" value="" placeholder="Nombre de personnes" style="border: none;">
+					</div>
+					
+				</div>
+				<div class="col-md-3 d-flex justify-content-center">
+					<input type="button" name="" value="Vérifier la disponibilité">
+				</div>
+				
+			</div>
+		
+
 		<div class="row">
 			
 			<div class="col-md-12 hotel-single ftco-animate mb-5 mt-4">
@@ -170,7 +200,7 @@ ol li {
 								   <div class="row p-3 mt-4" style="box-shadow: 0 4px 21px -12px rgba(0, 0, 0,
 								   0.66);border:none;">
 									   <div class="col-md-3 p-0">
-										   <img class="h-auto" src="{% static 'img/room-5.jpg' %}" style="border-top-left-radius: 5px;border-top-right-radius:
+										   <img class="img-thumbnail h-auto" src="{% static 'img/room-5.jpg' %}" style="border-top-left-radius: 5px;border-top-right-radius:
 											   5px;border-bottom-right-radius: 5px;">
 									   </div>
 									   <div class="col-md-6 py-0">

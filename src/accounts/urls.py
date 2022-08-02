@@ -10,14 +10,17 @@ urlpatterns = [
     path('deconnexion/', views.deconnexion, name='deconnexion'),
     path('profil/', views.profil_view, name='profil'),
     path('dashboard-admin/', views.dashboard_admin, name='dashboard_admin'),
-    path('manager/', views.manager_view, name='manager'),
     path('edit-profil/', views.edit_profile, name='edit-profil'),
     path('reservations/', views.mes_reservations, name='reservations'),
-    path('reservations/<int:id>/', views.detail_reservation, name='reservation'),
+    path('manager/chambres', views.manager_chambres, name='manager-chambres'),
+    path('manager/chambres/<int:number>',
+         views.manager_chambre, name='manager-chambre'),
+    path('reservations/<str:token>/',
+         views.detail_reservation, name='reservation'),
     path('reservations/<int:id>/annuler', views.annul_reservation,
          name='annul_reservation'),
     path('paiements/', views.mes_paiements, name='paiements'),
-    path('paiements/<int:id>/', views.detail_paiement, name='paiement'),
+    path('paiements/<str:token>/', views.detail_paiement, name='paiement'),
 
 
 

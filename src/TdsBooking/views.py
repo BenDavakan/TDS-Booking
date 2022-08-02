@@ -5,6 +5,7 @@ from django.core.mail import send_mail
 from django.urls import reverse
 from hotels.helpers.availability import check_availability
 from hotels.models import Chambre, Hotel, Payement, Ville
+from django.utils.crypto import get_random_string
 
 
 def home_view(request):
@@ -38,7 +39,6 @@ def a_propos_view(request):
 def search_hotel(request):
     search = request.GET['search']
     date = request.GET['date']
-    # date = "Hello word"
     t = date.split("-")
     t1 = t[0]
     t2 = t[1]
@@ -49,7 +49,6 @@ def search_hotel(request):
 
     room_list = Chambre.objects.filter(hotel__ville=ville)
 
-    # available_rooms = []
     available_hotels = []
     for room in room_list:
         if check_availability(room, t1, t2):
@@ -58,10 +57,10 @@ def search_hotel(request):
     # hotels = Hotel.objects.filter(
     #     Q(ville__name=search) | Q(name__icontains=search))
     hotels_number = len(set(available_hotels))
-    message = f' {hotels_number} hotels trouvés'
+    message = f' {hotels_number} établissements trouvés'
 
     if hotels_number == 1 or hotels_number == 0:
-        message = f'{hotels_number} hotel trouvé'
+        message = f'{hotels_number} établissement trouvé'
 
     # return render(request, 'search_hotel.html', {'hotels': hotels, 'message': message, 'date': date, 't1': t1, 't2': t2})
     return render(request, 'search_hotel.html', {'available_hotels': set(available_hotels), 'message': message, })
@@ -71,7 +70,11 @@ def paiement_process(request, number, type):
 
     transaction_id = request.GET['transaction_id']
 
-    paiement = Payement.objects.create(transaction_id=transaction_id, payment_method=type,
-                                       reservation_id=number)
+    token = get_random_string(length=32)
+    while Payement.objects.filter(token=token).exists():
+        token = get_random_string(length=32)
+
+    Payement.objects.create(transaction_id=transaction_id, token=token, payment_method=type,
+                            reservation_id=number)
 
     return HttpResponseRedirect(reverse('home'))

@@ -2,14 +2,14 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render, redirect
 from kkiapay import Kkiapay
 
-# Create your views here.
+
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.urls import reverse
-from accounts.forms import EditProfileForm, SignupForm, SigninForm
-from accounts.models import CustomUser, Profile
-from hotels.models import Payement, Reservation
+from accounts.forms import EditProfileForm, ManagerEditChambre, SignupForm, SigninForm
+from accounts.models import CustomUser, HotelManager, Profile
+from hotels.models import Chambre, Payement, Reservation
 
 
 def inscription_view(request):
@@ -79,30 +79,20 @@ def mes_reservations(request):
     return render(request, 'accounts/mes_reservations.html', {'reservations': reservations})
 
 
-def detail_reservation(request, id):
+def detail_reservation(request, token):
 
-    reservation = get_object_or_404(Reservation, id=id)
+    reservation = get_object_or_404(Reservation, token=token)
 
     return render(request, 'accounts/detail_reservation.html', {'reservation': reservation})
 
 
-def detail_paiement(request, id):
-    paiement = get_object_or_404(Payement, id=id)
+def annul_reservation(request, token):
 
-    k = Kkiapay('286874f0fedb11eca56ad905c440058f',
-                'tpk_28689c01fedb11eca56ad905c440058f', 'tsk_28689c02fedb11eca56ad905c440058f', sandbox=True)
-    transaction = k.verify_transaction(paiement.transaction_id)
-    print(transaction)
-    return render(request, 'accounts/detail_paiement.html', {'paiement': paiement, 'transaction': transaction, })
-
-
-def annul_reservation(request, id):
-
-    reservation = Reservation.objects.get(pk=id)
+    reservation = Reservation.objects.get(token=token)
     reservation.status = "AN"
     reservation.save()
 
-    return HttpResponseRedirect(reverse('reservation', args=[id]))
+    return HttpResponseRedirect(reverse('reservation', args=[token]))
 
 
 def mes_paiements(request):
@@ -113,9 +103,30 @@ def mes_paiements(request):
     return render(request, 'accounts/mes_paiements.html', {'paiements': paiements})
 
 
+def detail_paiement(request, token):
+    paiement = get_object_or_404(Payement, token=token)
+
+    k = Kkiapay('286874f0fedb11eca56ad905c440058f',
+                'tpk_28689c01fedb11eca56ad905c440058f', 'tsk_28689c02fedb11eca56ad905c440058f', sandbox=True)
+    transaction = k.verify_transaction(paiement.transaction_id)
+    return render(request, 'accounts/detail_paiement.html', {'paiement': paiement, 'transaction': transaction, })
+
+
 def dashboard_admin(request):
     return render(request, 'accounts/admin/dashboard_admin.html')
 
 
-def manager_view(request):
-    return render(request, 'accounts/manager/index.html')
+def manager_chambres(request):
+    user = request.user
+    manager = HotelManager.objects.get(user=user.id)
+
+    chambres = Chambre.objects.filter(hotel=manager.hotel)
+
+    return render(request, 'hotels/manager/chambres/index.html', {'chambres': chambres})
+
+
+def manager_chambre(request, number):
+    chambre = get_object_or_404(Chambre, number=number)
+    form = ManagerEditChambre()
+
+    return render(request, 'hotels/manager/chambres/chambre.html', {"form": form, 'chambre': chambre})

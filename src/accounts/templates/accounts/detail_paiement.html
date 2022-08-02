@@ -1,4 +1,4 @@
-{% extends 'accounts/base.html' %}
+{% extends 'accounts/manager/base.html' %}
 {% load widget_tweaks %}
 {% load humanize %}
 {% load static %}
@@ -11,10 +11,10 @@
 {% block style %}
 
 
-<!-- DataTables -->
+
 <link href="{% static 'accounts/horizontal/assets/plugins/datatables/dataTables.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
 <link href="{% static 'accounts/horizontal/assets/plugins/datatables/buttons.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
-<!-- Responsive datatable examples -->
+
 <link href="{% static 'accounts/horizontal/assets/plugins/datatables/responsive.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
 
 <link href="{% static 'accounts/horizontal/assets/css/reservations/style.css' %}" rel="stylesheet" type="text/css">
@@ -26,8 +26,19 @@
 
 
 
-<div class="container">
-    <h4 class="mt-3 mb-1">Détails du paiement</h4>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="float-right page-breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Drixo</a></li>
+                <li class="breadcrumb-item"><a href="#">Tables</a></li>
+                <li class="breadcrumb-item active">Datatable</li>
+            </ol>
+        </div>
+        <h5 class="page-title">Datatable</h5>
+    </div>
+</div>
     
     <div class="row">
         <div class="col-9">
@@ -42,11 +53,8 @@
                         truncate the text with an ellipsis.</p>
 
                     <dl class="row mb-0">
-                        <dt class="col-sm-4">Numéro de la réservation</dt>
-                        <dd class="col-sm-8">3422.606.831</dd>
-
-                        <dt class="col-sm-4">Code confidentiel </dt>
-                        <dd class="col-sm-8">5684</dd>
+                        <dt class="col-sm-4">Reference de la réservation</dt>
+                        <dd class="col-sm-8">{{ paiement.reservation.id }}</dd>
                         
                         <dt class="col-sm-4">Méthode de paiement </dt>
                         <dd class="col-sm-8">{{ transaction.source }}</dd>
@@ -88,9 +96,9 @@
             </div>
 
         </div>
-         <!-- end col -->
+         
     </div>
-</div>
+
 
 
 
@@ -98,16 +106,16 @@
 
 {% block script %}
    
-     <!-- Required datatable js -->
+     
      <script src="{% static 'accounts/horizontal/assets/plugins/datatables/jquery.dataTables.min.js' %}"></script>
      <script src="{% static 'accounts/horizontal/assets/plugins/datatables/dataTables.bootstrap4.min.js' %}"></script>
    
 
-     <!-- Responsive examples -->
+     
      <script src="{% static 'accounts/horizontal/assets/plugins/datatables/dataTables.responsive.min.js' %}"></script>
      <script src="{% static 'accounts/horizontal/assets/plugins/datatables/responsive.bootstrap4.min.js' %}"></script>
 
-     <!-- Datatable init js -->
+     
      <script src="{% static 'accounts/horizontal/assets/pages/datatables.init.js' %}"></script>
 
 

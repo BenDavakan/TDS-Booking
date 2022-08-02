@@ -108,6 +108,7 @@ class Reservation(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              on_delete=models.CASCADE)
     secret_key = models.CharField(max_length=100, blank=True, null=True)
+    token = models.CharField(max_length=100, blank=True, null=True)
     chambre = models.ForeignKey(Chambre, on_delete=models.CASCADE)
     amount = models.PositiveIntegerField(blank=True, null=True)
     check_in = models.DateField()
@@ -126,6 +127,7 @@ class Reservation(models.Model):
 
 class Payement(models.Model):
     reservation = models.ForeignKey(Reservation, on_delete=models.CASCADE)
+    token = models.CharField(max_length=100, blank=True, null=True)
     MODE = [
         ('card', 'Carte de Crédit'),
         ('momo', 'Mobile Money'),

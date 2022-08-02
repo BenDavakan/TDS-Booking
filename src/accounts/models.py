@@ -42,6 +42,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
     tel = models.IntegerField(blank=True, null=True)
     is_active = models.BooleanField(default=True)
+    is_manager = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
@@ -89,3 +90,6 @@ class HotelManager (models.Model):
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     hotel = models.OneToOneField(Hotel, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user.email

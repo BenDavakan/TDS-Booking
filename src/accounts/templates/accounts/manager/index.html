@@ -1,21 +1,17 @@
 {% extends 'accounts/manager/base.html' %}
-{% load widget_tweaks %}
 {% load static %}
 
-{% block title %}
-<title>Dashboard</title>
-{% endblock %}
-
-
-{% block style %}
-{% endblock %}
-
-
 {% block content %}
-
-<h2>Hello World</h2>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="float-right page-breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Drixo</a></li>
+                <li class="breadcrumb-item active">Dashboard</li>
+            </ol>
+        </div>
+        <h5 class="page-title">Dashboard</h5>
+    </div>
+</div>
 
 {% endblock content %}
-
-{% block script %}    
-{% endblock %}

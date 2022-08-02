@@ -1,4 +1,4 @@
-{% extends 'accounts/base.html' %}
+{% extends 'accounts/manager/base.html' %}
 {% load widget_tweaks %}
 {% load static %}
 
@@ -11,32 +11,31 @@
 
 
 <!-- DataTables -->
-<link href="{% static 'accounts/horizontal/assets/plugins/datatables/dataTables.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
-<link href="{% static 'accounts/horizontal/assets/plugins/datatables/buttons.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'accounts/vertical/assets/plugins/datatables/dataTables.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'accounts/vertical/assets/plugins/datatables/buttons.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
 <!-- Responsive datatable examples -->
-<link href="{% static 'accounts/horizontal/assets/plugins/datatables/responsive.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'accounts/vertical/assets/plugins/datatables/responsive.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
 
-<link href="{% static 'accounts/horizontal/assets/css/reservations/style.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'accounts/vertical/assets/css/reservations/style.css' %}" rel="stylesheet" type="text/css">
 
 {% endblock %}
 
 
 {% block content %}
 
-<div class="container">
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="page-title-box">
-                <div class="btn-group float-right">
-                    <ol class="breadcrumb hide-phone p-0 m-0">
-                        <li class="breadcrumb-item"><a href="#">Tds Booking</a></li>
-                        <li class="breadcrumb-item active">Paiements</li>
-                    </ol>
-                </div>
-                <h4 class="page-title">Paiements</h4>
-            </div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="float-right page-breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Drixo</a></li>
+                <li class="breadcrumb-item"><a href="#">Tables</a></li>
+                <li class="breadcrumb-item active">Datatable</li>
+            </ol>
         </div>
+        <h5 class="page-title">Datatable</h5>
     </div>
+</div>
 
     
     <div class="row">
@@ -71,7 +70,7 @@
                                 <td>{{ paiem.payment_method }}</td>
                                 <td>{{ paiem.reservation.amount }}</td>
                                 <td>{{ paiem.add_at|date:"D d M Y, H:i" }}</td>
-                                <td><a href="{% url 'paiement' paiem.id %}">Voir plus</a></td>
+                                <td><a href="{% url 'paiement' paiem.token %}">Voir plus</a></td>
                             </tr>
                             
                         {% endfor %}
@@ -82,10 +81,9 @@
 
                 </div>
             </div>
-        </div> <!-- end col -->
+        </div> 
     </div>
     
-</div>
 
 
 
@@ -93,17 +91,14 @@
 
 {% block script %}
    
-     <!-- Required datatable js -->
-     <script src="{% static 'accounts/horizontal/assets/plugins/datatables/jquery.dataTables.min.js' %}"></script>
-     <script src="{% static 'accounts/horizontal/assets/plugins/datatables/dataTables.bootstrap4.min.js' %}"></script>
+     
+     <script src="{% static 'accounts/vertical/assets/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+     <script src="{% static 'accounts/vertical/assets/plugins/datatables/dataTables.bootstrap4.min.js' %}"></script>
    
+     <script src="{% static 'accounts/vertical/assets/plugins/datatables/dataTables.responsive.min.js' %}"></script>
+     <script src="{% static 'accounts/vertical/assets/plugins/datatables/responsive.bootstrap4.min.js' %}"></script>
 
-     <!-- Responsive examples -->
-     <script src="{% static 'accounts/horizontal/assets/plugins/datatables/dataTables.responsive.min.js' %}"></script>
-     <script src="{% static 'accounts/horizontal/assets/plugins/datatables/responsive.bootstrap4.min.js' %}"></script>
-
-     <!-- Datatable init js -->
-     <script src="{% static 'accounts/horizontal/assets/pages/datatables.init.js' %}"></script>
+     <script src="{% static 'accounts/vertical/assets/pages/datatables.init.js' %}"></script>
 
 
         
