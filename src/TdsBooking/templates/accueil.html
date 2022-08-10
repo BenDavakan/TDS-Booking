@@ -1,4 +1,4 @@
-{% extends 'base.html'%}
+{% extends 'TdsBooking/layouts/base.html'%}
 {% load static %}
 
 {% block title %}
@@ -106,7 +106,7 @@ a {
         </div>
     </section>
     <div class="container" style="justify-content: center; display: flex;">
-        <form action="{% url 'search_hotel' %}" class="filter__form w-auto" method='GET'>
+        <form action="{% url 'name_search_hotel' %}" class="filter__form w-auto" method='GET'>
             <div class="filter__form__item filter__form__item--search">
                 
                 <div class="filter__form__input d-flex">

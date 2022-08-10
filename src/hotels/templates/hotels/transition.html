@@ -1,0 +1,108 @@
+{% extends 'TdsBooking/layouts/base.html'%}
+{% load static %}
+
+{% block title %}
+<title>Hôtels</title>
+{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/otl.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.css" integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="anonymous" />
+{% endblock %}
+
+
+{% block content %}
+
+<script src="https://www.paypal.com/sdk/js?client-id=AQtjejSKUs6rpWQG3zwuI_xYshQrAx0zZqeT0zjZWa3bRSUc_21Ab-fg2CdIm1NB-BkvSZxh-5T5BQ4X&currency=USD"></script>
+
+<div class="container mb-5">
+    <div class="row mt-md-5">
+        <div class="col-md-12">
+            <div class="alert alert-info text-center" role="alert">
+                Veuillez patienter pendant que nous vous dirigeons vers le service de paiement ... 
+            </div>
+        </div>
+        <div class="col-md-12 d-flex justify-content-center my-5">
+            <div class="progress " style="width: 250px;">
+                <div class="progress-bar progress-bar-striped progress-bar-animated " role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%; background-color: rgb(141, 137, 137);"></div>
+            </div>
+        </div>
+        
+        
+        {% if type_paiement == "card" %}
+          <div class="col-md-12 d-flex justify-content-center mb-5">
+            <button type="button" class="btn btn-primary btn-sm kkiapay-button">Payer maintenant</button>
+          </div>
+        {% elif type_paiement == "momo" %}
+          <div class="col-md-12 d-flex justify-content-center mb-5">
+              <button type="button" class="btn btn-primary btn-sm kkiapay-button">Payer maintenant</button>
+          </div>
+        {% else %}
+          <div class="col-md-12 d-flex justify-content-center">
+              <div id="paypal-button-container" class="" style="width: 45%"></div>
+          </div>
+        {% endif %}
+          
+
+        
+    </div>
+</div>
+
+{% endblock %}
+
+{% block script %}
+
+<script amount="{{ reservation.amount }}" 
+    callback="http://localhost:8000/hotels/paiement/{{ reservation.id }}/{{ type_paiement }}/paiement-process/"
+    data=""
+    firstname="{{ reservation.user.first_name }}"
+    lastname="{{ reservation.user.last_name }}"
+    email="{{ reservation.user.email }}"
+    url="https://technodatasolutions.bj/img/logo.png"
+    position="center" 
+    theme="#0095ff"
+    sandbox="true"
+    key="286874f0fedb11eca56ad905c440058f"
+    src="https://cdn.kkiapay.me/k.js"></script>
+
+
+<script>
+    paypal.Buttons({
+
+      style: {
+        color: '',
+        shape: '',
+      },
+      // Sets up the transaction when a payment button is clicked
+      createOrder: (data, actions) => {
+        return actions.order.create({
+          purchase_units: [{
+            amount: {
+              value: '{{ reservation.amount }}' // Can also reference a variable or function
+            }
+          }]
+        });
+      },
+      // Finalize the transaction after payer approval
+      onApprove: (data, actions) => {
+        return actions.order.capture().then(function(orderData) {
+          // Successful capture! For dev/demo purposes:
+          console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+          const transaction = orderData.purchase_units[0].payments.captures[0];
+          alert('Transaction ${transaction.status}: ${transaction.id}\n\nSee console for all available details');
+          // When ready to go live, remove the alert and show a success message within this page. For example:
+          // const element = document.getElementById('paypal-button-container');
+          // element.innerHTML = '<h3>Thank you for your payment!</h3>';
+          // Or go to another URL:  actions.redirect('thank_you.html');
+        });
+      }
+    }).render('#paypal-button-container');
+</script>
+
+<script>
+
+  
+  
+</script>
+
+{% endblock script %}

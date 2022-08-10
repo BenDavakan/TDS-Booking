@@ -1,0 +1,72 @@
+{% extends 'accounts/layouts/base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block title %}
+<title>Hotel</title>
+{% endblock %}
+
+
+{% block style %}
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="float-right page-breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Tds Booking</a></li>
+                <li class="breadcrumb-item"><a href="#">Hotel</a></li>
+                <li class="breadcrumb-item active">Infos</li>
+            </ol>
+        </div>
+        <h5 class="page-title">Infos</h5>
+    </div>
+</div>
+
+<div class="row">
+        <div class="col-md-10 offset-1">
+
+            <div class="card m-b-30">
+                <div class="card-body">
+
+                    <h4 class="mt-0 header-title"> {{ hotel.name }}</h4>
+                    <p class="text-muted m-b-30 font-14">{{ hotel.description }}</p>
+
+                    <dl class="row mb-0">
+                        <dt class="col-sm-4">Adresse</dt>
+                        <dd class="col-sm-8">{{ hotel.adress }}</dd>
+
+                        <dt class="col-sm-4">Ville</dt>
+                        <dd class="col-sm-8">{{ hotel.ville }}</dd>
+
+                        <dt class="col-sm-4">Email</dt>
+                        <dd class="col-sm-8">{{ hotel.email }}</dd>
+                        
+                        <dt class="col-sm-4">Numéros de téléphone </dt>
+                        <dd class="col-sm-8">{{ hotel.tel_1 }}</dd>
+                        
+
+                        <dt class="col-sm-4">Nombre d'étoiles</dt>
+                        <dd class="col-sm-8">{{hotel.star_nbr }}</dd>
+                        
+                        
+                    </dl>
+                    
+                </div>
+
+            </div>
+
+        </div>
+        
+</div>
+
+
+
+{% endblock content %}
+
+{% block script %}
+{% endblock %}

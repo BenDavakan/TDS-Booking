@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
-from hotels.views import transition, villes_view
+from hotels.views import transition
 from TdsBooking import settings
 from . import views
 from django.conf.urls.static import static
@@ -28,10 +28,9 @@ urlpatterns = [
     path('compte/', include('django.contrib.auth.urls')),
     path('compte/', include("accounts.urls"), name='accounts'),
     path('a-propos/', views.a_propos_view, name='a-propos'),
-    path('search_hotel/', views.search_hotel, name='search_hotel'),
-    path('villes/', villes_view, name='villes'),
+
+
     path('transition/<int:number>/<str:type>/', transition, name='transition'),
-    path('paiement/<int:number>/<str:type>/paiement-process/',
-         views.paiement_process, name='paiement_process'),
+
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

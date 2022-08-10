@@ -1,11 +1,15 @@
+
+from django.core.mail import EmailMessage
+from django.conf import settings
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.db.models import Q
 from django.core.mail import send_mail
 from django.urls import reverse
 from hotels.helpers.availability import check_availability
-from hotels.models import Chambre, Hotel, Payement, Ville
+from hotels.models import Chambre, Hotel, Payement, Reservation, Ville
 from django.utils.crypto import get_random_string
+from django.template.loader import render_to_string
 
 
 def home_view(request):
@@ -34,47 +38,3 @@ def contact_view(request):
 
 def a_propos_view(request):
     return render(request, 'a_propos.html')
-
-
-def search_hotel(request):
-    search = request.GET['search']
-    date = request.GET['date']
-    t = date.split("-")
-    t1 = t[0]
-    t2 = t[1]
-    request.session['date01'] = t1
-    request.session['date02'] = t2
-
-    ville = Ville.objects.get(name=search)
-
-    room_list = Chambre.objects.filter(hotel__ville=ville)
-
-    available_hotels = []
-    for room in room_list:
-        if check_availability(room, t1, t2):
-            available_hotels.append(room.hotel)
-
-    # hotels = Hotel.objects.filter(
-    #     Q(ville__name=search) | Q(name__icontains=search))
-    hotels_number = len(set(available_hotels))
-    message = f' {hotels_number} établissements trouvés'
-
-    if hotels_number == 1 or hotels_number == 0:
-        message = f'{hotels_number} établissement trouvé'
-
-    # return render(request, 'search_hotel.html', {'hotels': hotels, 'message': message, 'date': date, 't1': t1, 't2': t2})
-    return render(request, 'search_hotel.html', {'available_hotels': set(available_hotels), 'message': message, })
-
-
-def paiement_process(request, number, type):
-
-    transaction_id = request.GET['transaction_id']
-
-    token = get_random_string(length=32)
-    while Payement.objects.filter(token=token).exists():
-        token = get_random_string(length=32)
-
-    Payement.objects.create(transaction_id=transaction_id, token=token, payment_method=type,
-                            reservation_id=number)
-
-    return HttpResponseRedirect(reverse('home'))

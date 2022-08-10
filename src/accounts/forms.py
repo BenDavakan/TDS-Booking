@@ -1,9 +1,9 @@
 from pyexpat import model
+from attr import fields
 from django import forms
-from django.forms import ModelForm
 
 from accounts.models import CustomUser, Profile
-from hotels.models import Chambre, Reservation
+from hotels.models import Chambre
 
 
 class SignupForm(forms.Form):
@@ -19,13 +19,28 @@ class SigninForm(forms.Form):
     password = forms.CharField(min_length=6, widget=forms.PasswordInput())
 
 
-class EditProfileForm(forms.ModelForm):
-    first_name = forms.CharField(max_length=20)
-    last_name = forms.CharField(max_length=20)
-    email = forms.EmailField()
+class UserForm(forms.ModelForm):
+    class Meta:
+        model = CustomUser
+        fields = [
+            'first_name',
+            'last_name',
+            'email',
+            'tel',
+        ]
 
 
-class ManagerEditChambre(ModelForm):
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = [
+            'gender',
+            'birthdate',
+            'country',
+        ]
+
+
+class ManagerEditChambre(forms.ModelForm):
     class Meta:
         model = Chambre
         fields = [
@@ -36,4 +51,18 @@ class ManagerEditChambre(ModelForm):
             'area',
             'beds',
             'category',
+            'capacity'
         ]
+
+
+class CheckBooking(forms.Form):
+    secret_key = forms.CharField(min_length=6, required=True)
+
+
+class DateInput(forms.DateInput):
+    input_type = 'date'
+
+
+class ManagerAddBooking(forms.Form):
+    check_in = forms.DateField(widget=DateInput)
+    check_out = forms.DateField()

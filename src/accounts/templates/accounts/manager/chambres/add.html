@@ -1,0 +1,150 @@
+{% extends 'accounts/layouts/base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block title %}
+<title>Chambres | Ajouter une chambre</title>
+{% endblock %}
+
+
+{% block style %}
+
+<link href="{% static 'accounts/vertical/assets/plugins/datatables/dataTables.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'accounts/vertical/assets/plugins/datatables/buttons.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+
+<link href="{% static 'accounts/vertical/assets/plugins/datatables/responsive.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+
+<link href="{% static 'accounts/vertical/assets/css/reservations/style.css' %}" rel="stylesheet" type="text/css">
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="float-right page-breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Tds Booking</a></li>
+                <li class="breadcrumb-item"><a href="#">Chambres</a></li>
+                
+                <li class="breadcrumb-item active">Ajouter une chambre</li>
+                
+            </ol>
+        </div>
+        <h5 class="page-title">Ajouter une chambre</h5>
+    </div>
+</div>
+
+<div class="row ">
+    
+    <div class="col-md-8 offset-2">
+        <div class="card m-b-30">
+            <div class="card-body">
+
+                <h4 class="mt-0 header-title">Ajouter une chambre</h4>
+                <p class="text-muted m-b-30 font-14">Parsley is a javascript form validation
+                    library. It helps you provide your users with feedback on their form
+                    submission before sending it to your server.</p>
+
+                <form class="" method="POST">
+                   
+                    {% csrf_token %}
+                    
+                    <div class="form-group">
+                        <label>Numéro de la chambre</label>
+                        <div>
+                            {% render_field form.number class="form-control" placeholder="Numéro" %}  
+                        </div>
+                        
+                    </div>
+                    <div class="form-group">
+                        <label>Nom de la chambre</label>
+                        <div>
+                            {% render_field form.name class="form-control" placeholder="Nom de la chambre" %}  
+                        </div>
+                    </div>
+     
+                    
+                    <div class="form-group">
+                        <label>Description</label>
+                        <div>
+                            {% render_field form.description rows=5 class="form-control" placeholder='Texte descriptif de la chambre' %}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Catégorie</label>
+                        <div>
+                            {% render_field form.category class="form-control" %}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Nuité</label>
+                        <div>
+                            {% render_field form.overnight class="form-control" %}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Superficie</label>
+                        <div>
+                            {% render_field form.area class="form-control" %}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Nombre de lits</label>
+                        <div>
+                            {% render_field form.beds class="form-control" %}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Capacité</label>
+                        <div>
+                            {% render_field form.capacity class="form-control" %}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div>
+                            <button type="submit" class="btn btn-primary waves-effect waves-light">
+                                Ajouter
+                            </button>
+                            <button type="reset" class="btn btn-secondary waves-effect m-l-5">
+                                Annuler
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    
+
+
+
+
+{% endblock %}
+
+{% block script %}
+   
+     <script src="{% static 'accounts/vertical/assets/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+     <script src="{% static 'accounts/vertical/assets/plugins/datatables/dataTables.bootstrap4.min.js' %}"></script>
+   
+
+     <script src="{% static 'accounts/vertical/assets/plugins/datatables/dataTables.responsive.min.js' %}"></script>
+     <script src="{% static 'accounts/vertical/assets/plugins/datatables/responsive.bootstrap4.min.js' %}"></script>
+
+     <script src="{% static 'accounts/vertical/assets/pages/datatables.init.js' %}"></script>
+
+     
+     <script src="{% static 'accounts/vertical/assets/plugins/parsleyjs/parsley.min.js' %}"></script>
+     <script>
+         $(document).ready(function() {
+             $('form').parsley();
+         });
+     </script>
+     
+        
+{% endblock %}

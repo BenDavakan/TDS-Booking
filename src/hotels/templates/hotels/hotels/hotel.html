@@ -1,0 +1,322 @@
+{% extends 'TdsBooking/layouts/base.html'%}
+{% load static %}
+{% load humanize %}
+{% block style %}
+{% comment %} <style>
+
+img:hover{
+	transform: scale(1.2);  
+}
+
+img{
+	transition: all .5s;
+}
+
+</style> {% endcomment %}
+
+<style>
+ol li {
+	list-style: none;
+	opacity: 0.5;
+	cursor: pointer;
+	box-sizing:content-box;
+	
+	flex:0 1 auto;
+	
+	margin-right:3px;
+	margin-left:3px;
+	
+	
+	border-top:10px solid transparent;
+	border-bottom:10px solid transparent;
+	transition:opacity .6s ease;
+}
+
+</style>
+{% endblock style %}
+{% block content %}
+
+<section class="ftco-section ftco-degree-bg">
+	<div class="container">
+
+		<div class="row">
+			<div class="col-12 mt-3">
+				<div class="row col-12">
+					<h2>{{ hotel.name }} </h2>
+
+					<div class="mt-auto ml-3">
+						<span class="" style="font-size: 21px;"> {{ hotel.star_nbr }}</span>
+						<span class="" style="color:#FFB913; font-size: 18px; font-weight:
+							bold;"><i class="fa-solid fa-star"></i></span>
+					</div>
+				</div>
+
+				<p class="rate mb-1">
+					<span class="loc"><i class="fa-solid fa-location-dot mr-1"></i>{{ hotel.adress }}</span>
+				</p>
+				<p class="rate mb-3">
+					<span class="loc"><i class="fa-solid fa-wifi mr-1"></i>Wi-fi graduit</span>
+					<span class="loc mx-2"><i class="fa-solid fa-square-parking mr-1"></i>Parking disponible</span>
+					<span class="loc "><i class="fa-solid fa-person-swimming mr-1"></i>Piscine</span>
+					<span class="loc mx-2"><i class="fa-solid fa-ban-smoking mr-1"></i>Non-fumeurs</span>
+				</p>
+			</div>
+			<div class="col-lg-9">
+				<div class="row">
+
+					<div class="col-md-12  mb-5 ftco-animate">
+
+						<div id="room-thumbnail--slide" class="carousel slide" data-ride="carousel">
+							<div class="carousel-inner">
+								<div class="carousel-item active">
+									<img src="{% static 'img/bg-img/48.jpg' %}" height="400" class="d-block w-100" alt="2">
+								</div>
+								<div class="carousel-item" style="height: 400px">
+									<img src="{% static 'img/bg-img/49.jpg' %}"  class="d-block w-100" alt="3">
+								</div>
+								<div class="carousel-item" style="height: 400px">
+									<img src="{% static 'img/bg-img/50.jpg' %}" class="d-block w-100" alt="4">
+								</div>
+								<div class="carousel-item" style="height: 400px">
+									<img src="{% static 'img/bg-img/51.jpg' %}" class="d-block w-100 " alt="5">
+								</div>
+								<div class="carousel-item" style="height: 400px">
+									<img src="{% static 'img/bg-img/52.jpg' %}" class="d-block w-100" alt="6">
+								</div>
+							</div>
+					
+							<ol class="carousel-indicators mt-1 d-flex justify-content-between">
+								<li data-target="#room-thumbnail--slide" data-slide-to="0" class="active">
+									<img src="{% static 'img/bg-img/48.jpg' %}" class="d-block w-100" alt="2">
+								</li>
+								<li data-target="#room-thumbnail--slide" data-slide-to="1">
+									<img src="{% static 'img/bg-img/49.jpg' %}" class="d-block w-100" alt="3">
+								</li>
+								<li data-target="#room-thumbnail--slide" data-slide-to="2">
+									<img src="{% static 'img/bg-img/50.jpg' %}" class="d-block w-100" alt="4">
+								</li>
+								<li data-target="#room-thumbnail--slide" data-slide-to="3">
+									<img src="{% static 'img/bg-img/51.jpg' %}" class="d-block w-100" alt="5">
+								</li>
+								<li data-target="#room-thumbnail--slide" data-slide-to="4">
+									<img src="{% static 'img/bg-img/52.jpg' %}" class="d-block w-100" alt="6">
+								</li>
+							</ol>
+						</div>
+						<small> Les Images ont été mises à jour le 26/10/2022 </small>
+						<p>{{ hotel.description }}</p>
+
+						<p>When she reached the first hills of the Italic Mountains, she had a
+							last view back on the skyline of her hometown Bookmarksgrove, the
+							headline of Alphabet Village and the subline of her own road, the Line
+							Lane. Pityful a rethoric question ran over her cheek, then she continued
+							her way.</p>
+					</div>
+
+				</div>
+			</div>
+			<div class="col-lg-3">
+				<div class="row">
+					<div class="col-12">
+						<div class="" style="width: 100%;">
+						   <iframe async src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2240.352579368094!2d2.453393174905351!3d6.365894863178339!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1023552ee67f442f%3A0xcb91562a1104a7b6!2sTechnoData%20Solutions!5e1!3m2!1sfr!2sbj!4v1653307083597!5m2!1sfr!2sbj" width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+						 </div>
+					</div>
+					<div class="col-12 mt-2">
+						<div>
+							<h4>Visite en video</h4>
+						</div>
+						<div class="embed-responsive embed-responsive-16by9 z-depth-1-half">
+							<iframe async width="560" height="315" src="https://www.youtube.com/embed/98qiqE019As?start=140" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+						  </div>
+					</div>
+					
+				</div>
+			</div>
+			
+		</div>
+		{% for equipement in equipements %}
+		    <p>{{ equipement.name }}</p>
+		{% endfor %}
+        
+	
+			<div class=" row bg-light p-4">
+				<div class="col-md-3 d-flex justify-content-center">
+					<div style="border: 1px solid black;">
+						<i class="fa-solid fa-calendar-days"></i>
+						<input type="" name=""  placeholder="Debut" style="border: none;">
+					</div>
+				</div>
+				<div class="col-md-3 d-flex justify-content-center ">
+					<div style="border: 1px solid black;">
+						<i class="fa-solid fa-calendar-days"></i>
+						<input type="" name="" value="" placeholder="Départ" style="border: none;">
+					</div>
+					
+				</div>
+				<div class="col-md-3 d-flex justify-content-center">
+					<div style="border: 1px solid black;">
+						<i class="fa-solid fa-user-group"></i>
+						<input type="" name="" value="" placeholder="Nombre de personnes" style="border: none;">
+					</div>
+					
+				</div>
+				<div class="col-md-3 d-flex justify-content-center">
+					<input type="button" name="" value="Vérifier la disponibilité">
+				</div>
+				
+			</div>
+		
+
+		<div class="row">
+			
+			<div class="col-md-12 hotel-single ftco-animate mb-5 mt-4">
+				<h4 class="mb-4">Nos Chambres</h4>
+				<ul class="nav nav-tabs" id="myTab" role="tablist">
+					
+					<li class="nav-item">
+						
+						<a class="nav-link active" id="standard-tab" data-toggle="tab" href="#standard" role="tab"
+						aria-controls="standard" aria-selected="true">Standard</a>
+						
+					</li>
+					
+					<li class="nav-item">
+						<a class="nav-link" id="vip-tab" data-toggle="tab" href="#vip" role="tab"
+						aria-controls="vip" aria-selected="false">VIP</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="suite-tab" data-toggle="tab" href="#suite" role="tab"
+						aria-controls="suite" aria-selected="false">Suite</a>
+					</li>
+					
+				</ul>
+				<div class="tab-content" id="myTabContent">
+					<div class="tab-pane fade show active" id="standard" role="tabpanel" aria-labelledby="standard-tab">
+						
+						{% for chambre in chambres %}
+						   {% if chambre.category.name == "Standard" %}
+							   <div class="row col-12 m-0">
+								   <div class="row p-3 mt-4" style="box-shadow: 0 4px 21px -12px rgba(0, 0, 0,
+								   0.66);border:none;">
+									   <div class="col-md-3 p-0">
+										   <img class="img-thumbnail h-auto" src="{% static 'img/room-5.jpg' %}" style="border-top-left-radius: 5px;border-top-right-radius:
+											   5px;border-bottom-right-radius: 5px;">
+									   </div>
+									   <div class="col-md-6 py-0">
+										   <h3 class="card-title"><a href="{% url 'chambre' hotel.slug chambre.number %}"> Chambre {{ chambre.number }}</a></h3>
+										   <p class="card-text">{{ chambre.category }}</p>			
+									   </div>
+									   <div class="col-md-3 py-0 pr-0">
+										   <div class="row w-100 m-0 mb-md-4">
+											   <div class="col-md-10">
+												   <div class="float-right">Exceptionnel </div>
+												   
+											   </div>
+											   <div class="text-center ml-auto" style="background-color:blue; height: 25px; width: 35px;border-top-left-radius: 5px;border-top-right-radius: 5px;border-bottom-right-radius: 5px;color: white;">
+												   9,5
+											   </div>
+											   <div class="w-auto ml-auto"> 198 experiences vécues</div>
+										   </div>
+										   <div class="row col-12 float-right w-auto mb-md-3">
+											   <span class="">XOF {{ chambre.overnight | intcomma}}</span>
+										   </div>
+										   <div class="row col-12 m-0 p-0 fixed-bottom" style="position:absolute !important">
+											   <a class="btn btn-primary ml-md-auto" href="{% url 'chambre' hotel.slug chambre.number %}" role="button">Réserver</a>
+										   </div>
+										   {% comment %} <div class=""></div> {% endcomment %}
+									   </div>
+								   </div>
+							   </div>
+						   {% endif %}
+					   {% endfor %} 
+
+				   </div>
+					<div class="tab-pane fade" id="vip" role="tabpanel" aria-labelledby="vip-tab">
+						
+						 {% for chambre in chambres %}
+							{% if chambre.category.name == "VIP" %}
+								<div class="row col-12 m-0">
+									<div class="row p-3 mt-4 " style="box-shadow: 0 4px 21px -12px rgba(0, 0, 0,
+									0.66);border:none;">
+										<div class="col-md-3 p-0">
+											<img class="h-auto" src="{% static 'img/room-5.jpg' %}" style="border-top-left-radius: 5px;border-top-right-radius:
+												5px;border-bottom-right-radius: 5px;">
+										</div>
+										<div class="col-md-6 py-0">
+											<h3 class="card-title"><a href="{% url 'chambre' hotel.slug chambre.number %}"> Chambre {{ chambre.number }}</a></h3>
+											<p class="card-text">{{ chambre.category }}</p>			
+										</div>
+										<div class="col-md-3 py-0 pr-0">
+											<div class="row w-100 m-0 mb-md-4">
+												<div class="col-md-10">
+													<div class="float-right">Exceptionnel </div>
+													
+												</div>
+												<div class="text-center ml-auto" style="background-color:blue; height: 25px; width: 35px;border-top-left-radius: 5px;border-top-right-radius: 5px;border-bottom-right-radius: 5px;color: white;">
+													9,5
+												</div>
+												<div class="w-auto ml-auto"> 198 experiences vécues</div>
+											</div>
+											<div class="row col-12 float-right w-auto mb-md-3">
+												<span class="">XOF {{ chambre.overnight | intcomma }}</span>
+											</div>
+											<div class="row col-12 m-0 p-0 fixed-bottom" style="position:absolute !important">
+												<a class="btn btn-primary ml-md-auto" href="{% url 'chambre' hotel.slug chambre.number %}" role="button">Réserver</a>
+											</div>
+											{% comment %} <div class=""></div> {% endcomment %}
+										</div>
+									</div>
+								</div>
+							{% endif %}
+						{% endfor %} 
+
+					</div>
+					<div class="tab-pane fade" id="suite" role="tabpanel" aria-labelledby="suite-tab">
+												
+						{% for chambre in chambres %}
+							{% if chambre.category.name == "Suite" %}
+								<div class="row col-12 m-0">
+										<div class="row p-3 mt-4" style="box-shadow: 0 4px 21px -12px rgba(0, 0, 0,
+										0.66);border:none;">
+											<div class="col-md-3 p-0">
+												<img class="h-auto" src="{% static 'img/room-5.jpg' %}" style="border-top-left-radius: 5px;border-top-right-radius:
+													5px;border-bottom-right-radius: 5px;">
+											</div>
+											<div class="col-md-6 py-0">
+												<h3 class="card-title"><a href="{% url 'chambre' hotel.slug chambre.number %}"> Chambre {{ chambre.number }}</a></h3>
+												<p class="card-text">{{ chambre.category }}</p>			
+											</div>
+											<div class="col-md-3 py-0 pr-0">
+												<div class="row w-100 m-0 mb-md-4">
+													<div class="col-md-10">
+														<div class="float-right">Exceptionnel </div>
+														
+													</div>
+													<div class="text-center ml-auto" style="background-color:blue; height: 25px; width: 35px;border-top-left-radius: 5px;border-top-right-radius: 5px;border-bottom-right-radius: 5px;color: white;">
+														9,5
+													  </div>
+													  <div class="w-auto ml-auto"> 198 experiences vécues</div>
+												</div>
+												<div class="row col-12 float-right w-auto mb-md-3">
+													<span class="">XOF {{ chambre.overnight | intcomma}}</span>
+												</div>
+												<div class="row col-12 m-0 p-0 fixed-bottom" style="position:absolute !important">
+													<a class="btn btn-primary ml-md-auto" href="{% url 'chambre' hotel.slug chambre.number %}" role="button">Réserver</a>
+												</div>
+												{% comment %} <div class=""></div> {% endcomment %}
+											</div>
+										</div>
+								</div>
+							{% endif %}
+						{% endfor %}
+						
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+{% endblock %}

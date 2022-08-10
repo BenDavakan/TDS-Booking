@@ -1,0 +1,128 @@
+{% extends 'accounts/layouts/base.html' %}
+{% load widget_tweaks %}
+{% load humanize %}
+{% load static %}
+
+{% block title %}
+<title>Tableau de bord</title>
+{% endblock %}
+
+
+{% block style %}
+{% endblock %}
+
+
+{% block content %}
+
+
+
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="float-right page-breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Tds Booking</a></li>
+                <li class="breadcrumb-item active">Tableau de bord</li>
+                
+            </ol>
+        </div>
+        <h5 class="page-title">Tableau de bord</h5>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xl-3 col-md-6">
+        <div class="card mini-stat m-b-30">
+            <div class="p-3 bg-primary text-white">
+                <div class="mini-stat-icon">
+                    <i class="mdi mdi-cube-outline float-right mb-0"></i>
+                </div>
+                <h6 class="text-uppercase mb-0">Reservations</h6>
+            </div>
+            <div class="card-body">
+                <div class="border-bottom pb-2">
+                    <p class="mb-0"><span class="text-muted">En cours : {{ progress }}</span></p>
+                    <p class="mb-0"><span class=" text-muted">Terminées :  {{ end }} </span></p>
+                    <p class="mb-1"><span class=" text-muted">Annulées :  {{ cancel }} </span></p>
+
+                </div>
+                <div class="mt-2 text-muted">
+                    <h5 class="m-0">Total : <span class="ml-4"> {{ total }}  </span> </h5>
+                    
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <div class="card mini-stat m-b-30">
+            <div class="p-3 bg-primary text-white">
+                <div class="mini-stat-icon">
+                    <i class="mdi mdi-account-network float-right mb-0"></i>
+                </div>
+                <h6 class="text-uppercase mb-0">Paiements</h6>
+            </div>
+            <div class="card-body">
+                <div class="border-bottom pb-4">
+                        
+                </div>
+                <div class="mt-4 text-muted">
+                    
+                    <h5 class="m-0">Total : <span class="ml-4"> {{ total_payment }}  </span></h5>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <div class="card mini-stat m-b-30">
+            <div class="p-3 bg-primary text-white">
+                <div class="mini-stat-icon">
+                    <i class="mdi mdi-tag-text-outline float-right mb-0"></i>
+                </div>
+                <h6 class="text-uppercase mb-0">Chambres</h6>
+            </div>
+            <div class="card-body">
+                <div class="border-bottom pb-4">
+                    
+                </div>
+                <div class="mt-4 text-muted">
+                    
+                    <h5 class="m-0">Total : <span class="ml-4"> {{ total_room }}  </span></h5>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <div class="card mini-stat m-b-30">
+            <div class="p-3 bg-primary text-white">
+                <div class="mini-stat-icon">
+                    <i class="mdi mdi-cart-outline float-right mb-0"></i>
+                </div>
+                <h6 class="text-uppercase mb-0"></h6>
+            </div>
+            <div class="card-body">
+                <div class="border-bottom pb-4">
+                    
+                </div>
+                <div class="mt-4 text-muted">
+                    <div class="float-right">
+                        
+                    </div>
+                    
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    
+   
+
+
+
+{% endblock content %}
+
+{% block script %}
+{% endblock %}

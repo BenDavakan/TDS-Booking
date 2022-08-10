@@ -51,12 +51,13 @@ class ChambreAdmin(admin.ModelAdmin):
         "overnight",
         "capacity",
         "category",
+        "is_delete",
 
     )
 
     search_fields = ('number', 'hotel__name', 'category__name')
 
-    list_editable = ('overnight',)
+    list_editable = ('overnight', 'is_delete',)
 
     inlines = [ImageChambre, EquipChambre]
 

@@ -1,0 +1,163 @@
+{% extends 'TdsBooking/layouts/base.html'%}
+{% load static %}
+
+{% block title %}
+<title>Hôtels</title>
+{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/otl.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.css" integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="anonymous" />
+<style>
+  body{
+    background-color: rgb(231, 228, 228);
+  }
+</style>
+{% endblock %}
+
+
+{% block content %}
+<br>
+<section class="ftco-section ">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-3 sidebar ftco-animate">
+              <div class="sidebar-wrap ftco-animate">
+                  <form action="{% url 'name_search_hotel' %}" method='GET'>
+                    <div class="fields">
+                      <div class="form-group">
+                        <input type="text" name="search" class="form-control" placeholder="Oû allez-vous?">
+                      </div>
+                      <div class="form-group">
+                        <div class="select-wrap one-third">
+                        <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                        
+                      </div>
+                      </div>
+                      <div class="form-group">
+                        
+                        <input type="text" id="datepicker" class="form-control checkin_date" placeholder="Date d'arrivée" readonly>
+                      </div>
+                      <div class="form-group">
+                        <input type="text" id="datepicker1" class="form-control checkout_date" placeholder="Date de depart" readonly>
+                      </div>
+                      
+                      <div class="form-group">
+                        <input type="submit" value="Rechercher" class="btn btn-primary py-3 px-5">
+                      </div>
+                    </div>
+              </form>
+            </div>
+              
+        </div>
+        <div class="col-lg-9">
+            
+                {% for hotel in hotels %}
+                <div class="col-12 m-0">
+                  <div class="row p-2 mb-4 " style="background-color: white; border-radius: 5px;">
+                      <div class="col-md-4 p-0">
+                        <img class="img-thumbnail h-auto" src="{% static 'img/room-5.jpg' %}" style="border-top-left-radius: 5px;border-top-right-radius:
+                          5px;border-bottom-right-radius: 5px;">
+                      </div>
+                      <div class="col-md-5 py-0">
+                        <div class="col-md-12 px-0 d-flex">
+                            <h4 class="mr-3"><a href="{% url 'hotel' hotel.slug %}">{{ hotel.name }}</a></h4> <span class="mr-2" > {{ hotel.star_nbr }} </span>    <span class="" style="color: yellow;"><i class="fa-solid fa-star"></i></span>
+                        </div>
+                        <div class="col-md-12 px-0">
+                          <small class="m-0 p-0 mt-0">
+                              {{ hotel.ville }} | {{ hotel.adress }}
+                          </small>
+                        </div>
+                        <div class="col-md-12 px-0">
+                          <span class="mr-3">
+                            <i class="fa-solid fa-square-parking"></i>
+                          </span>
+                          <span class="mr-3">
+                            <i class="fa-solid fa-wifi"></i>
+                          </span>
+                          <span class="mr-3">
+                            <i class="fa-solid fa-fork-knife"></i>
+                          </span>
+                        </div>
+
+                      </div>
+                      <div class="col-md-3 py-0 pr-0">
+                        <div class="row w-100 m-0 mb-md-4">
+                          <div class="col-md-10">
+                            <div class="float-right"></div>
+                            
+                          </div>
+                          
+                          
+                        </div>
+                        <div class="col-12 float-right w-auto mb-md-3">
+                          <p style="font-size: 15px" class="mb-0 mt-4 text-right">À partir de :</p>
+                          <span class=""> 25 252 F CFA</span>
+                        </div>
+                                               
+                        <div class="row col-12 m-0 p-0 fixed-bottom" style="position:absolute !important">
+                          
+                          <a class="btn btn-primary ml-md-auto" href="{% url 'hotel' hotel.slug %}" role="button">Voir les disponibilités</a>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+
+                {% endfor %}
+            
+            <nav class="mb-3" aria-label="...">
+            
+            <ul class="pagination justify-content-center">
+              {% if hotels.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page={{ hotels.previous_page_number }}"><span aria-hidden="true">&laquo;</span></a></li>
+              {% else %}
+                <li class="page-item"><span class="page-link">&laquo;</span></li>
+              {% endif %}
+              {% for i in hotels.paginator.page_range %}
+                {% if hotels.number == i %}
+                  <li class=" page-item active"><span class="page-link">{{ i }} <span class="sr-only">(current)</span></span></li>
+                {% else %}
+                  <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                {% endif %}
+              {% endfor %}
+              {% if hotels.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{ hotels.next_page_number }}">&raquo;</a></li>
+              {% else %}
+                <li class=" page-item disabled"><span class="page-link">&raquo;</span></li>
+              {% endif %}
+            </ul>
+        
+
+           </nav> 
+    
+        </div> <!-- .col-md-8 -->
+      </div>
+    </div>
+</section>
+
+
+{% endblock %}
+
+{% block script %}
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.js" integrity="sha256-/7FLTdzP6CfC1VBAj/rsp3Rinuuu9leMRGd354hvk0k=" crossorigin="anonymous"></script>
+<script>
+  $(function () {
+    $("#datepicker").datepicker({
+      autoApply: true,
+      format:'DD/MM/YYYY',
+      autoHide: true,
+    });
+  });
+
+  $(function () {
+    $("#datepicker1").datepicker({
+     
+      format:'dd/MM/YYYY',
+      autoHide: true,
+    }).val();
+  });
+  
+</script>
+
+{% endblock script %}

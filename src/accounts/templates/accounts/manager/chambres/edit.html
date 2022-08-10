@@ -1,0 +1,109 @@
+{% extends 'accounts/layouts/base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block title %}
+<title>Chambre</title>
+{% endblock %}
+
+
+{% block style %}
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="float-right page-breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Tds Booking</a></li>
+                <li class="breadcrumb-item"><a href="#">Chambres</a></li>
+                <li class="breadcrumb-item"><a href="#">Liste des chambres</a></li>
+                <li class="breadcrumb-item active">Editer</li>
+            </ol>
+        </div>
+        <h5 class="page-title">Éditer</h5>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-8 offset-2">
+        <div class="card m-b-30">
+            <div class="card-body">
+
+                <h4 class="mt-0 header-title">Chambre {{ chambre.number }}</h4>
+                <p class="text-muted m-b-30 font-14">Parsley is a javascript form validation
+                    library. It helps you provide your users with feedback on their form
+                    submission before sending it to your server.</p>
+
+                <form class="" method="POST">
+
+                    
+                    {% csrf_token %}
+
+                    <div class="form-group">
+                        <label>Numéro</label>
+                        
+                        {% render_field form.number class="form-control" value=chambre.number placeholder="Numéro de la chambre" %}
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Nom</label>
+                        {% render_field form.name class="form-control" value=chambre.name placeholder="Nom de la chambre" %}
+                    </div>
+
+                    <div class="form-group">
+                        <label>Description</label>
+                        <div>
+                            {% render_field form.description class="form-control" value=chambre.description rows="4" placeholder="Description de la chambre" %}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Categorie</label>
+                        {% render_field form.category value='1' class="form-control" %}
+                    </div>
+                    <div class="form-group">
+                        <label>Superficie</label>
+                        {% render_field form.area class="form-control" value=chambre.area %}
+                    </div>
+                    <div class="form-group">
+                        <label>Nombre de lits</label>
+                        {% render_field form.beds class="form-control" value=chambre.beds %}
+                    </div>
+                    <div class="form-group">
+                        <label>Nuité</label>
+                        {% render_field form.overnight class="form-control" value=chambre.overnight %}
+                    </div>
+
+                    <div class="form-group">
+                        <div>
+                            <button type="submit" class="btn btn-primary waves-effect waves-light">
+                                Enrégistrer
+                            </button>
+                            <button type="reset" class="btn btn-secondary waves-effect m-l-5">
+                                Annuler
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block script %}
+<script src="{% static 'accounts/vertical/assets/plugins/parsleyjs/parsley.min.js' %}"></script>
+<script>
+    $(document).ready(function() {
+        $('form').parsley();
+    });
+</script>
+{% endblock %}

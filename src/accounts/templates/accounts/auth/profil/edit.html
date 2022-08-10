@@ -1,0 +1,245 @@
+{% extends 'accounts/layouts/base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block title %}
+<title>Profil</title>
+{% endblock %}
+
+
+{% block style %}
+
+{% endblock %}
+
+
+{% block content %}
+
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="float-right page-breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'home' %}">Tds Booking</a></li>
+                <li class="breadcrumb-item"><a href="#">Profil</a></li>
+            </ol>
+        </div>
+        <h5 class="page-title">Profil</h5>
+    </div>
+</div>
+    
+    <div class="row">
+        
+        <div class="col-md-12">
+          <div class="tab-content" id="v-pills-tabContent">
+            <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card m-b-30">
+                        <div class="card-body">
+
+                            <h2 class="mt-0 header-title">Informations personnelles</h2>
+                            <p class="text-muted m-b-30 font-14">
+                                lorem ipsum dolor sit amet, consectetur adip
+                            </p>
+                            <form method="POST" enctype="multipart/form-data">
+
+                                {% csrf_token %}
+                                
+
+                                <div class="">
+                                    
+                                
+                                    <div class="row">
+                                        <div class="col-5">Nom </div>
+                                        <div class="col-5" id="nom"> <span class="mr-2">{{ profile.user.first_name }}</span> <span class="">{{ profile.user.last_name }}</span></div>
+                                        <div class="col-5" id="input_nom" style="display: none;">
+                                            <p>
+                                                
+                                                {% render_field user_form.first_name  value=profile.user.first_name placeholder="Prénoms" %}
+                                            </p>
+                                            <p>
+                                                {% render_field user_form.last_name  value=profile.user.last_name placeholder="Nom" %}
+                                            </p>
+                                        </div>
+                                        <div class="col-2">
+                                            <span class="edit_name" style="color: blue; cursor: pointer;" >Modifier</span>
+                                            <button class="ann_edit_name" type="reset" style="color: black; display: none" >Annuler</button>
+                                            <button type="submit" id="val_edit_name" style="color: black; display: none" >Valider</button>
+                                            
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-5">Numéro de Téléphone </div>
+                                        <div class="col-5" id="tel">{{ profile.user.tel }}</div>
+                                        <div class="col-5" id="input_tel" style="display: none">
+                                        {% render_field user_form.tel  value=profile.user.tel placeholder="Numéro de téléphone" %}
+                                        </div>
+                                        <div class="col-2">
+                                            <span class="edit_tel" style="color: blue; cursor: pointer;" >Modifier</span>
+                                            <button class="ann_edit_tel" type="reset" style="color: black; display: none" >Annuler</button>
+                                            <button type="submit" id="val_edit_tel" style="color: black; display: none" >Valider</button>
+                                            
+                                        </div>
+                                    </div> 
+                                    <hr>
+                                
+                                    <div class="row">
+                                        <div class="col-5">Date de Naissance</div>
+                                        
+                                        {% if profile.birthdate %}
+                                        <div class="col-5" id="birthdate">{{ profile.birthdate }}</div>
+
+                                        {% else %}
+                                        <div class="col-5" id="birthdate" >-</div>
+                                        {% endif %}
+                                        <div class="col-5" id="input_birthdate" style="display: none">
+                                            
+                                            {% render_field profile_form.birthdate value=profile.birthdate  placeholder="Date de Naissance" %}
+                                        </div>
+                                        <div class="col-2">
+                                            <span class="edit_birthdate" style="color: blue; cursor: pointer;" >Modifier</span>
+                                            <button class="ann_edit_birthdate btn btn-secondary" type="reset" style="color: black; display: none" >Annuler</button>
+                                            <button class="btn btn-primary" type="submit" id="val_edit_birthdate" style="color: black; display: none" >Valider</button>
+                                            
+                                        </div>
+                                            
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-5">Pays</div>
+                                        
+                                        {% if profile.country %}
+                                        <div class="col-5 profil_country" id="country">{{ profile.country }}</div>
+
+                                        {% else %}
+                                        <div class="col-5 profil_country" id="country">-</div>
+                                        {% endif %}
+                                        <div class="col-5" id="input_country" style="display: none">
+                                            
+                                            {% render_field profile_form.country value=profile.country  placeholder="Pays" %}
+                                        </div>
+                                        <div class="col-2">
+                                            <span class="edit_country" style="color: blue; cursor: pointer;" >Modifier</span>
+                                            <button class="ann_edit_country" type="reset" style="color: black; display: none" >Annuler</button>
+                                            <button type="submit" id="val_edit_country" style="color: black; display: none" >Valider</button>
+                                            
+                                        </div>
+                                    </div>
+                                        
+                                    </div> 
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-5">Genre </div>
+                                        
+                                        {% if profile.gender %}
+                                        <div class="col-5" id="genre">{{ profile.gender }}</div>
+
+                                        {% else %}
+                                        <div class="col-5" id="genre">-</div>
+                                        {% endif %}
+                                        <div class="col-5" id="input_genre" style="display: none">
+                                            
+                                            {% render_field profile_form.gender value=profile.gender placeholder="Genre" %}
+                                        </div>
+                                        <div class="col-2">
+                                            <span class="edit_genre" style="color: blue; cursor: pointer;" disabled>Modifier</span>
+                                            <button class="ann_edit_genre" type="reset" style="color: black; display: none" >Annuler</button>
+                                            <button type="submit" id="val_edit_genre" style="color: black; display: none" >Valider</button>
+                                            
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+
+                            </form>
+
+                        </div>
+                    </div>
+                 </div> <!-- end col -->  
+            </div>
+        </div>
+            
+            
+            
+       
+
+
+
+
+{% endblock %}
+
+{% block script %}
+<script>
+    
+    $(document).ready(function(){
+        $(".edit_name").click(function(){
+
+          $("#nom, .edit_name").hide();
+          $("#val_edit_name, .ann_edit_name, #input_nom").show();
+          
+          $(".hide").attr("disabled", true);
+        });
+        $(".ann_edit_name").click(function(){
+            $("#nom, .edit_name").show();
+            $("#val_edit_name, .ann_edit_name, #input_nom").hide();
+        });
+        
+        $(".edit_email").click(function(){
+
+          $("#email, .edit_email").hide();
+          $("#val_edit_email, .ann_edit_email, #input_email").show();
+          
+          $(".edit_name").attr("disabled", true);
+        });
+        $(".ann_edit_email").click(function(){
+            $("#email, .edit_email").show();
+            $("#val_edit_email, .ann_edit_email, #input_email").hide();
+        });
+        $(".edit_tel").click(function(){
+
+          $("#tel, .edit_tel").hide();
+          $("#val_edit_tel, .ann_edit_tel, #input_tel").show();
+          
+          $(".hide").attr("disabled", true);
+        });
+        $(".ann_edit_tel").click(function(){
+            $("#tel, .edit_tel").show();
+            $("#val_edit_tel, .ann_edit_tel, #input_tel").hide();
+        });
+        $(".edit_birthdate").click(function(){
+
+          $("#birthdate, .edit_birthdate").hide();
+          $("#val_edit_birthdate, .ann_edit_birthdate, #input_birthdate").show();
+          
+          $(".hide").attr("disabled", true);
+        });
+        $(".ann_edit_birthdate").click(function(){
+            $("#birthdate, .edit_birthdate").show();
+            $("#val_edit_birthdate, .ann_edit_birthdate, #input_birthdate").hide();
+        });
+        $(".edit_country").click(function(){
+
+          $("#country, .edit_country").hide();
+          $("#val_edit_country, .ann_edit_country, #input_country").show();
+          
+          $(".hide").attr("disabled", true);
+        });
+        $(".ann_edit_country").click(function(){
+            $("#country, .edit_country").show();
+            $("#val_edit_country, .ann_edit_country, #input_country").hide();
+        });
+        $(".edit_genre").click(function(){
+
+          $("#genre, .edit_genre").hide();
+          $("#val_edit_genre, .ann_edit_genre, #input_genre").show();
+          
+          $(".hide").attr("disabled", true);
+        });
+        $(".ann_edit_genre").click(function(){
+            $("#genre, .edit_genre").show();
+            $("#val_edit_genre, .ann_edit_genre, #input_genre").hide();
+        });
+      });
+</script>
+{% endblock %}

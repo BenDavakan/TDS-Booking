@@ -1,15 +1,14 @@
+
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render, redirect
-from kkiapay import Kkiapay
 
 
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from django.urls import reverse
-from accounts.forms import EditProfileForm, ManagerEditChambre, SignupForm, SigninForm
-from accounts.models import CustomUser, HotelManager, Profile
-from hotels.models import Chambre, Payement, Reservation
+from django.urls import reverse, reverse_lazy
+from accounts.forms import ProfileForm, SignupForm, SigninForm, UserForm
+from accounts.models import CustomUser, Profile
 
 
 def inscription_view(request):
@@ -21,7 +20,7 @@ def inscription_view(request):
         password2 = request.POST.get('password2')
         if password != password2:
             form = SignupForm()
-            return render(request, 'signup.html', {"error": "Les mots de passse ne correspondent pas", "form": form})
+            return render(request, 'accounts/auth/signup.html', {"error": "Les mots de passse ne correspondent pas", "form": form})
         elif CustomUser.objects.filter(email=email).exists():
             messages.info(
                 request, "L'email est déja pris!! Réessayez avez un autre.")
@@ -32,7 +31,7 @@ def inscription_view(request):
             return redirect('connexion')
     else:
         form = SignupForm()
-        return render(request, 'signup.html', {"form": form})
+        return render(request, 'accounts/auth/signup.html', {"form": form})
 
 
 def connexion_view(request):
@@ -46,10 +45,10 @@ def connexion_view(request):
             return redirect('home')
         else:
             form = SigninForm()
-            return render(request, 'signin.html', {"error": "Erreur de connexion, veuillez réesayer.", "form": form})
+            return render(request, 'accounts/auth/signin.html', {"error": "Erreur de connexion, veuillez réesayer.", "form": form})
     else:
         form = SigninForm()
-        return render(request, 'signin.html', {"form": form})
+        return render(request, 'accounts/auth/signin.html', {"form": form})
 
 
 def deconnexion(request):
@@ -58,75 +57,25 @@ def deconnexion(request):
 
 
 def profil_view(request):
-    return render(request, 'profil.html', {'user': request.user})
+    return render(request, 'accounts/auth/profil/index.html', {'user': request.user})
 
 
 def edit_profile(request):
-    user = request.user
-    profil = Profile.objects.get(user=user.id)
-    profil.gender = "Masculin"
-    profil.save()
 
-    print(profil.gender)
+    profile = Profile.objects.get(user=request.user)
 
-    return render(request, 'edit_profil.html', {'profil': profil})
+    if request.method == 'POST':
+        user_form = UserForm(request.POST, instance=request.user)
+        profile_form = ProfileForm(
+            request.POST, request.FILES, instance=request.user.profile)
 
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            messages.success(request, f'Votre profil a été mis à jour')
+            return redirect('home')
+    else:
+        user_form = UserForm(instance=request.user)
+        profile_form = ProfileForm(instance=request.user.profile)
 
-def mes_reservations(request):
-    user = request.user
-    reservations = Reservation.objects.filter(user=user.id)
-
-    return render(request, 'accounts/mes_reservations.html', {'reservations': reservations})
-
-
-def detail_reservation(request, token):
-
-    reservation = get_object_or_404(Reservation, token=token)
-
-    return render(request, 'accounts/detail_reservation.html', {'reservation': reservation})
-
-
-def annul_reservation(request, token):
-
-    reservation = Reservation.objects.get(token=token)
-    reservation.status = "AN"
-    reservation.save()
-
-    return HttpResponseRedirect(reverse('reservation', args=[token]))
-
-
-def mes_paiements(request):
-    user = request.user
-
-    paiements = Payement.objects.filter(reservation__user=user)
-
-    return render(request, 'accounts/mes_paiements.html', {'paiements': paiements})
-
-
-def detail_paiement(request, token):
-    paiement = get_object_or_404(Payement, token=token)
-
-    k = Kkiapay('286874f0fedb11eca56ad905c440058f',
-                'tpk_28689c01fedb11eca56ad905c440058f', 'tsk_28689c02fedb11eca56ad905c440058f', sandbox=True)
-    transaction = k.verify_transaction(paiement.transaction_id)
-    return render(request, 'accounts/detail_paiement.html', {'paiement': paiement, 'transaction': transaction, })
-
-
-def dashboard_admin(request):
-    return render(request, 'accounts/admin/dashboard_admin.html')
-
-
-def manager_chambres(request):
-    user = request.user
-    manager = HotelManager.objects.get(user=user.id)
-
-    chambres = Chambre.objects.filter(hotel=manager.hotel)
-
-    return render(request, 'hotels/manager/chambres/index.html', {'chambres': chambres})
-
-
-def manager_chambre(request, number):
-    chambre = get_object_or_404(Chambre, number=number)
-    form = ManagerEditChambre()
-
-    return render(request, 'hotels/manager/chambres/chambre.html', {"form": form, 'chambre': chambre})
+    return render(request, 'accounts/auth/profil/edit.html', {'user_form': user_form, 'profile_form': profile_form, 'profile': profile})

@@ -78,6 +78,7 @@ class Chambre(models.Model):
     slug = models.SlugField(blank=True)
     description = models.TextField(blank=True)
     number = models.IntegerField()
+    token = models.CharField(max_length=100, blank=True, null=True)
     overnight = models.PositiveIntegerField()
     area = models.PositiveIntegerField()
     category = models.ForeignKey(
@@ -89,6 +90,8 @@ class Chambre(models.Model):
     created_at = models.DateTimeField(auto_now=True, blank=True, null=True)
     video = models.FileField(upload_to='videos_uploaded', null=True, blank=True,
                              validators=[FileExtensionValidator(allowed_extensions=['MOV', 'avi', 'mp4', 'webm', 'mkv'])])
+    is_delete = models.BooleanField(default=False)
+    delete_at = models.DateTimeField(blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -115,11 +118,14 @@ class Reservation(models.Model):
     check_out = models.DateField()
     STATUS = [
         ('EC', 'En cours'),
-        ('AN', 'Annulé'),
-        ('P', 'Payé'),
+        ('AN', 'Annulée'),
+        ('T', 'Termineé'),
+        ('P', 'Payée'),
     ]
     status = models.CharField(choices=STATUS, max_length=200, default='EC')
     add_at = models.DateTimeField(auto_now=True, blank=True, null=True)
+    is_delete = models.BooleanField(default=False)
+    delete_at = models.DateTimeField(blank=True, null=True)
 
     def __str__(self):
         return self.chambre.name
@@ -137,6 +143,8 @@ class Payement(models.Model):
         choices=MODE, max_length=200, default='card')
     transaction_id = models.CharField(max_length=700)
     add_at = models.DateTimeField(auto_now=True, blank=True, null=True)
+    is_delete = models.BooleanField(default=False)
+    delete_at = models.DateTimeField(blank=True, null=True)
 
 
 class CategorieEquipementHotel(models.Model):
