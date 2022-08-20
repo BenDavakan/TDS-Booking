@@ -2,43 +2,24 @@ from django.conf import settings
 from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
+from ckeditor.fields import RichTextField
 
 from django.core.validators import FileExtensionValidator
 
 # Create your models here.
 
 
-class Pays (models.Model):
-    name = models.CharField(max_length=100)
-    date_added = models.DateTimeField(auto_now=True, blank=True, null=True)
-
-    def __str__(self):
-        return self.name
-
-
-class Ville (models.Model):
-    pays = models.ForeignKey(Pays, on_delete=models.CASCADE)
-    name = models.CharField(max_length=100)
-    date_added = models.DateTimeField(auto_now=True, blank=True, null=True)
-
-    def __str__(self):
-        return self.name
-
-    def one_ville(self, id):
-        return id
-
-
 class Hotel(models.Model):
     name = models.CharField(max_length=100)
     slug = models.SlugField(blank=True)
-    description = models.TextField(blank=True)
+    description = RichTextField(blank=True, null=True)
     tel_1 = models.CharField(max_length=100)
     tel_2 = models.IntegerField(blank=True, null=True)
     email = models.EmailField()
     adress = models.CharField(max_length=100, blank=True, null=True)
     star_nbr = models.PositiveIntegerField()
-    ville = models.ForeignKey(
-        Ville, related_name='categorie', on_delete=models.CASCADE)
+    ville = models.CharField(max_length=100, blank=True, null=True)
+    token = models.CharField(max_length=100, blank=True, null=True)
     created_at = models.DateTimeField(auto_now=True, blank=True, null=True)
     video = models.FileField(upload_to='videos_uploaded', null=True, blank=True,
                              validators=[FileExtensionValidator(allowed_extensions=['MOV', 'avi', 'mp4', 'webm', 'mkv'])])
@@ -74,9 +55,10 @@ class Category(models.Model):
 
 
 class Chambre(models.Model):
+
     name = models.CharField(max_length=100, blank=True, null=True)
     slug = models.SlugField(blank=True)
-    description = models.TextField(blank=True)
+    description = RichTextField(blank=True, null=True)
     number = models.IntegerField()
     token = models.CharField(max_length=100, blank=True, null=True)
     overnight = models.PositiveIntegerField()
@@ -86,12 +68,13 @@ class Chambre(models.Model):
     hotel = models.ForeignKey(
         Hotel, related_name='hotel', on_delete=models.CASCADE)
     beds = models.PositiveIntegerField()
-    capacity = models.PositiveIntegerField()
+    capacity = models.PositiveIntegerField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now=True, blank=True, null=True)
     video = models.FileField(upload_to='videos_uploaded', null=True, blank=True,
                              validators=[FileExtensionValidator(allowed_extensions=['MOV', 'avi', 'mp4', 'webm', 'mkv'])])
     is_delete = models.BooleanField(default=False)
     delete_at = models.DateTimeField(blank=True, null=True)
+    update_at = models.DateTimeField(blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -178,8 +161,8 @@ class Equipement(models.Model):
 
 
 class Image_Hotel(models.Model):
-    name = models.CharField(max_length=255, blank=True)
-    image = models.ImageField(upload_to="images/", validators=[
+    name = models.CharField(max_length=255, blank=True, null=True)
+    image = models.ImageField(upload_to="images/hotel/", validators=[
                               FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'webp'])])
     hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now=True, blank=True, null=True)

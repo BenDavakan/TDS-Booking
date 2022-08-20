@@ -35,22 +35,55 @@
         <div class="card mini-stat m-b-30">
             <div class="p-3 bg-primary text-white">
                 <div class="mini-stat-icon">
+                    <i class="mdi mdi-tag-text-outline float-right mb-0"></i>
+                </div>
+                <h6 class="text-uppercase mb-0">Chambres</h6>
+            </div>
+            <div class="card-body">
+                <div class=" pb-1 d-block">
+                    <span class="badge badge-success"> {{ progress }} </span> <span class="ml-2 text-muted">Standars</span>
+                </div>
+                <div class=" pb-1 d-block">
+                    <span class="badge badge-success"> {{ end }} </span> <span class="ml-2 text-muted">VIP</span>
+                </div>
+                <div class="border-bottom pb-2 d-block">
+                    <span class="badge badge-success"> {{ cancel }} </span> <span class="ml-2 text-muted">Suite</span>
+                </div>
+                <div class="mt-2 text-muted">
+                    <div class="float-right">
+                        <p class="m-0"></p>
+                    </div>
+                    <h5 class="m-0">{{ total_room }} <i class="mdi mdi-arrow-up text-secondary ml-2"></i></h5>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <div class="card mini-stat m-b-30">
+            <div class="p-3 bg-primary text-white">
+                <div class="mini-stat-icon">
                     <i class="mdi mdi-cube-outline float-right mb-0"></i>
                 </div>
                 <h6 class="text-uppercase mb-0">Reservations</h6>
             </div>
             <div class="card-body">
-                <div class="border-bottom pb-2">
-                    <p class="mb-0"><span class="text-muted">En cours : {{ progress }}</span></p>
-                    <p class="mb-0"><span class=" text-muted">Terminées :  {{ end }} </span></p>
-                    <p class="mb-1"><span class=" text-muted">Annulées :  {{ cancel }} </span></p>
-
-                </div>
-                <div class="mt-2 text-muted">
-                    <h5 class="m-0">Total : <span class="ml-4"> {{ total }}  </span> </h5>
-                    
-                    
-                </div>
+                
+                    <div class=" pb-1 d-block">
+                        <span class="badge badge-success"> {{ progress }} </span> <span class="ml-2 text-muted">En cours</span>
+                    </div>
+                    <div class=" pb-1 d-block">
+                        <span class="badge badge-success"> {{ end }} </span> <span class="ml-2 text-muted">Terminées</span>
+                    </div>
+                    <div class="border-bottom pb-2 d-block">
+                        <span class="badge badge-danger"> {{ cancel }} </span> <span class="ml-2 text-muted">Annulées</span>
+                    </div>
+                    <div class="mt-2 text-muted">
+                        <div class="float-right">
+                            <p class="m-0"></p>
+                        </div>
+                        <h5 class="m-0">{{ total }} <i class="mdi mdi-arrow-up text-secondary ml-2"></i></h5>
+                    </div>
             </div>
         </div>
     </div>
@@ -66,34 +99,17 @@
                 <div class="border-bottom pb-4">
                         
                 </div>
-                <div class="mt-4 text-muted">
-                    
-                    <h5 class="m-0">Total : <span class="ml-4"> {{ total_payment }}  </span></h5>
-                    
+                <div class="mt-2 text-muted">
+                    <div class="float-right">
+                        <p class="m-0"></p>
+                    </div>
+                    <h5 class="m-0">{{ total_payment }} <i class="mdi mdi-arrow-up text-secondary ml-2"></i></h5>
                 </div>
+                
             </div>
         </div>
     </div>
-    <div class="col-xl-3 col-md-6">
-        <div class="card mini-stat m-b-30">
-            <div class="p-3 bg-primary text-white">
-                <div class="mini-stat-icon">
-                    <i class="mdi mdi-tag-text-outline float-right mb-0"></i>
-                </div>
-                <h6 class="text-uppercase mb-0">Chambres</h6>
-            </div>
-            <div class="card-body">
-                <div class="border-bottom pb-4">
-                    
-                </div>
-                <div class="mt-4 text-muted">
-                    
-                    <h5 class="m-0">Total : <span class="ml-4"> {{ total_room }}  </span></h5>
-                    
-                </div>
-            </div>
-        </div>
-    </div>
+    
     <div class="col-xl-3 col-md-6">
         <div class="card mini-stat m-b-30">
             <div class="p-3 bg-primary text-white">

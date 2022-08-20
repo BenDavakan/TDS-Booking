@@ -9,6 +9,13 @@
 
 {% block style %}
 
+    <link href="{% static 'accounts/vertical/assets/plugins/datatables/dataTables.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'accounts/vertical/assets/plugins/datatables/buttons.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+
+    <link href="{% static 'accounts/vertical/assets/plugins/datatables/responsive.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+
+    <link href="{% static 'accounts/vertical/assets/css/reservations/style.css' %}" rel="stylesheet" type="text/css">
+
 {% endblock %}
 
 
@@ -33,28 +40,35 @@
             <div class="card m-b-30">
                 <div class="card-body">
 
-                    <h4 class="mt-0 header-title"> {{ hotel.name }}</h4>
+                    <h2 class="mt-0 header-title"> {{ hotel.name }}</h2>
                     <p class="text-muted m-b-30 font-14">{{ hotel.description }}</p>
-
-                    <dl class="row mb-0">
-                        <dt class="col-sm-4">Adresse</dt>
-                        <dd class="col-sm-8">{{ hotel.adress }}</dd>
-
-                        <dt class="col-sm-4">Ville</dt>
-                        <dd class="col-sm-8">{{ hotel.ville }}</dd>
-
-                        <dt class="col-sm-4">Email</dt>
-                        <dd class="col-sm-8">{{ hotel.email }}</dd>
-                        
-                        <dt class="col-sm-4">Numéros de téléphone </dt>
-                        <dd class="col-sm-8">{{ hotel.tel_1 }}</dd>
-                        
-
-                        <dt class="col-sm-4">Nombre d'étoiles</dt>
-                        <dd class="col-sm-8">{{hotel.star_nbr }}</dd>
-                        
-                        
-                    </dl>
+                    <table class="table table-bordered table-striped">
+        
+                        <tbody>
+                          <tr>
+                            <th scope="row">Nombre d'étoiles</th>
+                            <td> {{hotel.star_nbr }} </td>
+                          </tr>
+                          <tr>
+                            <th scope="row">Adresse</th>
+                            <td> {{ hotel.adress }} </td>
+                          </tr>
+                          <tr>
+                            <th scope="row">Ville</th>
+                            <td colspan="2"> {{ hotel.ville }} </td>
+                          </tr>
+                          <tr>
+                            <th scope="row">Email</th>
+                            <td colspan="2"> {{ hotel.email }} </td>
+                          </tr>
+                          
+                          <tr>
+                            <th scope="row">Numéro de telefone</th>
+                            <td colspan="2"> {{ hotel.tel_1 }} </td>
+                          </tr>
+                          
+                        </tbody>
+                    </table>
                     
                 </div>
 
@@ -64,9 +78,55 @@
         
 </div>
 
+<div class="row">
+    <div class="col-md-10 offset-1">
+        <div class="card m-b-30">
+            <div class="card-body">
+
+                <h2 class="mt-0 header-title">Equipements</h2>
+                
+                <table id="datatable" class="table table-bordered table-striped dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                    <thead>
+                    <tr>
+                        <th>Dénomination</th>
+                        <th>Quantité</th>
+                        <th>Date d'ajout</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    
+                    <tr>
+                        <td>Parking</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td class="text-center">
+                            <a href=""><button type="" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></button></a>
+                            <a href=""><button class="btn btn-danger btn-sm" type="button"><i class="fa fa-trash"></i></button></a>
+                        </td>                                              
+                    </tr>
+                  
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div> <!-- end col -->
+</div>
+
 
 
 {% endblock content %}
 
 {% block script %}
+
+     <script src="{% static 'accounts/vertical/assets/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+     <script src="{% static 'accounts/vertical/assets/plugins/datatables/dataTables.bootstrap4.min.js' %}"></script>
+   
+
+     <script src="{% static 'accounts/vertical/assets/plugins/datatables/dataTables.responsive.min.js' %}"></script>
+     <script src="{% static 'accounts/vertical/assets/plugins/datatables/responsive.bootstrap4.min.js' %}"></script>
+
+     <script src="{% static 'accounts/vertical/assets/pages/datatables.init.js' %}"></script>
 {% endblock %}

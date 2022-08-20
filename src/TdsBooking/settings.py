@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'accounts',
     'django.contrib.humanize',
+    'ckeditor',
 
 ]
 
@@ -88,7 +89,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'TdsBooking',
         'USER': 'root',
-        'PASSWORD': 'Ben10@',
+        'PASSWORD': 'Ben/@94Ben',
         'HOST': 'localhost',
         'PORT': '3306',
     }

@@ -7,7 +7,7 @@ from django.db.models import Q
 from django.core.mail import send_mail
 from django.urls import reverse
 from hotels.helpers.availability import check_availability
-from hotels.models import Chambre, Hotel, Payement, Reservation, Ville
+from hotels.models import Chambre, Hotel, Payement, Reservation
 from django.utils.crypto import get_random_string
 from django.template.loader import render_to_string
 

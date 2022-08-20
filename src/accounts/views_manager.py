@@ -1,17 +1,24 @@
-
+import random
+import string
+import dateparser
 from datetime import datetime
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render, redirect
 
 from django.utils.crypto import get_random_string
+from hotels.helpers.availability import check_availability
+from hotels.views import scret_key_generator
 from kkiapay import Kkiapay
+from django.template.loader import render_to_string
+from django.core.mail import EmailMessage
+from django.conf import settings
 
 from django.shortcuts import render
 from django.contrib import messages
 from django.urls import reverse
-from accounts.forms import CheckBooking, ManagerAddBooking, ManagerEditChambre
-from accounts.models import HotelManager
-from hotels.models import Chambre, Hotel, Payement, Reservation
+from accounts.forms import AddHotelImg, CheckBooking, ManagerAddBooking, ManagerEditChambre
+from accounts.models import CustomUser, HotelManager
+from hotels.models import Chambre, Equipement, Hotel, Image_Hotel, Payement, Reservation
 
 
 def add_room(request):
@@ -50,6 +57,26 @@ def manager_hotel(request):
     return render(request, 'accounts/manager/hotel/index.html', {'hotel': hotel})
 
 
+def add_hotel_img(request):
+    manager = HotelManager.objects.get(user=request.user.id)
+
+    imgs = Image_Hotel.objects.filter(hotel=manager.hotel.id)
+
+    if request.method == 'POST':
+
+        form = AddHotelImg(request.POST, request.FILES)
+
+        if form.is_valid():
+
+            form.save()
+
+            return redirect('add-hotel-img')
+    else:
+        form = AddHotelImg()
+
+    return render(request, 'accounts/manager/hotel/gallery.html', {'form': form, 'imgs': imgs})
+
+
 def manager_chambres(request):
     user = request.user
     manager = HotelManager.objects.get(user=user.id)
@@ -60,14 +87,27 @@ def manager_chambres(request):
     return render(request, 'accounts/manager/chambres/index.html', {'chambres': chambres})
 
 
-def manager_chambre(request, id):
-    chambre = get_object_or_404(Chambre, pk=id)
+def manager_edit_chambre(request, token):
+    manager = HotelManager.objects.get(user=request.user.id)
+    chambre = get_object_or_404(Chambre, token=token)
+
     if request.method == "POST":
-        form = ManagerEditChambre(request.POST, instance=chambre)
-        if form.is_valid():
-            form.save()
-    form = ManagerEditChambre()
+
+        Chambre.objects.filter(token=token).update(hotel=manager.hotel.id, description=request.POST['description'], name=request.POST['name'], number=request.POST['number'], overnight=request.POST[
+            'overnight'], category=request.POST['category'], beds=request.POST['beds'], capacity=request.POST['capacity'],  area=request.POST['area'], update_at=datetime.now(),)
+
+        return HttpResponseRedirect(reverse('manager-edit-chambre', args=[token]))
+    else:
+
+        form = ManagerEditChambre(
+            initial={'description': chambre.description, 'category': chambre.category})
     return render(request, 'accounts/manager/chambres/edit.html', {"form": form, 'chambre': chambre})
+
+
+def manager_chambre_details(request, token):
+    room = Chambre.objects.get(token=token)
+    equipements = Equipement.objects.filter(chambre=room.id)
+    return render(request, 'accounts/manager/chambres/details.html', {'room': room, 'equipements': equipements})
 
 
 def mes_paiements(request):
@@ -117,7 +157,8 @@ def manager_dashboard(request):
     manager = HotelManager.objects.get(user=user.id)
 
     # Count Booking
-    booking = Reservation.objects.filter(chambre__hotel=manager.hotel.id)
+    booking = Reservation.objects.filter(
+        chambre__hotel=manager.hotel.id)
     total = booking.count()
     booking_cancel = booking.filter(status="AN")
     cancel = booking_cancel.count()
@@ -165,18 +206,90 @@ def check_booking(request):
 
 
 def add_booking(request):
-    form = ManagerAddBooking()
-    return render(request, 'accounts/manager/reservations/add.html', {'form': form})
+    user = request.user
+    manager = HotelManager.objects.get(user=user.id)
+    available_rooms = []
+    check_in = ""
+    check_out = ""
+    form = ManagerAddBooking(request.GET)
+    if form.is_valid():
+
+        check_in = str(form.cleaned_data['check_in'])
+        check_out = str(form.cleaned_data['check_out'])
+        print(type(check_in))
+
+        room_list = Chambre.objects.filter(
+            hotel=manager.hotel.id).exclude(is_delete=True)
+
+        for room in room_list:
+            if check_availability(room, check_in, check_out):
+                available_rooms.append(room)
+
+    return render(request, 'accounts/manager/reservations/add.html', {'form': form, 'available_rooms': available_rooms, 'check_in': check_in, 'check_out': check_out})
 
 
-def delete_room(request, id):
-    room = Chambre.objects.get(id=id)
+def add_booking_form(request, token, check_in, check_out):
+    manager = HotelManager.objects.get(user=request.user.id)
+    room = Chambre.objects.get(hotel=manager.hotel.id, token=token)
+    x1 = dateparser.parse(check_in)
+    x2 = dateparser.parse(check_out)
+    sejour = (x2 - x1).days
+    amount = room.overnight * sejour
+
+    key = scret_key_generator()
+    while Reservation.objects.filter(secret_key=key).exists():
+        key = scret_key_generator()
+
+    token = get_random_string(length=32)
+    while Reservation.objects.filter(token=token).exists():
+        token = get_random_string(length=32)
+
+    if request.method == 'POST':
+
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        email = request.POST.get('email')
+        tel = request.POST.get('tel')
+
+        password = ''
+        characters = list(string.ascii_letters + string.digits + "!@#$%&()")
+
+        for i in range(8):
+            password += random.choice(characters)
+
+        if CustomUser.objects.filter(email=email).exists():
+            user = CustomUser.objects.get(email=email)
+
+        else:
+            user = CustomUser.objects.create_user(
+                first_name=first_name, last_name=last_name, email=email, password=password, tel=tel,)
+
+            template = render_to_string('hotels/email/new_user.html', {
+                'first_name': first_name, 'last_name': last_name, 'password': password, 'email': email})
+            mail = EmailMessage(
+                'TDS Booking',
+                template,
+                settings.EMAIL_HOST_USER,
+                [email],
+            )
+            mail.fail_silently = False
+            mail.send()
+
+        reserv = Reservation.objects.create(
+            user_id=user.id, secret_key=key, token=token, chambre_id=room.id, check_in=x1, check_out=x2, amount=amount)
+        print(reserv)
+
+    return render(request, 'accounts/manager/reservations/add_form.html', {'room': room, 'check_in': x1, 'check_out': x2, 'sejour': sejour, 'amount': amount})
+
+
+def delete_room(request, token):
+    room = Chambre.objects.get(token=token)
     room.is_delete = True
     room.delete_at = datetime.now()
     room.save()
     return redirect('manager-chambres')
 
 
-def delete_room_confirm(request, id):
-    room = Chambre.objects.get(id=id)
+def delete_room_confirm(request, token):
+    room = Chambre.objects.get(token=token)
     return render(request, 'accounts/manager/chambres/delete.html', {'room': room})

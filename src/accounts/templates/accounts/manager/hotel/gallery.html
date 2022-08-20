@@ -1,0 +1,84 @@
+{% extends 'accounts/layouts/base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block title %}
+<title>Hotel</title>
+{% endblock %}
+
+
+{% block style %}
+<link href="{% static 'accounts/vertical/assets/plugins/magnific-popup/magnific-popup.css' %}" rel="stylesheet" type="text/css">
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="float-right page-breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Tds Booking</a></li>
+                <li class="breadcrumb-item active">Galerie</li>
+            </ol>
+        </div>
+        <h5 class="page-title">Galerie</h5>
+    </div>
+</div>
+
+<div class="row">
+        <div class="col-md-12">
+
+            <div class="card m-b-30">
+                <div class="card-body">
+
+                    <form method="POST" enctype="multipart/form-data" >
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                       <button type="submit">Ajouter</button> 
+                    </form>
+                    
+                </div>
+
+            </div>
+
+        </div>
+
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card m-b-30">
+            <div class="card-body">
+
+                <h4 class="mt-0 header-title">Lightbox gallery</h4>
+                <p class="text-muted m-b-30 font-14">In this example lazy-loading of images is enabled for the next image based on move direction. </p>
+
+                <div class="popup-gallery">
+                    {% for img in imgs %}
+                    <a class="float-left" href="{{ img.image.url }}" title="Project 1">
+                        <div class="img-fluid d-block mx-auto">
+                            <img src=" {{ img.image.url }} " alt="" width="120"  height="120">
+                        </div>
+                    </a>
+                    {% endfor %}
+                    
+                    
+                </div>
+
+            </div>
+        </div>
+    </div> 
+</div>
+
+
+
+{% endblock content %}
+
+
+
+{% block script %}
+<script src="{% static 'accounts/vertical/assets/plugins/magnific-popup/jquery.magnific-popup.min.js' %}"></script>
+<script src="{% static 'accounts/vertical/assets/pages/lightbox.js' %}"></script>
+{% endblock %}

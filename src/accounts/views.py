@@ -1,7 +1,8 @@
 
+from datetime import datetime
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render, redirect
-
+from django.utils import timezone
 
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
@@ -27,7 +28,7 @@ def inscription_view(request):
             return redirect('inscription')
         else:
             CustomUser.objects.create_user(
-                first_name=first_name, last_name=last_name, email=email, password=password, tel=97662516,)
+                first_name=first_name, last_name=last_name, date_joined=datetime.now(), email=email, password=password, tel=97662516,)
             return redirect('connexion')
     else:
         form = SignupForm()
@@ -65,16 +66,20 @@ def edit_profile(request):
     profile = Profile.objects.get(user=request.user)
 
     if request.method == 'POST':
-        user_form = UserForm(request.POST, instance=request.user)
-        profile_form = ProfileForm(
-            request.POST, request.FILES, instance=request.user.profile)
+        user_form = UserForm(request.POST,
+                             instance=request.user)
+        profile_form = ProfileForm(request.POST,
+                                   request.FILES,
+                                   instance=profile)
+        if profile_form.is_valid():
 
-        if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
-            messages.success(request, f'Votre profil a été mis à jour')
-            return redirect('home')
+
+            return redirect('edit-profil')
+
     else:
+
         user_form = UserForm(instance=request.user)
         profile_form = ProfileForm(instance=request.user.profile)
 

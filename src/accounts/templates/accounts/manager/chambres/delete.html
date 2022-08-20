@@ -14,9 +14,9 @@
 
 {% block content %}
 
-<div class="" >
+<div class="row" >
     
-    <div class="modal-content">
+    <div class="modal-content col-md-6 mt-5 offset-3">
         <div class="modal-header ">
         <h2 class="modal-title " stye="color:red;">Avertissement</h2>
         </div>
@@ -33,7 +33,7 @@
         </div>
         <div class="modal-footer">
             
-            <a href="{% url 'delete-room' room.id %}"><button type="button" class="btn btn-primary">OUI</button></a>
+            <a href="{% url 'delete-room' room.token %}"><button type="button" class="btn btn-danger">OUI</button></a>
             <a href="{% url 'manager-chambres'%}"><button type="button" class="btn btn-secondary">Non</button></a>
         
         </div>

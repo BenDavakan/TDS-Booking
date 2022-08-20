@@ -39,14 +39,15 @@ class MyUserManager(BaseUserManager):
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(max_length=100, blank=True, null=True)
     last_name = models.CharField(max_length=100, blank=True, null=True)
-    email = models.EmailField(unique=True)
+    email = models.EmailField(unique=True,)
     tel = models.IntegerField(blank=True, null=True)
     is_active = models.BooleanField(default=True)
     is_manager = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
-    date_joined = models.DateTimeField(auto_now=True, blank=True, null=True)
+    date_joined = models.DateTimeField(blank=True, null=True)
+    update_at = models.DateTimeField(blank=True, null=True)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELD = ['first_name', 'last_name']
@@ -69,10 +70,11 @@ class Profile(models.Model):
     country = models.CharField(max_length=50, blank=True, null=True)
     gender = models.CharField(max_length=100, blank=True, null=True)
     birthdate = models.DateField(null=True, blank=True)
-    profile_pic = models.ImageField(upload_to="images/", validators=[
+
+    profile_pic = models.ImageField(upload_to="images/profil/", validators=[
                                     FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'webp'])], blank=True, null=True)
     created_at = models.DateTimeField(null=True, blank=True)
-    update_on = models.DateTimeField(null=True, blank=True)
+    update_at = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
         return self.user.first_name

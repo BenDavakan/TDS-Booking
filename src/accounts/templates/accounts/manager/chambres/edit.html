@@ -44,6 +44,7 @@
                     
                     {% csrf_token %}
 
+                   
                     <div class="form-group">
                         <label>Numéro</label>
                         
@@ -77,6 +78,10 @@
                     <div class="form-group">
                         <label>Nuité</label>
                         {% render_field form.overnight class="form-control" value=chambre.overnight %}
+                    </div>
+                    <div class="form-group">
+                        <label>Capacité (Nombre de personnes)</label>
+                        {% render_field form.capacity class="form-control" value=chambre.capacity %}
                     </div>
 
                     <div class="form-group">

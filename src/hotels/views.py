@@ -6,12 +6,12 @@ import dateparser
 
 from django.utils.crypto import get_random_string
 from django.core.paginator import Paginator
-from datetime import date
+from datetime import date, datetime
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from accounts.models import CustomUser
-from hotels.models import Chambre, Equipement, Equipement_Hotel, Hotel, Payement, Reservation, Ville
+from hotels.models import Chambre, Equipement, Equipement_Hotel, Hotel, Payement, Reservation
 
 from django.contrib import messages
 from django.template.loader import render_to_string
@@ -34,7 +34,8 @@ def search_hotel(request):
     request.session['date01'] = t1
     request.session['date02'] = t2
 
-    room_list = Chambre.objects.filter(hotel__ville__name=search)
+    room_list = Chambre.objects.filter(
+        hotel__ville=search).exclude(is_delete=True)
 
     available_hotels = []
     available_hotels_by_price = []
@@ -45,7 +46,8 @@ def search_hotel(request):
     set_hotel = set(available_hotels)
 
     for item in set_hotel:
-        chambres = Chambre.objects.filter(hotel_id=item)
+        chambres = Chambre.objects.filter(
+            hotel_id=item).exclude(is_delete=True)
         for chambre in chambres:
             price.append(chambre.overnight)
         available_hotels_by_price.append(
@@ -64,7 +66,7 @@ def search_hotel(request):
 def hotels_view(request):
 
     hotels = Hotel.objects.all()
-    chambres = Chambre.objects.all()
+    chambres = Chambre.objects.all().exclude(is_delete=True)
     paginator = Paginator(hotels, 9)
     page_number = request.GET.get('page')
     page_object = paginator.get_page(page_number)
@@ -139,7 +141,7 @@ def reservation_hotel(request, slug, number):
 
         else:
             user = CustomUser.objects.create_user(
-                first_name=first_name, last_name=last_name, email=email, password=password, tel=tel,)
+                first_name=first_name, date_joined=datetime.now(), last_name=last_name, email=email, password=password, tel=tel,)
 
             template = render_to_string('hotels/email/new_user.html', {
                 'first_name': first_name, 'last_name': last_name, 'password': password, 'email': email})

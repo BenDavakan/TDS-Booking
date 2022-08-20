@@ -3,7 +3,7 @@ from attr import fields
 from django import forms
 
 from accounts.models import CustomUser, Profile
-from hotels.models import Chambre
+from hotels.models import Chambre, Image_Hotel
 
 
 class SignupForm(forms.Form):
@@ -17,6 +17,16 @@ class SignupForm(forms.Form):
 class SigninForm(forms.Form):
     email = forms.EmailField()
     password = forms.CharField(min_length=6, widget=forms.PasswordInput())
+
+
+class AddHotelImg(forms.ModelForm):
+    class Meta:
+        model = Image_Hotel
+        fields = [
+            'name',
+            'image',
+            'hotel',
+        ]
 
 
 class UserForm(forms.ModelForm):
@@ -37,7 +47,11 @@ class ProfileForm(forms.ModelForm):
             'gender',
             'birthdate',
             'country',
+            'profile_pic',
         ]
+
+        Widgets = {'birthdate': forms.SelectDateWidget(
+            years=range(1990, 2025))}
 
 
 class ManagerEditChambre(forms.ModelForm):
@@ -51,7 +65,7 @@ class ManagerEditChambre(forms.ModelForm):
             'area',
             'beds',
             'category',
-            'capacity'
+            'capacity',
         ]
 
 
@@ -64,5 +78,5 @@ class DateInput(forms.DateInput):
 
 
 class ManagerAddBooking(forms.Form):
-    check_in = forms.DateField(widget=DateInput)
+    check_in = forms.DateField()
     check_out = forms.DateField()
