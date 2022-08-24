@@ -1,0 +1,79 @@
+{% extends 'accounts/layouts/base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+
+
+{% block style %}
+
+{% endblock %}
+
+
+{% block content %}
+<div class="row">
+    <div class="col-sm-12">
+        <div class="float-right page-breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Tds Booking</a></li>
+                <li class="breadcrumb-item"><a href="#">Reservations</a></li>
+                <li class="breadcrumb-item active">Vérification</li>
+            </ol>
+        </div>
+        <h5 class="page-title">Vérification</h5>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card m-b-30">
+            <div class="card-body text-center">
+                <form  method="GET" >
+                    {% csrf_token %}
+                    
+                    {% render_field form.secret_key placeholder="Code Secret" %}
+                    <input type="submit"  value="Vérifier la réservation">
+
+                    
+                    
+                </form>
+                
+                
+            </div>
+        </div>
+    </div> 
+</div>
+
+
+{% if msg %}
+
+<div class="row">
+    <div class="col-12">
+        <div class="alert alert-danger  card m-b-30">
+            <div class="card-body text-center">
+                Le code secret <strong> {{ msg }} </strong> ne correspond à aucune réservation
+            </div>
+        </div>
+    </div> 
+</div>
+
+{% elif booking %}
+<div class="row">
+    <div class="col-12">
+        <div class="card m-b-30">
+            <div class="card-body text-center">
+                
+                <p>Cette réservation est de <strong> {{ booking.user.first_name }}  {{ booking.user.last_name }} </strong></p>
+                
+            </div>
+        </div>
+    </div> 
+</div>
+    
+{% endif %}
+    
+
+
+{% endblock content %}
+
+{% block script %}
+                
+{% endblock %}

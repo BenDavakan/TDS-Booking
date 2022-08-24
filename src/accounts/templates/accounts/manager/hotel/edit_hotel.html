@@ -1,0 +1,103 @@
+{% extends 'accounts/layouts/base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block title %}
+<title>Hotel</title>
+{% endblock %}
+
+
+{% block style %}
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="float-right page-breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Tds Booking</a></li>
+                <li class="breadcrumb-item"><a href="#">Hôtel</a></li>
+                <li class="breadcrumb-item active">Éditer l'hôtel</li>
+            </ol>
+        </div>
+        <h5 class="page-title">Éditer</h5>
+    </div>
+</div>
+
+<div class="row">
+        <div class="col-8 offset-2">
+
+            <div class="card m-b-30">
+                <div class="card-body">
+
+                    <form method="POST" enctype="multipart/form-data">
+
+                        {% csrf_token %}
+
+                        <div class="form-group">
+                            <label>Nom</label>
+                            
+                            {% render_field form.name class="form-control" value=hotel.name placeholder="Nom" %}
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Description</label>
+                            <div>
+                                {% render_field form.description class="form-control" value=hotel.description rows="4" placeholder="Description" %}
+                            </div>
+                        </div>
+    
+                        <div class="form-group">
+                            <label>Tel 1</label>
+                            {% render_field form.tel_1 value=hotel.tel_1  class="form-control" %}
+                        </div>
+                        <div class="form-group">
+                            <label>Tel 2 ( facultatif)</label>
+                            {% render_field form.tel_2 value=hotel.tel_2 class="form-control" %}
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            {% render_field form.email value=hotel.email class="form-control" %}
+                        </div>
+                        <div class="form-group">
+                            <label>Adresse</label>
+                            {% render_field form.adress value=hotel.adress class="form-control"  %}
+                        </div>
+                        <div class="form-group">
+                            <label>Ville</label>
+                            {% render_field form.ville value=hotel.ville class="form-control"  %}
+                        </div>
+                        <div class="form-group">
+                            <label>Nombre d'étoiles</label>
+                            {% render_field form.star_nbr value=hotel.star_nbr class="form-control" %}
+                        </div>
+    
+                        <div class="form-group">
+                            <div>
+                                <button type="submit" class="btn btn-primary waves-effect waves-light">
+                                    Enrégistrer
+                                </button>
+                                <button type="reset" class="btn btn-secondary waves-effect m-l-5">
+                                    Annuler
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    
+                </div>
+
+            </div>
+
+        </div>
+        
+</div>
+
+
+
+{% endblock content %}
+
+{% block script %}
+{% endblock %}

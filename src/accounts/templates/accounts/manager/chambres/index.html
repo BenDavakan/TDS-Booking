@@ -1,0 +1,113 @@
+{% extends 'accounts/layouts/base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block title %}
+<title>Chambres</title>
+{% endblock %}
+
+
+{% block style %}
+
+<link href="{% static 'accounts/vertical/assets/plugins/datatables/dataTables.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'accounts/vertical/assets/plugins/datatables/buttons.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+
+<link href="{% static 'accounts/vertical/assets/plugins/datatables/responsive.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+
+<link href="{% static 'accounts/vertical/assets/css/reservations/style.css' %}" rel="stylesheet" type="text/css">
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="float-right page-breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Tds Booking</a></li>
+                <li class="breadcrumb-item"><a href="#">Chambres</a></li>
+                <li class="breadcrumb-item active">Liste des chambres</li>
+            </ol>
+        </div>
+        <h5 class="page-title">Liste des chambres</h5>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 mb-2">
+        <a href="{% url 'add-room'%}"><button type="button" class="btn btn-success waves-effect waves-light">Ajouter une chambre</button></a>
+        
+    </div>
+    <div class="col-md-12">
+        <div class="card m-b-30">
+            <div class="card-body">
+
+                <h4 class="mt-0 header-title">Nos chambres</h4>
+                <p class="text-muted m-b-30 font-14">
+                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam, accusamus optio temporibus libero, amet sunt aliquam debitis aliquid magnam provident magni nostrum vel velit quo eaque quasi pariatur ad quibusdam.
+                </p>
+
+                <table class="datatable table table-bordered table-striped dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                    <thead>
+                    <tr class="bg-light ">
+                        <th>Numéro</th>
+                        <th>Nom</th>
+                        <th>Catégorie</th>
+                        <th>Nuité</th>
+                        <th>Capacité</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+
+
+                    <tbody>
+                    
+                    {% for ch in chambres  %}
+                            <tr>
+                                <td>{{ ch.number }}</td>
+                                <td>{{ ch.name }}</td>
+                                <td>{{ ch.category.name }}</td>
+                                <td>{{ ch.overnight }}</td>
+                                <td>{{ ch.capacity }}</td>
+                                <td class="text-center">
+                                    <a href="{% url 'manager-chambre' ch.token %}"><button class="btn btn-secondary btn-sm" type=""><i class="fa fa-eye"></i></button></a>
+                                    <a href="{% url 'manager-edit-chambre' ch.token %}"><button type="" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></button></a>
+                                    <a href="{% url 'delete-room-confirm' ch.token %}"><button class="btn btn-danger btn-sm" type="button"><i class="fa fa-trash"></i></button></a>
+                                </td>
+                                    
+                            </tr>
+                            
+                            
+                        {% endfor %}
+                                    
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div> 
+</div>
+
+
+    
+
+
+
+
+{% endblock %}
+
+{% block script %}
+   
+     <script src="{% static 'accounts/vertical/assets/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+     <script src="{% static 'accounts/vertical/assets/plugins/datatables/dataTables.bootstrap4.min.js' %}"></script>
+   
+
+     <script src="{% static 'accounts/vertical/assets/plugins/datatables/dataTables.responsive.min.js' %}"></script>
+     <script src="{% static 'accounts/vertical/assets/plugins/datatables/responsive.bootstrap4.min.js' %}"></script>
+
+     <script src="{% static 'accounts/vertical/assets/pages/datatables.init.js' %}"></script>
+
+
+        
+{% endblock %}

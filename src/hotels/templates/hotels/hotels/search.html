@@ -1,0 +1,136 @@
+{% extends 'TdsBooking/layouts/base.html'%}
+{% load static %}
+{% load humanize %}
+
+{% block title %}
+<title>Hôtels</title>
+{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/otl.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.css" integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="anonymous" />
+<style>
+  body {
+    background-color: lightgray;
+  }
+</style>
+{% endblock %}
+
+
+{% block content %}
+<br>
+
+  <div class="container">
+    <div class="row">
+          <div class="col-lg-3 sidebar  ftco-animate">
+              <div class="sidebar-wrap ftco-animate">
+                <form action="#">
+                  <div class="fields">
+                    <div class="form-group">
+                      <input type="text" class="form-control" placeholder="Oû allez-vous?">
+                    </div>
+                    <div class="form-group">
+                      <div class="select-wrap one-third">
+                      <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                      
+                      </div>
+                      </div>
+                      <div class="form-group">
+                        <input type="text" id="datepicker" class="form-control checkout_date" value='{{ t1 }}'  placeholder="Date d'arrivée" readonly>
+                      </div>
+                      <div class="form-group">
+                        <input type="text" id="datepicker1" class="form-control checkin_date" value='{{ t2 }}' placeholder="Date de depart" readonly>
+                      </div>
+                      <div class="form-group">
+                      <input type="submit" value="Rechercher" class="btn btn-primary py-3 px-5">
+                    </div>
+                  </div>
+                </form>
+              </div>
+          </div>
+          <div class="col-lg-9">
+              <p> {{ message }} </p>
+              {% for av in available_hotels_by_price %}
+                <div class="col-12 m-0">
+                  <div class="row p-2 mb-4 " style="background-color: white; border-radius: 5px;">
+                      <div class="col-md-4 p-0">
+                        <img class="img-thumbnail h-auto" src="{% static 'img/room-5.jpg' %}" style="border-top-left-radius: 5px;border-top-right-radius:
+                          5px;border-bottom-right-radius: 5px;">
+                      </div>
+                      <div class="col-md-5 py-0">
+                        <div class="col-md-12 px-0 d-flex">
+                            <h4 class="mr-3"><a href="{% url 'hotel' av.hotel.slug %}">{{ av.hotel }}</a></h4> <span class="mr-2" > {{ av.hotel.star_nbr }} </span>    <span class="" style="color: yellow;"><i class="fa-solid fa-star"></i></span>
+                        </div>
+                        <div class="col-md-12 px-0">
+                          <small class="m-0 p-0 mt-0">
+                              {{ av.hotel.ville }} | {{ av.hotel.adress }}
+                          </small>
+                        </div>
+                        <div class="col-md-12 px-0">
+                          <span class="mr-3">
+                            <i class="fa-solid fa-square-parking"></i>
+                          </span>
+                          <span class="mr-3">
+                            <i class="fa-solid fa-wifi"></i>
+                          </span>
+                          <span class="mr-3">
+                            <i class="fa-solid fa-fork-knife"></i>
+                          </span>
+                        </div>
+
+                      </div>
+                      <div class="col-md-3 py-0 pr-0">
+                        <div class="row w-100 m-0 mb-md-4">
+                          <div class="col-md-10">
+                            <div class="float-right"></div>
+                            
+                          </div>
+                          
+                          
+                        </div>
+                        <div class="col-12 float-right w-auto mb-md-3">
+                          <p style="font-size: 15px" class="mb-0 mt-4 text-right">À partir de :</p>
+                          <span class=""> {{ av.price | intcomma}} F CFA</span>
+                        </div>
+                                               
+                        <div class="row col-12 m-0 p-0 fixed-bottom" style="position:absolute !important">
+                          
+                          <a class="btn btn-primary ml-md-auto" href="{% url 'hotel' av.hotel.slug %}" role="button">Voir les disponibilités</a>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+              {% endfor %}
+          </div>  
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block script %}
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.js" integrity="sha256-/7FLTdzP6CfC1VBAj/rsp3Rinuuu9leMRGd354hvk0k=" crossorigin="anonymous"></script>
+<script>
+  $(function () {
+    $("#datepicker").datepicker({
+      autoApply: true,
+      format:'DD/MM/YYYY',
+      autoHide: true,
+    });
+  });
+
+  $(function () {
+    $("#datepicker1").datepicker({
+      changeMonth: true,
+      changeYear: true,
+      dayNamesMin: [ "Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa" ],
+      monthNames: [ "Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Decembre" ],
+      monthNamesShort: [ "Jan", "Fév", "Mar", "Avr", "Mai", "Juin", "Juil", "Aoû", "Sep", "Oct", "Nov", "Dec" ],
+      format:'dd/MM/YYYY',
+      autoHide: true,
+    }).val();
+  });
+  
+</script>
+
+{% endblock script %}

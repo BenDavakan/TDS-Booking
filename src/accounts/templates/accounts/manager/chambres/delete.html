@@ -1,0 +1,51 @@
+{% extends 'accounts/layouts/base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block title %}
+<title>Chambres | Suppression d'une chambre</title>
+{% endblock %}
+
+
+{% block style %}
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="row" >
+    
+    <div class="modal-content col-md-6 mt-5 offset-3">
+        <div class="modal-header ">
+        <h2 class="modal-title " stye="color:red;">Avertissement</h2>
+        </div>
+        <div class="modal-body">
+            <div>
+                <p>
+                    <strong>Vous êtes sur le point de supprimer la chambre {{ room.number }}</strong>
+                </p>
+                <p>
+                    <b>La suppression est irréversible,</b>  êtes vous sure de votre action ??
+                </p>
+            </div>
+            
+        </div>
+        <div class="modal-footer">
+            
+            <a href="{% url 'delete-room' room.token %}"><button type="button" class="btn btn-danger">OUI</button></a>
+            <a href="{% url 'manager-chambres'%}"><button type="button" class="btn btn-secondary">Non</button></a>
+        
+        </div>
+    </div>
+</div>
+
+
+
+
+
+{% endblock %}
+
+{% block script %}
+      
+{% endblock %}

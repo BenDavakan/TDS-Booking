@@ -1,0 +1,203 @@
+{% extends 'accounts/layouts/base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block title %}
+<title>Chambres | Chambre </title>
+{% endblock %}
+
+
+{% block style %}
+
+    <link href="{% static 'accounts/vertical/assets/plugins/datatables/dataTables.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'accounts/vertical/assets/plugins/datatables/buttons.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+
+    <link href="{% static 'accounts/vertical/assets/plugins/datatables/responsive.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+
+    <link href="{% static 'accounts/vertical/assets/css/reservations/style.css' %}" rel="stylesheet" type="text/css">
+    
+    <link href="{% static 'accounts/vertical/assets/plugins/magnific-popup/magnific-popup.css' %}" rel="stylesheet" type="text/css">
+
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="float-right page-breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Tds Booking</a></li>
+                <li class="breadcrumb-item"><a href="#">Hotel</a></li>
+                <li class="breadcrumb-item active">Infos</li>
+            </ol>
+        </div>
+        <h5 class="page-title">Infos</h5>
+    </div>
+</div>
+
+<div class="row">
+    
+        <div class="col-md-10 offset-1">
+
+            <div class="card m-b-30">
+                <div class="card-body">
+                    <h2 class="mt-0 header-title">Détails de la chambre {{ room.number }} </h2>
+                    <table class="table table-bordered table-striped">
+        
+                        <tbody>
+                          <tr>
+                            <th scope="row">Dénomination</th>
+                            <td> {{ room.name }} </td>
+                          </tr>
+                          <tr>
+                            <th scope="row">Numéro</th>
+                            <td> {{ room.number }} </td>
+                          </tr>
+                          <tr>
+                            <th scope="row">Description</th>
+                            <td colspan="2"> {{ room.description }} </td>
+                          </tr>
+                          <tr>
+                            <th scope="row">Catégorie</th>
+                            <td colspan="2"> {{ room.category }} </td>
+                          </tr>
+                          <tr>
+                            <th scope="row">Superficie</th>
+                            <td colspan="2"> {{ room.area }} m2</td>
+                          </tr>
+                          <tr>
+                            <th scope="row">Nuité</th>
+                            <td colspan="2"> {{ room.overnight }} F CFA </td>
+                          </tr>
+                          <tr>
+                            <th scope="row">Nombre de lits</th>
+                            <td colspan="2"> {{ room.beds }} </td>
+                          </tr>
+                          <tr>
+                            <th scope="row">Capacité</th>
+                            <td colspan="2"> {{ room.capacity }} personne(s)</td>
+                          </tr>
+                          <tr>
+                            <th scope="row">Date de création</th>
+                            <td colspan="2"> {{ room.created_at | date:"D d M Y, H:i" }} </td>
+                          </tr>
+                        </tbody>
+                    </table>
+                                        
+                </div>
+
+            </div>
+
+        </div>
+        
+</div>
+
+<div class="row">
+    <div class="col-md-10 offset-1">
+        <div class="card m-b-30">
+            <div class="card-body">
+
+                <h2 class="mt-0 header-title">Equipements</h2>
+                
+                <table class="datatable table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                    <thead>
+                    <tr>
+                        <th>Dénomination</th>
+                        <th>Quantité</th>
+                        <th>Date d'ajout</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                                      
+                        
+                {% for eq in equipements %}
+                    <tr>
+                        <td> {{ eq.name }} </td>
+                        <td> {{ eq.number }} </td>
+                        <td> {{ eq.add_at | date:"D d M Y, H:i" }} </td>
+                        <td class="text-center">
+                            <a href=""><button type="" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></button></a>
+                            <a href=""><button class="btn btn-danger btn-sm" type="button"><i class="fa fa-trash"></i></button></a>
+                        </td> 
+                    </tr> 
+                {% endfor %}
+                            
+                                                                    
+                    
+                  
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div> <!-- end col -->
+</div>
+
+
+
+
+
+<div class="row">
+  
+<div class="col-md-10 offset-1">
+  <div class="card m-b-30">
+    
+      <div class="card-body">
+        
+          <div class="bg-primary py-2">
+            <form class="text-center" method="POST" enctype="multipart/form-data"  >
+              {% csrf_token %}
+              {{ form }}
+              <button type="submit">Ajouter une image</button> 
+            </form>
+          </div>
+              {% for img in imgs %}
+              <div class="row d-inline-block mt-2">
+                  <div class="col-md-12 popup-gallery">
+
+                    <div class="img-fluid d-inline-block ">
+                        <a class="d-inline-block mb-2" href="{{ img.image.url }}" title="{{ img.name }} | {{ img.created_at }} ">
+                                <img src=" {{ img.image.url }} " alt="" width="120"  height="120">
+                        </a>
+                        
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <a class="" href=" {% url 'del-chambre-img' img.token %} ">
+                        <button class="btn btn-danger btn-sm d-block" href="" role="button"><i class="fa fa-trash"></i></button>   
+                    </a>
+                  </div>
+              </div>
+              
+
+                  
+                  
+              {% endfor %}
+
+      </div>
+  </div>
+</div> 
+</div>
+
+
+
+{% endblock content %}
+
+{% block script %}
+
+     <script src="{% static 'accounts/vertical/assets/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+     <script src="{% static 'accounts/vertical/assets/plugins/datatables/dataTables.bootstrap4.min.js' %}"></script>
+   
+
+     <script src="{% static 'accounts/vertical/assets/plugins/datatables/dataTables.responsive.min.js' %}"></script>
+     <script src="{% static 'accounts/vertical/assets/plugins/datatables/responsive.bootstrap4.min.js' %}"></script>
+
+     <script src="{% static 'accounts/vertical/assets/pages/datatables.init.js' %}"></script>
+
+     <script src="{% static 'accounts/vertical/assets/plugins/magnific-popup/jquery.magnific-popup.min.js' %}"></script>
+     <script src="{% static 'accounts/vertical/assets/pages/lightbox.js' %}"></script>
+{% endblock %}

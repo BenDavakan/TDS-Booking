@@ -1,0 +1,152 @@
+{% extends 'TdsBooking/layouts/base.html'%}
+{% load static %}
+{% load humanize %}
+{% block style %}
+ <style>
+
+
+/* img:hover{
+	transform: scale(1.2);  
+}
+
+img{
+	transition: all .5s;
+}  */
+
+ol li {
+	list-style: none;
+	opacity: 0.5;
+	cursor: pointer;
+	box-sizing:content-box;
+	
+	flex:0 1 auto;
+	
+	margin-right:3px;
+	margin-left:3px;
+	
+	
+	border-top:10px solid transparent;
+	border-bottom:10px solid transparent;
+	transition:opacity .6s ease;
+}
+
+
+
+</style> 
+
+{% endblock style %}
+{% block content %}
+
+
+<section class="ftco-section ftco-degree-bg">
+	<div class="container">
+
+		<div class="row">
+			<div class="col-12 mt-3">
+				<div class="row col-12 mb-2">
+					<h2><a href="{% url 'hotel' hotel.slug %}">{{ hotel.name }}</a> 
+					<span style="color: #bbb8b2;">| </span>
+					<span style="color: #FFB913;">Chambre {{ chambre.number }}</span>
+					</h2>
+				</div>
+			</div>
+			<div class="col-lg-9">
+				<div class="row">
+
+					<div class="col-md-12  mb-2 ftco-animate">
+
+						
+							<div id="room-thumbnail--slide" class="carousel slide" data-ride="carousel">
+								<div class="carousel-inner">
+									<div class="carousel-item active">
+										<img src="{% static 'img/bg-img/48.jpg' %}" height="400" class="d-block w-100" alt="2">
+									</div>
+									<div class="carousel-item" style="height: 400px">
+										<img src="{% static 'img/bg-img/49.jpg' %}"  class="d-block w-100" alt="3">
+									</div>
+									<div class="carousel-item" style="height: 400px">
+										<img src="{% static 'img/bg-img/50.jpg' %}" class="d-block w-100" alt="4">
+									</div>
+									<div class="carousel-item" style="height: 400px">
+										<img src="{% static 'img/bg-img/51.jpg' %}" class="d-block w-100 " alt="5">
+									</div>
+									<div class="carousel-item" style="height: 400px">
+										<img src="{% static 'img/bg-img/52.jpg' %}" class="d-block w-100" alt="6">
+									</div>
+								</div>
+						
+								<ol class="carousel-indicators mt-1">
+									<li data-target="#room-thumbnail--slide" data-slide-to="0" class="active">
+										<img src="{% static 'img/bg-img/48.jpg' %}" class="d-block w-100" alt="2">
+									</li>
+									<li data-target="#room-thumbnail--slide" data-slide-to="1">
+										<img src="{% static 'img/bg-img/49.jpg' %}" class="d-block w-100" alt="3">
+									</li>
+									<li data-target="#room-thumbnail--slide" data-slide-to="2">
+										<img src="{% static 'img/bg-img/50.jpg' %}" class="d-block w-100" alt="4">
+									</li>
+									<li data-target="#room-thumbnail--slide" data-slide-to="3">
+										<img src="{% static 'img/bg-img/51.jpg' %}" class="d-block w-100" alt="5">
+									</li>
+									<li data-target="#room-thumbnail--slide" data-slide-to="4">
+										<img src="{% static 'img/bg-img/52.jpg' %}" class="d-block w-100" alt="6">
+									</li>
+								</ol>
+							</div>
+						
+						<p>{{ chambre.description }}</p>
+
+						<p>When she reached the first hills of the Italic Mountains, she had a
+							last view back on the skyline of her hometown Bookmarksgrove, the
+							headline of Alphabet Village and the subline of her own road, the Line
+							Lane. Pityful a rethoric question ran over her cheek, then she continued
+							her way.</p>
+					</div>
+					
+					<div class=" col-12 mb-2">
+						
+						{% if equipements %}
+						<p>
+							<h4>Les Equipements de la chambre</h4>
+						</p>
+						<ul class="row">
+							{% for equipement in equipements %}
+							<li style="list-style-type:none" class="col-md-4"> 
+								<span><i class="fa-solid fa-check"></i></span>
+								{{ equipement.name | title }}</li>
+							{% endfor %}
+						</ul>
+						{% else %}
+						{% endif %}
+							
+					</div>
+					
+				</div>
+			</div>
+			<div class="col-lg-3">
+				
+					<div class="col-12 px-0">
+						<div>
+							<h4>Visite en video</h4>
+						</div>
+						<div class="embed-responsive embed-responsive-16by9 z-depth-1-half">
+							<iframe width="560" height="315" src="https://www.youtube.com/embed/98qiqE019As?start=140" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+						</div>
+						<div class="d-flex mt-2">
+							<h5>Nuité : </h5> <span class="ml-1" style="color: red">{{ chambre.overnight | intcomma }} f CFA</span>
+						</div>
+						
+						
+						<a name="" id="" class="btn btn-primary mt-2" href="{% url 'reservation' hotel.slug chambre.number %}" role="button">Reserver</a>
+					</div>
+					
+					
+				
+			</div>
+			
+		</div>
+		
+	</div>
+</section>
+
+{% endblock %}

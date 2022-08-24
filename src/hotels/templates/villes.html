@@ -1,0 +1,107 @@
+{% extends 'base.html'%}
+{% load static %}
+
+{% block title %}
+<title>Villes</title>
+{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/otl.css' %}">
+{% endblock %}
+
+
+{% block content %}
+<br>
+<section class="ftco-section">
+    <div class="container">
+      <div class="row">
+          <div class="col-lg-3 sidebar order-md-last ftco-animate">
+              <div class="sidebar-wrap ftco-animate">
+                  <h3 class="heading mb-4">Destination</h3>
+                  <form action="#">
+                      <div class="fields">
+                    <div class="form-group">
+                      <input type="text" class="form-control" placeholder="Oû allez-vous?">
+                    </div>
+                    <div class="form-group">
+                      <div class="select-wrap one-third">
+                      <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                      
+                    </div>
+                    </div>
+                    <div class="form-group">
+                      <input type="text" id="checkin_date" class="form-control checkin_date" placeholder="Date d'arrivée">
+                    </div>
+                    <div class="form-group">
+                      <input type="text" id="checkout_date" class="form-control checkout_date" placeholder="Date de depart">
+                    </div>
+                    
+                    <div class="form-group">
+                      <input type="submit" value="Rechercher" class="btn btn-primary py-3 px-5">
+                    </div>
+                  </div>
+              </form>
+              </div>
+              
+        </div><!-- END-->
+        <div class="col-lg-9">
+            <div class="row">
+                {% for ville in villes %}
+                      <div class="col-sm col-md-6 col-lg-4 ftco-animate">
+                          <div class="destination">
+                              <a href="{{ hotel.get_absolute_url }}" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url(img/hotel-1.jpg);">
+                                <img src="{% static 'img/hotel-2.jpg' %}" alt="">
+                              </a>
+                              <div class="text p-3">
+                                  <div class="d-flex">
+                                      <div class="one">
+                                          <h4><a href="">{{ hotel.name|truncatechars:20 }}</a></h4>
+                                          
+                                      </div>
+                                      
+                                  </div>
+                                  <p class="mb-0"> 0{{ x }} Etablissement</p>
+                                  <hr>
+                                  <p class="bottom-area d-flex">
+                                      <span><i class="icon-map-o"></i>{{ ville.name }}</span>  
+                                  </p>
+                              </div>
+                          </div>
+                      </div>
+
+                {% endfor %}
+            </div>
+            <nav class="mb-3" aria-label="...">
+            
+            <ul class="pagination justify-content-center">
+              {% if hotels.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page={{ hotels.previous_page_number }}"><span aria-hidden="true">&laquo;</span></a></li>
+              {% else %}
+                <li class="page-item"><span class="page-link">&laquo;</span></li>
+              {% endif %}
+              {% for i in hotels.paginator.page_range %}
+                {% if hotels.number == i %}
+                  <li class=" page-item active"><span class="page-link">{{ i }} <span class="sr-only">(current)</span></span></li>
+                {% else %}
+                  <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                {% endif %}
+              {% endfor %}
+              {% if hotels.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{ hotels.next_page_number }}">&raquo;</a></li>
+              {% else %}
+                <li class=" page-item disabled"><span class="page-link">&raquo;</span></li>
+              {% endif %}
+            </ul>
+        
+           </nav> 
+    
+        </div> <!-- .col-md-8 -->
+      </div>
+    </div>
+</section>
+
+
+
+  
+
+{% endblock %}

@@ -1,0 +1,144 @@
+{% extends 'accounts/layouts/base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+{% load humanize %}
+
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/otl.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.css" integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="anonymous" />
+
+{% endblock %}
+
+
+{% block content %}
+<div class="row">
+    <div class="col-sm-12">
+        <div class="float-right page-breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Tds Booking</a></li>
+                <li class="breadcrumb-item"><a href="#">Reservations</a></li>
+                <li class="breadcrumb-item active">Ajouter une réservation</li>
+            </ol>
+        </div>
+        <h5 class="page-title">Ajouter une réservation</h5>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card m-b-30">
+            <div class="card-body text-center">
+                <form  method="GET" >
+                    {% csrf_token %}
+                    
+                    
+                    
+                    {% render_field form.check_in|attr:"readonly:true"  id="datepicker"  placeholder="Arrivée"  %}
+                    {% render_field form.check_out|attr:"readonly:true"  id="datepicker1"  placeholder="Départ"  %}
+                    
+                    
+                    <select>
+                        <option value="">1 Adulte</option>
+                        <option value="">2 Adultes</option>
+                        <option value="">2 Adultes 1 enfant</option>
+                    </select>
+                    <input type="submit"  value="Vérifier la disponibilité">
+
+                </form>
+
+                
+                
+                
+            </div>
+        </div>
+    </div> 
+</div>
+
+<div class="row"></div>
+{% for av in available_rooms %}
+                
+         
+    <div class="col-12 m-0">
+        <div class="row p-2 mb-4 " style="background-color: white; border-radius: 5px;">
+            <div class="col-md-4 p-0">
+              <img class="img-thumbnail h-auto" src="{% static 'img/room-5.jpg' %}" style="border-top-left-radius: 5px;border-top-right-radius:
+                5px;border-bottom-right-radius: 5px;">
+            </div>
+            <div class="col-md-5 py-0">
+              <div class="col-md-12 px-0 d-flex">
+                  <h4 class="mr-3"><a href="{% url 'add-booking-form' av.token check_in check_out %}">Chambre {{ av.number }}</a></h4>
+              </div>
+              <div class="col-md-12 px-0">
+                <small class="m-0 p-0 mt-0">
+                    {{ av.hotel.ville }} | {{ av.hotel.adress }}
+                </small>
+              </div>
+              <div class="col-md-12 px-0">
+                <span class="mr-3">
+                  <i class="fa-solid fa-square-parking"></i>
+                </span>
+                <span class="mr-3">
+                  <i class="fa-solid fa-wifi"></i>
+                </span>
+                <span class="mr-3">
+                  <i class="fa-solid fa-fork-knife"></i>
+                </span>
+              </div>
+
+            </div>
+            <div class="col-md-3 py-0 pr-0">
+              <div class="row w-100 m-0 mb-md-4">
+                <div class="col-md-10">
+                  <div class="float-right"></div>
+                  
+                </div>
+                
+                
+              </div>
+              <div class="col-12 float-right w-auto mb-md-3">
+                <p style="font-size: 15px" class="mb-0 mt-4 text-right">Nuité :</p>
+                <span class=""> {{ av.overnight | intcomma}} F CFA</span>
+              </div>
+                                     
+              <div class="row col-12 m-0 p-0 fixed-bottom" style="position:absolute !important">
+                
+                <a class="btn btn-primary ml-md-auto" href="{% url 'add-booking-form' av.token check_in check_out %}" role="button">Réserver</a>
+              </div>
+            </div>
+        </div>
+      </div>
+      
+                  
+{% endfor %}
+
+</div> 
+
+
+
+
+{% endblock content %}
+
+{% block script %}
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.js" integrity="sha256-/7FLTdzP6CfC1VBAj/rsp3Rinuuu9leMRGd354hvk0k=" crossorigin="anonymous"></script>
+<script>
+  $(function () {
+    $("#datepicker").datepicker({
+      autoApply: true,
+      format:'MM/DD/YYYY',
+      autoHide: true,
+    });
+  });
+
+  $(function () {
+    $("#datepicker1").datepicker({
+     
+      format:'MM/DD/YYYY',
+      autoHide: true,
+    }).val();
+  });
+  
+</script>
+                
+{% endblock %}

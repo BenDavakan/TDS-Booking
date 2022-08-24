@@ -1,0 +1,66 @@
+{% extends 'accounts/layouts/base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+
+
+{% block style %}
+
+{% endblock %}
+
+
+{% block content %}
+<div class="row">
+    <div class="col-sm-12">
+        <div class="float-right page-breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Tds Booking</a></li>
+                <li class="breadcrumb-item"><a href="#">Reservations</a></li>
+                <li class="breadcrumb-item active">Récapitulatif</li>
+            </ol>
+        </div>
+        <h5 class="page-title">Récapitulatif</h5>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-10 offset-1">
+        <div class="card m-b-30">
+
+            <div class="card-header bg-success">
+                Succès
+              </div>
+            <div class="card-body text-center">
+                
+                <p>
+                    Vous venez d'éffectuer avec succès une réservation au nom de ...
+                </p>
+                
+            </div>
+        </div>
+    </div> 
+</div>
+<div class="row">
+    <div class="col-md-10 offset-1">
+        <div class="card m-b-30">
+
+    
+            <div class="card-body">
+                
+                <p>
+                </p>
+                <a href="#" class="btn btn-primary">Payer</a>
+                
+            </div>
+        </div>
+    </div> 
+</div>
+
+
+    
+
+
+{% endblock content %}
+
+{% block script %}
+                
+{% endblock %}
