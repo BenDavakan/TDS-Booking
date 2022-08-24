@@ -16,9 +16,9 @@ from django.conf import settings
 from django.shortcuts import render
 from django.contrib import messages
 from django.urls import reverse
-from accounts.forms import AddChambreImg, AddHotelImg, AddPayement, CheckBooking, EditHotel, ManagerAddBooking, ManagerEditChambre
+from accounts.forms import AddChambreImg, AddHotelEp, AddHotelImg, AddPayement, CheckBooking, EditHotel, ManagerAddBooking, ManagerEditChambre
 from accounts.models import CustomUser, HotelManager
-from hotels.models import Chambre, Equipement, Hotel, Image_Chambre, Image_Hotel, Payement, Reservation
+from hotels.models import Chambre, Equipement, Equipement_Hotel, Hotel, Image_Chambre, Image_Hotel, Payement, Reservation
 
 
 def add_room(request):
@@ -54,7 +54,14 @@ def manager_hotel(request):
     user = request.user
     manager = HotelManager.objects.get(user=user.id)
     hotel = Hotel.objects.get(id=manager.hotel.id)
-    return render(request, 'accounts/manager/hotel/index.html', {'hotel': hotel})
+    eqs = Equipement_Hotel.objects.filter(hotel=manager.hotel)
+    
+    if request.method == 'POST':
+        Equipement_Hotel.objects.create(hotel=manager.hotel, name=request.POST['name'],number=request.POST['number'],category=request.POST['category'])
+    else:
+        form = AddHotelEp()
+    
+    return render(request, 'accounts/manager/hotel/index.html', {'hotel': hotel,'form':form, 'eqs':eqs})
 
 def edit_hotel(request):
     hotel = Hotel.objects.get(pk=request.user.hotelmanager.hotel.id)
@@ -353,6 +360,14 @@ def delete_room_confirm(request, token):
 
 def booking_recap(request, token):
     booking = Reservation.objects.get(token=token)
-    return render(request, 'accounts/manager/reservations/recap.html', {'booking':booking})
+    if request.method =='POST':
+        tok = get_random_string(length=50)
+        while Payement.objects.filter(token=tok).exists():
+            tok = get_random_string(length=50)
+        Payement.objects.create(reservation=booking, payment_method=request.POST['payment_method'], token=token, transaction_id=request.POST['transaction_id'] )
+        return HttpResponseRedirect(reverse('booking-recap', args=[token]))
+    else:
+        form = AddPayement()
+    return render(request, 'accounts/manager/reservations/recap.html', {'booking':booking, 'form':form})
 
 

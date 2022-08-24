@@ -3,7 +3,7 @@ from attr import fields
 from django import forms
 
 from accounts.models import CustomUser, Profile
-from hotels.models import Chambre, Hotel, Image_Chambre, Image_Hotel, Payement
+from hotels.models import Chambre, Equipement_Hotel, Hotel, Image_Chambre, Image_Hotel, Payement
 
 
 class SignupForm(forms.Form):
@@ -38,8 +38,15 @@ class EditHotel(forms.ModelForm):
             'email',
             'adress',
             'ville',
-            'star_nbr',
-            
+            'star_nbr',  
+        ]
+class AddHotelEp(forms.ModelForm):
+    class Meta:
+        model=Equipement_Hotel
+        fields = [
+            'name',
+            'number',
+            'category',
         ]
 
 

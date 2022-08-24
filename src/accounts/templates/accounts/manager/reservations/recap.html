@@ -43,12 +43,13 @@
     <div class="col-md-10 offset-1">
         <div class="card m-b-30">
 
-    
-            <div class="card-body">
-        
-                <a href="#" class="btn btn-primary">Payer maintenant</a>
-                
-            </div>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="card-body">
+                    {{ form }}
+                    <button type="submit" class="btn btn-primary">Payer maintenant</button>
+                </div>
+            </form>
         </div>
     </div> 
 </div>
