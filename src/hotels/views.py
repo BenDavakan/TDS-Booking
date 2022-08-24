@@ -177,7 +177,7 @@ def pay_process(request, number, type):
 
     Payement.objects.create(transaction_id=transaction_id, token=token, payment_method=type,
                             reservation_id=number)
-
+    Reservation.objects.filter(pk=number).update(status='EC')
     reserv = Reservation.objects.get(pk=number)
 
     template = render_to_string('hotels/email/confirmation_booking.html', {

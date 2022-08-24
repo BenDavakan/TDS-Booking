@@ -15,6 +15,9 @@
     <link href="{% static 'accounts/vertical/assets/plugins/datatables/responsive.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
 
     <link href="{% static 'accounts/vertical/assets/css/reservations/style.css' %}" rel="stylesheet" type="text/css">
+    
+    <link href="{% static 'accounts/vertical/assets/plugins/magnific-popup/magnific-popup.css' %}" rel="stylesheet" type="text/css">
+
 
 {% endblock %}
 
@@ -98,7 +101,7 @@
 
                 <h2 class="mt-0 header-title">Equipements</h2>
                 
-                <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                <table class="datatable table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                     <thead>
                     <tr>
                         <th>Dénomination</th>
@@ -136,6 +139,52 @@
 
 
 
+
+
+<div class="row">
+  
+<div class="col-md-10 offset-1">
+  <div class="card m-b-30">
+    
+      <div class="card-body">
+        
+          <div class="bg-primary py-2">
+            <form class="text-center" method="POST" enctype="multipart/form-data"  >
+              {% csrf_token %}
+              {{ form }}
+              <button type="submit">Ajouter une image</button> 
+            </form>
+          </div>
+              {% for img in imgs %}
+              <div class="row d-inline-block mt-2">
+                  <div class="col-md-12 popup-gallery">
+
+                    <div class="img-fluid d-inline-block ">
+                        <a class="d-inline-block mb-2" href="{{ img.image.url }}" title="{{ img.name }} | {{ img.created_at }} ">
+                                <img src=" {{ img.image.url }} " alt="" width="120"  height="120">
+                        </a>
+                        
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <a class="" href=" {% url 'del-chambre-img' img.token %} ">
+                        <button class="btn btn-danger btn-sm d-block" href="" role="button"><i class="fa fa-trash"></i></button>   
+                    </a>
+                  </div>
+              </div>
+              
+
+                  
+                  
+              {% endfor %}
+
+      </div>
+  </div>
+</div> 
+</div>
+
+
+
 {% endblock content %}
 
 {% block script %}
@@ -148,4 +197,7 @@
      <script src="{% static 'accounts/vertical/assets/plugins/datatables/responsive.bootstrap4.min.js' %}"></script>
 
      <script src="{% static 'accounts/vertical/assets/pages/datatables.init.js' %}"></script>
+
+     <script src="{% static 'accounts/vertical/assets/plugins/magnific-popup/jquery.magnific-popup.min.js' %}"></script>
+     <script src="{% static 'accounts/vertical/assets/pages/lightbox.js' %}"></script>
 {% endblock %}

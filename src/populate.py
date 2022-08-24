@@ -14,7 +14,7 @@ from faker import Faker
 fake = Faker(locale="fr-FR")
 
 hotels = ['Novotel Orisha', 'Link Hôtel', 'Golden Tulip', 'Azalai Hôtel', 'Hôtel du Port', 'Sun Beach Hôtel', 'Hôtel du Lac', 'Nobila Airport Hôtel',
-          'Tahiti Hôtel', 'Hotel Mainson Rouge', 'Hotel de la Dispora', 'Villa San Miguel', 'Lagoon Residence', 'La Brume Joyeuse', 'Hôtel Acropole','Home Residence Hôtel', 'Ibis Hôtel', 'Paradisia Hôtel', 'Hôtel DK', 'Bénin Royal Hôtel', 'Hotel Pramondo', 'Nora Hôtel', 'Nifur Hôtel', 'i5Hôtel', 'La Lune', 'TDS Hôtel']
+          'Tahiti Hôtel', 'Hotel Mainson Rouge', 'Hotel de la Dispora', 'Villa San Miguel', 'Lagoon Residence', 'La Brume Joyeuse', 'Hôtel Acropole','Home Residence Hôtel', 'Ibis Hôtel', 'Paradisia Hôtel', 'Hôtel DK', 'Bénin Royal Hôtel', 'Hotel Pramondo', 'Nora Hôtel', 'Nifur Hôtel', 'i5Hôtel', 'La Lune', 'TDS Hôtel', 'Hôtel des Princes', 'Hôtel Etoile Rouge']
 etoiles = ['2', '3', '4', '5', '6', '7', '8']
 
 
@@ -55,6 +55,9 @@ def populate(N):
 if __name__ == '__main__':
     print("Populating Script!")
     
-    add_equipement(5800)
+    add_equipement(7000)
+    
+    
+    
 
     print("Populating Complete!")

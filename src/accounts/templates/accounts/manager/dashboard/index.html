@@ -68,7 +68,10 @@
                 <h6 class="text-uppercase mb-0">Reservations</h6>
             </div>
             <div class="card-body">
-                
+                    
+                    <div class=" pb-1 d-block">
+                        <span class="badge badge-success"> {{ waiting_pay }} </span> <span class="ml-2 text-muted">En attente de paiement</span>
+                    </div>
                     <div class=" pb-1 d-block">
                         <span class="badge badge-success"> {{ progress }} </span> <span class="ml-2 text-muted">En cours</span>
                     </div>
@@ -133,6 +136,9 @@
         </div>
     </div>
 </div>
+
+
+
     
    
 
@@ -141,4 +147,5 @@
 {% endblock content %}
 
 {% block script %}
+
 {% endblock %}

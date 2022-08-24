@@ -16,9 +16,9 @@ from django.conf import settings
 from django.shortcuts import render
 from django.contrib import messages
 from django.urls import reverse
-from accounts.forms import AddHotelImg, CheckBooking, ManagerAddBooking, ManagerEditChambre
+from accounts.forms import AddChambreImg, AddHotelImg, AddPayement, CheckBooking, EditHotel, ManagerAddBooking, ManagerEditChambre
 from accounts.models import CustomUser, HotelManager
-from hotels.models import Chambre, Equipement, Hotel, Image_Hotel, Payement, Reservation
+from hotels.models import Chambre, Equipement, Hotel, Image_Chambre, Image_Hotel, Payement, Reservation
 
 
 def add_room(request):
@@ -56,6 +56,18 @@ def manager_hotel(request):
     hotel = Hotel.objects.get(id=manager.hotel.id)
     return render(request, 'accounts/manager/hotel/index.html', {'hotel': hotel})
 
+def edit_hotel(request):
+    hotel = Hotel.objects.get(pk=request.user.hotelmanager.hotel.id)
+    if request.method == 'POST':
+        form = EditHotel(request.POST, instance=hotel)
+        
+        if form.is_valid():
+            form.save()
+            return redirect('manager-edit-hotel')
+    else:
+        form = EditHotel(initial={'description': hotel.description})
+    return render(request, 'accounts/manager/hotel/edit_hotel.html', {'form': form, 'hotel':hotel})
+
 
 def add_hotel_img(request):
     manager = HotelManager.objects.get(user=request.user.id)
@@ -64,18 +76,24 @@ def add_hotel_img(request):
 
     if request.method == 'POST':
 
-        form = AddHotelImg(request.POST, request.FILES)
-
-        if form.is_valid():
-
-            form.save()
-
-            return redirect('add-hotel-img')
+        token = get_random_string(length=60)
+        while Image_Hotel.objects.filter(token=token).exists():
+            token = get_random_string(length=60)
+            
+        Image_Hotel.objects.create(name=request.POST['name'],token=token,hotel=manager.hotel, image=request.FILES['image'])
+        return redirect('add-hotel-img')
     else:
         form = AddHotelImg()
 
     return render(request, 'accounts/manager/hotel/gallery.html', {'form': form, 'imgs': imgs})
 
+def del_hotel_img(request, token):
+    img = Image_Hotel.objects.get(token=token)
+    if img.image:
+        img.image.delete()
+    img.delete()
+    return redirect('add-hotel-img')
+    
 
 def manager_chambres(request):
     user = request.user
@@ -105,9 +123,32 @@ def manager_edit_chambre(request, token):
 
 
 def manager_chambre_details(request, token):
+    
     room = Chambre.objects.get(token=token)
     equipements = Equipement.objects.filter(chambre=room.id)
-    return render(request, 'accounts/manager/chambres/details.html', {'room': room, 'equipements': equipements})
+    imgs = Image_Chambre.objects.filter(chambre=room.id)
+    
+    if request.method == 'POST':
+        
+        token = get_random_string(length=60)
+        while Image_Chambre.objects.filter(token=token).exists():
+            token = get_random_string(length=60)
+        
+        Image_Chambre.objects.create(name=request.POST['name'],chambre=room, token=token, image=request.FILES['image'])
+        return HttpResponseRedirect(reverse('manager-chambre', args=[room.token]))
+    else:
+        form = AddChambreImg()
+        
+    return render(request, 'accounts/manager/chambres/details.html', {'room': room, 'equipements': equipements, 'form': form, 'imgs':imgs})
+
+def del_chambre_img(request, token):
+    img = Image_Chambre.objects.get(token=token)
+    if img.image:
+        img.image.delete()
+    img.delete()
+    return HttpResponseRedirect(reverse('manager-chambre', args=[img.chambre.token]))
+    
+    
 
 
 def mes_paiements(request):
@@ -133,14 +174,26 @@ def manager_reservations(request):
     user = request.user
     manager = HotelManager.objects.get(user=user.id)
 
-    reservations = Reservation.objects.filter(chambre__hotel=manager.hotel.id)
+    reservations_EAP = Reservation.objects.filter(chambre__hotel=manager.hotel.id, status='EAP')
+    reservations_EC = Reservation.objects.filter(chambre__hotel=manager.hotel.id, status='EC')
+    reservations_AN = Reservation.objects.filter(chambre__hotel=manager.hotel.id, status='AN')
+    reservations_T = Reservation.objects.filter(chambre__hotel=manager.hotel.id, status='T')
 
-    return render(request, 'accounts/manager/reservations/index.html', {'reservations': reservations})
+    return render(request, 'accounts/manager/reservations/index.html', {'reservations_EAP': reservations_EAP, 'reservations_EC': reservations_EC, 'reservations_AN':reservations_AN, 'reservations_T': reservations_T})
 
 
 def manager_reservation(request, token):
     reservation = get_object_or_404(Reservation, token=token)
-    return render(request, 'accounts/manager/reservations/details.html', {'reservation': reservation})
+    verify_pay = Payement.objects.filter(reservation=reservation)
+    form = AddPayement()
+    if request.method == "POST":
+        token = get_random_string(length=60)
+        while Payement.objects.filter(token=token).exists():
+            token = get_random_string(length=60)
+        Payement.objects.create(reservation=reservation,token=token, payment_method=request.POST['payment_method'], transaction_id=request.POST['transaction_id'])        
+    else:
+        form = AddPayement()
+    return render(request, 'accounts/manager/reservations/details.html', {'reservation': reservation, 'form':form, 'verify_pay':verify_pay})
 
 
 def annul_reservation(request, token):
@@ -166,6 +219,8 @@ def manager_dashboard(request):
     progress = booking_progress.count()
     booking_end = booking.filter(status="T")
     end = booking_end.count()
+    wait_pay = booking.filter(status="T")
+    waiting_pay = wait_pay.count()
 
     # Count Payment
     payment = Payement.objects.filter(
@@ -176,7 +231,7 @@ def manager_dashboard(request):
     room = Chambre.objects.filter(hotel=manager.hotel.id)
     total_room = room.count()
 
-    return render(request, 'accounts/manager/dashboard/index.html', {'total': total, 'cancel': cancel, 'progress': progress, 'end': end, 'total_payment': total_payment, 'total_room': total_room})
+    return render(request, 'accounts/manager/dashboard/index.html', {'total': total, 'cancel': cancel, 'progress': progress,'waiting_pay':waiting_pay, 'end': end, 'total_payment': total_payment, 'total_room': total_room})
 
 
 def check_booking(request):
@@ -240,9 +295,9 @@ def add_booking_form(request, token, check_in, check_out):
     while Reservation.objects.filter(secret_key=key).exists():
         key = scret_key_generator()
 
-    token = get_random_string(length=32)
+    token = get_random_string(length=60)
     while Reservation.objects.filter(token=token).exists():
-        token = get_random_string(length=32)
+        token = get_random_string(length=60)
 
     if request.method == 'POST':
 
@@ -275,9 +330,10 @@ def add_booking_form(request, token, check_in, check_out):
             mail.fail_silently = False
             mail.send()
 
-        reserv = Reservation.objects.create(
-            user_id=user.id, secret_key=key, token=token, chambre_id=room.id, check_in=x1, check_out=x2, amount=amount)
-        print(reserv)
+        booking = Reservation.objects.create(
+            user_id=user.id, secret_key=key,status="EC", token=token, chambre_id=room.id, check_in=x1, check_out=x2, amount=amount)
+        return HttpResponseRedirect(reverse('booking-recap', args=[booking.token]))
+        
 
     return render(request, 'accounts/manager/reservations/add_form.html', {'room': room, 'check_in': x1, 'check_out': x2, 'sejour': sejour, 'amount': amount})
 
@@ -293,3 +349,9 @@ def delete_room(request, token):
 def delete_room_confirm(request, token):
     room = Chambre.objects.get(token=token)
     return render(request, 'accounts/manager/chambres/delete.html', {'room': room})
+
+
+def booking_recap(request, token):
+    return render(request, 'accounts/manager/reservations/recap.html', {})
+
+

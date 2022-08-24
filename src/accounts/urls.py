@@ -24,20 +24,26 @@ urlpatterns = [
 
     # Views_Manager
     path('manager/hotel', views_manager.manager_hotel, name='manager-hotel'),
+    path('manager/hotel/editer', views_manager.edit_hotel, name='manager-edit-hotel'),
     path('manager/tableau-de-bord/',
          views_manager.manager_dashboard, name='manager-dash'),
+    
     path('manager/chambres', views_manager.manager_chambres,
          name='manager-chambres'),
     path('manager/chambres/ajouter-une-chambre',
          views_manager.add_room, name='add-room'),
-    path('manager/chambres/ajouter-une-reservation',
-         views_manager.add_booking, name='add-booking'),
-    path('manager/chambres/ajouter-une-reservation/formulaire/chambre:<str:token>/check_in:<str:check_in>-check_out:<str:check_out>',
-         views_manager.add_booking_form, name='add-booking-form'),
     path('manager/chambres/<str:token>',
          views_manager.manager_edit_chambre, name='manager-edit-chambre'),
     path('manager/chambres/<str:token>/details',
          views_manager.manager_chambre_details, name='manager-chambre'),
+    
+    
+    path('manager/reservations/ajouter-une-reservation',
+         views_manager.add_booking, name='add-booking'),
+    path('manager/rservations/ajouter-une-reservation/formulaire/chambre:<str:token>/check_in:<str:check_in>-check_out:<str:check_out>',
+         views_manager.add_booking_form, name='add-booking-form'),
+    path('manager/ajouter-une-reservation/reservation/<str:token>/recapitulatif', views_manager.booking_recap,
+         name='booking-recap'),
     path('manager/reservations', views_manager.manager_reservations,
          name='manager-reservations'),
     path('manager/reservations/verification/', views_manager.check_booking,
@@ -46,6 +52,8 @@ urlpatterns = [
          name='manager-reservation'),
     path('manager/reservations/<str:token>/annuler', views_manager.annul_reservation,
          name='manager-annul-reservation'),
+    
+    
     path('manager/paiements/',
          views_manager.mes_paiements, name='manager-paiements'),
     path('manager/paiements/<str:token>/',
@@ -56,6 +64,10 @@ urlpatterns = [
          views_manager.delete_room_confirm, name='delete-room-confirm'),
 
     path('manager/hotel/galerie',
-         views_manager.add_hotel_img, name='add-hotel-img'),
+         views_manager.add_hotel_img, name='add-hotel-img'), 
+    path('manager/hotel/image/<str:token>/supprimer',
+         views_manager.del_hotel_img, name='del-hotel-img'),
+    path('manager/chambre/image/<str:token>/supprimer',
+         views_manager.del_chambre_img, name='del-chambre-img'),
 
 ]

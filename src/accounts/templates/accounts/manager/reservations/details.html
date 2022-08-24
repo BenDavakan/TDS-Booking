@@ -111,6 +111,38 @@
 </div>
 
 
+{% if not verify_pay %}
+<div class="row">
+    <div class="col-9">
+
+        <div class="card m-b-30">
+            <div class="card-body">
+
+            <form method="POST" enctype="multipart/form-data">
+                
+                
+                {% render_field form.payment_method class="form-control" %}
+                {% render_field form.transaction_id class="form-control"%}
+                {% csrf_token %}
+                <button type="submit">Payer</button>
+            </form>
+                                
+            </div>
+
+        </div>
+
+    </div>
+</div>
+{% else %}
+<div></div>
+{% endif %}
+    
+
+
+
+
+
+
 
 {% endblock content %}
 

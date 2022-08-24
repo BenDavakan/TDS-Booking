@@ -57,19 +57,14 @@
                         <dd class="col-sm-8">{{ paiement.reservation.id }}</dd>
                         
                         <dt class="col-sm-4">Méthode de paiement </dt>
-                        <dd class="col-sm-8">{{ transaction.source }}</dd>
+                        <dd class="col-sm-8">{{ paiement.payment_method }}</dd>
                         
                         <dt class="col-sm-4">Montant </dt>
-                        <dd class="col-sm-8">{{ transaction.amount | intcomma }} F CFA</dd>
-                        
-                        <dt class="col-sm-4">Statut </dt>
-                        <dd class="col-sm-8">{{ transaction.status }}</dd>
+                        <dd class="col-sm-8">{{ paiement.reservation.amount | intcomma }} F CFA</dd>
                         
                         <dt class="col-sm-4">Reference</dt>
-                        <dd class="col-sm-8">{{ transaction.transactionId }}</dd>
+                        <dd class="col-sm-8">{{ paiement.transaction_id }}</dd>
                         
-                        <dt class="col-sm-4">Numéro de Télephone</dt>
-                        <dd class="col-sm-8">{{ transaction.phone }}</dd>
 
                     </dl>
                     

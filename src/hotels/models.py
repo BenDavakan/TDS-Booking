@@ -14,7 +14,7 @@ class Hotel(models.Model):
     slug = models.SlugField(blank=True)
     description = RichTextField(blank=True, null=True)
     tel_1 = models.CharField(max_length=100)
-    tel_2 = models.IntegerField(blank=True, null=True)
+    tel_2 = models.PositiveIntegerField(blank=True, null=True)
     email = models.EmailField()
     adress = models.CharField(max_length=100, blank=True, null=True)
     star_nbr = models.PositiveIntegerField()
@@ -100,12 +100,12 @@ class Reservation(models.Model):
     check_in = models.DateField()
     check_out = models.DateField()
     STATUS = [
+        ('EAP', 'En attente de paiement'),
         ('EC', 'En cours'),
         ('AN', 'Annulée'),
         ('T', 'Termineé'),
-        ('P', 'Payée'),
     ]
-    status = models.CharField(choices=STATUS, max_length=200, default='EC')
+    status = models.CharField(choices=STATUS, max_length=200, default='EAP')
     add_at = models.DateTimeField(auto_now=True, blank=True, null=True)
     is_delete = models.BooleanField(default=False)
     delete_at = models.DateTimeField(blank=True, null=True)
@@ -162,6 +162,7 @@ class Equipement(models.Model):
 
 class Image_Hotel(models.Model):
     name = models.CharField(max_length=255, blank=True, null=True)
+    token = models.CharField(max_length=500, blank=True, null=True)
     image = models.ImageField(upload_to="images/hotel/", validators=[
                               FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'webp'])])
     hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE)
@@ -170,7 +171,8 @@ class Image_Hotel(models.Model):
 
 class Image_Chambre(models.Model):
     name = models.CharField(max_length=255, blank=True)
-    image = models.ImageField(upload_to="images/", validators=[
+    token = models.CharField(max_length=500, blank=True, null=True)
+    image = models.ImageField(upload_to="images/chambre", validators=[
                               FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'webp'])])
     chambre = models.ForeignKey(Chambre, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now=True, blank=True, null=True)
