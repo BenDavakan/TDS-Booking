@@ -26,13 +26,13 @@
     <div class="col-md-10 offset-1">
         <div class="card m-b-30">
 
-            <div class="card-header bg-success">
-                Succès
+            <div class="card-header bg-success text-center">
+                <h5>Succès</h5>
               </div>
             <div class="card-body text-center">
                 
                 <p>
-                    Vous venez d'éffectuer avec succès une réservation au nom de ...
+                    Vous venez d'éffectuer avec succès une réservation au nom de <strong> {{ booking.user.first_name }} {{ booking.user.last_name }}</strong>
                 </p>
                 
             </div>
@@ -45,10 +45,8 @@
 
     
             <div class="card-body">
-                
-                <p>
-                </p>
-                <a href="#" class="btn btn-primary">Payer</a>
+        
+                <a href="#" class="btn btn-primary">Payer maintenant</a>
                 
             </div>
         </div>

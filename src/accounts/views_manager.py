@@ -352,6 +352,7 @@ def delete_room_confirm(request, token):
 
 
 def booking_recap(request, token):
-    return render(request, 'accounts/manager/reservations/recap.html', {})
+    booking = Reservation.objects.get(token=token)
+    return render(request, 'accounts/manager/reservations/recap.html', {'booking':booking})
 
 
