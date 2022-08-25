@@ -33,10 +33,14 @@
         <h5 class="page-title">Infos</h5>
     </div>
 </div>
-
 <div class="row">
+        <div class="col-md-10 offset-1 mb-2">
+            <a href="{% url 'manager-edit-hotel' %}" >
+                <button type="button" class="btn btn-success waves-effect waves-light">Éditer l'hôtel</button>
+            </a>
+        </div>
         <div class="col-md-10 offset-1">
-
+            
             <div class="card m-b-30">
                 <div class="card-body">
 
@@ -92,19 +96,30 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form>
+                <form method="POST">
+                    {% csrf_token %}
                     <div class="modal-body">
-                        {{ form.as_p }}
+                        <div class="form-group">
+                            <label for="recipient-name" class="col-form-label">Dénomination:</label>
+                            {% render_field form.name class="form-control" id="recipient-name" %}
+                        </div>
+                        <div class="form-group">
+                            <label for="message-text" class="col-form-label">Catégorie:</label>
+                            {% render_field form.category class="form-control" id="recipient-name" %}
+                            <label for="message-text" class="col-form-label">Quantité:</label>
+                            {% render_field form.number class="form-control" id="recipient-name" %}
+
+                        </div>
                         
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Annuler</button>
+                        <button type="reset" class="btn btn-secondary waves-effect" data-dismiss="modal">Annuler</button>
                         <button type="submit" class="btn btn-primary waves-effect waves-light">Enrégistrer</button>
                     </div>
                 </form>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
-      </div>
+    </div>
     <div class="col-md-10 offset-1">
         <div class="card m-b-30">
             <div class="card-body">
@@ -115,6 +130,7 @@
                     <thead>
                     <tr>
                         <th>Dénomination</th>
+                        <th>Catégorie</th>
                         <th>Quantité</th>
                         <th>Date d'ajout</th>
                         <th>Action</th>
@@ -123,16 +139,77 @@
 
                     <tbody>
                     
+                    {% for eq in eqs %}
+                    
                     <tr>
-                        <td>Parking</td>
-                        <td>2</td>
-                        <td>2</td>
+                        <td> {{ eq.name }} </td>
+                        <td> {{ eq.category }} </td>
+                        <td> {{ eq.number }} </td>
+                        <td> {{ eq.add_at }} </td>
                         <td class="text-center">
-                            <a href=""><button type="" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></button></a>
-                            <a href=""><button class="btn btn-danger btn-sm" type="button"><i class="fa fa-trash"></i></button></a>
+                            <button type="" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editModalCenter"><i class="fa fa-edit"></i></button>
+                            <button class="btn btn-danger btn-sm" type="button" id="btn_delete" data-id="{{ eq.id }}" ><i class="fa fa-trash"></i></button>
                         </td>                                              
                     </tr>
-                  
+                    {% endfor %}
+                    
+
+                    <div class="modal fade" id="editModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Éditer l'équipement</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            </div>
+                            <form>
+
+                                <div class="modal-body">
+                                        <div class="form-group">
+                                            <label for="recipient-name" class="col-form-label">Dénomination:</label>
+                                             {% render_field form.name class="form-control" id="recipient-name" %}
+
+                                            </div>
+                                            <div class="form-group">
+                                            <label for="message-text" class="col-form-label">Catégorie:</label>
+                                                {% render_field form.category class="form-control" id="recipient-name" %}
+                                            <label for="message-text" class="col-form-label">Quantité:</label>
+                                            {% render_field form.number class="form-control" id="recipient-name" %}
+                                        </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                    <button type="button" class="btn btn-primary">Éditer</button>
+                                </div>
+                            </form>
+
+                        </div>
+                        </div>
+                    </div>
+                    <div id="delModal" class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title mt-0" id="myModalLabel">Avertissement</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <form method="POST" action="{% url 'del-eq' 0 %}">
+                                    {% csrf_token %}
+                                    <div class="modal-body">
+                                    <input type="hidden" name="equipement" id="eqpt_id" />
+                                    <h5> Voulez vous vraiement supprimer cet équipement de la liste ? <h5>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal" >Non</button>
+                                        <button type="submit" class="btn btn-danger waves-effect" >Oui</button>
+                                    </div>
+                                </form>
+                            </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                    
                     </tbody>
                 </table>
 
@@ -155,4 +232,16 @@
      <script src="{% static 'accounts/vertical/assets/plugins/datatables/responsive.bootstrap4.min.js' %}"></script>
 
      <script src="{% static 'accounts/vertical/assets/pages/datatables.init.js' %}"></script>
+
+    <script>
+        $(document).on('click', '#btn_delete', function() {
+            var ID = $(this).attr('data-id');
+            
+            $('#eqpt_id').val(ID);
+
+            $('#delModal').modal('show');
+
+        });
+    </script>
+   
 {% endblock %}

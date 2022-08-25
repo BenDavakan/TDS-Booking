@@ -28,7 +28,7 @@ def inscription_view(request):
             return redirect('inscription')
         else:
             CustomUser.objects.create_user(
-                first_name=first_name, last_name=last_name, date_joined=datetime.now(), email=email, password=password, tel=97662516,)
+                first_name=first_name, last_name=last_name, email=email, password=password, tel=97662516,)
             return redirect('connexion')
     else:
         form = SignupForm()
@@ -68,14 +68,15 @@ def edit_profile(request):
     if request.method == 'POST':
         user_form = UserForm(request.POST,
                              instance=request.user)
-        profile_form = ProfileForm(request.POST, request.FILES, instance=profile)
-        
+        profile_form = ProfileForm(
+            request.POST, request.FILES, instance=profile)
+
         if user_form.is_valid():
-            
+
             user_form.save()
-            
+
             profile_form.save()
-            
+
             return redirect('edit-profil')
 
     else:

@@ -73,7 +73,7 @@ class Profile(models.Model):
 
     profile_pic = models.ImageField(upload_to="images/profil/", validators=[
                                     FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'webp'])], blank=True, null=True)
-    created_at = models.DateTimeField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now=True, null=True, blank=True)
     update_at = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
