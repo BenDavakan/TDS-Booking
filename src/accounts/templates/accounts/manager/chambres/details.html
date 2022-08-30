@@ -154,12 +154,45 @@
                             <td> {{ eq.number }} </td>
                             <td> {{ eq.add_at | date:"D d M Y, H:i" }} </td>
                             <td class="text-center">
-                                <button type="" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></button>
+                                <button type="" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editModal" data-id="{{ eq.id }}" id="btn_edit" ><i class="fa fa-edit"></i></button>
                                 
-                                <button class="btn btn-danger btn-sm" type="button" data-toggle="modal" data-target="#delModal" data-id=" {{ eq.id }} " id="btn_delete"><i class="fa fa-trash"></i></button>
+                                <button class="btn btn-danger btn-sm" type="button" data-toggle="modal" data-target="#delModal" data-id="{{ eq.id }}" id="btn_delete"><i class="fa fa-trash"></i></button>
                             </td> 
                         </tr> 
                     {% endfor %}
+
+                    <div id="editModal" class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered">
+                          <div class="modal-content">
+                              <div class="modal-header">
+                                  <h5 class="modal-title mt-0" id="myModalLabel">Éditer l'équipement</h5>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                  </button>
+                              </div>
+                              <form method="POST" action="{% url 'edit-chambre-eq' 0 %}">
+                                {% csrf_token %}
+                                <div class="modal-body">
+                                      <input type="hidden" name="eq-id" id="eq_id" />
+
+                                      <div class="form-group">
+                                      <label for="recipient-name" class="col-form-label">Dénomination:</label>
+                                      {% render_field eq_form.name class="form-control" id="recipient-name" %}
+                                      </div>
+                                      <div class="form-group">
+                                          <label for="message-text" class="col-form-label">Quantité:</label>
+                                          {% render_field eq_form.number class="form-control" id="recipient-name" %}
+                                      </div>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Annuler</button>
+                                    <button type="submit" class="btn btn-primary waves-effect waves-light">Enrégistrer</button>
+                                </div>
+                          </div><!-- /.modal-content -->
+                          </form>
+                      </div><!-- /.modal-dialog -->
+                    </div>
 
                     <div id="delModal" class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                       <div class="modal-dialog modal-dialog-centered">

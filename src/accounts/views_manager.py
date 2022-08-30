@@ -190,6 +190,14 @@ def del_chambre_eq(request, id):
     return HttpResponseRedirect(reverse('manager-chambre', args=[eq.chambre.token]))
 
 
+def edit_chambre_eq(request, id):
+    eq = Equipement.objects.get(pk=request.POST['eq-id'])
+    eq.name = request.POST['name']
+    eq.number = request.POST['number']
+    eq.save()
+    return HttpResponseRedirect(reverse('manager-chambre', args=[eq.chambre.token]))
+
+
 def mes_paiements(request):
     user = request.user
     manager = HotelManager.objects.get(user=user.id)

@@ -146,7 +146,7 @@
                         <td> <span id="eq-name">{{ eq.name }}</span></td>
                         <td> <span id="eq-category">{{ eq.category }}</span></td>
                         <td> <span id="ep-number">{{ eq.number }}</span></td>
-                        <td> <span >{{ eq.add_at }}</span></td>
+                        <td> <span >{{ eq.add_at | date:"D d M Y, H:i" }}</span></td>
                         <td class="text-center">
                             <button type="" class="btn btn-primary btn-sm" data-toggle="modal" id="btn_edit" data-target="#editModal" data-id="{{ eq.id }}" ><i class="fa fa-edit"></i></button>
                             <button class="btn btn-danger btn-sm" type="button" id="btn_delete" data-id="{{ eq.id }}" ><i class="fa fa-trash"></i></button>

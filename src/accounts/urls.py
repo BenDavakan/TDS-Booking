@@ -48,6 +48,8 @@ urlpatterns = [
          views_manager.add_chambre_eq, name='add-chambre-eq'),
     path('manager/chambres/equipement/<int:id>/supprimer',
          views_manager.del_chambre_eq, name='del-chambre-eq'),
+    path('manager/chambres/equipement/<int:id>/editer',
+         views_manager.edit_chambre_eq, name='edit-chambre-eq'),
 
 
     path('manager/reservations/ajouter-une-reservation',
