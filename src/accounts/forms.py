@@ -3,7 +3,7 @@ from attr import fields
 from django import forms
 
 from accounts.models import CustomUser, Profile
-from hotels.models import Chambre, Equipement_Hotel, Hotel, Image_Chambre, Image_Hotel, Payement
+from hotels.models import Chambre, Equipement, Equipement_Hotel, Hotel, Image_Chambre, Image_Hotel, Payement
 
 
 class SignupForm(forms.Form):
@@ -25,8 +25,10 @@ class AddHotelImg(forms.ModelForm):
         fields = [
             'name',
             'image',
-            
+
         ]
+
+
 class EditHotel(forms.ModelForm):
     class Meta:
         model = Hotel
@@ -38,15 +40,26 @@ class EditHotel(forms.ModelForm):
             'email',
             'adress',
             'ville',
-            'star_nbr',  
+            'star_nbr',
         ]
+
+
 class AddHotelEp(forms.ModelForm):
     class Meta:
-        model=Equipement_Hotel
+        model = Equipement_Hotel
         fields = [
             'name',
             'number',
             'category',
+        ]
+
+
+class AddChambreEp(forms.ModelForm):
+    class Meta:
+        model = Equipement
+        fields = [
+            'name',
+            'number',
         ]
 
 
@@ -89,12 +102,14 @@ class ManagerEditChambre(forms.ModelForm):
             'category',
             'capacity',
         ]
+
+
 class AddChambreImg(forms.ModelForm):
     class Meta:
         model = Image_Chambre
         fields = [
             'name',
-            'image',  
+            'image',
         ]
 
 
@@ -109,13 +124,13 @@ class DateInput(forms.DateInput):
 class ManagerAddBooking(forms.Form):
     check_in = forms.DateField()
     check_out = forms.DateField()
-    
+
+
 class AddPayement(forms.ModelForm):
     class Meta:
         model = Payement
         fields = [
             'payment_method',
             'transaction_id',
-           
+
         ]
-        

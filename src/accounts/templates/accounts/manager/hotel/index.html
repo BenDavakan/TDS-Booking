@@ -99,6 +99,7 @@
                 <form method="POST">
                     {% csrf_token %}
                     <div class="modal-body">
+
                         <div class="form-group">
                             <label for="recipient-name" class="col-form-label">Dénomination:</label>
                             {% render_field form.name class="form-control" id="recipient-name" %}
@@ -142,45 +143,46 @@
                     {% for eq in eqs %}
                     
                     <tr>
-                        <td> {{ eq.name }} </td>
-                        <td> {{ eq.category }} </td>
-                        <td> {{ eq.number }} </td>
-                        <td> {{ eq.add_at }} </td>
+                        <td> <span id="eq-name">{{ eq.name }}</span></td>
+                        <td> <span id="eq-category">{{ eq.category }}</span></td>
+                        <td> <span id="ep-number">{{ eq.number }}</span></td>
+                        <td> <span >{{ eq.add_at }}</span></td>
                         <td class="text-center">
-                            <button type="" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editModalCenter"><i class="fa fa-edit"></i></button>
+                            <button type="" class="btn btn-primary btn-sm" data-toggle="modal" id="btn_edit" data-target="#editModal" data-id="{{ eq.id }}" ><i class="fa fa-edit"></i></button>
                             <button class="btn btn-danger btn-sm" type="button" id="btn_delete" data-id="{{ eq.id }}" ><i class="fa fa-trash"></i></button>
                         </td>                                              
                     </tr>
                     {% endfor %}
                     
 
-                    <div class="modal fade" id="editModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLongTitle">Éditer l'équipement</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
+                                <h5 class="modal-title" id="exampleModalLongTitle">Éditer l'équipement</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
                             </div>
-                            <form>
-
+                            <form  method="POST" action="{% url 'edit-hotel-eq' 0 %}">
+                                {% csrf_token %}
                                 <div class="modal-body">
                                         <div class="form-group">
+                                            <input type="hidden" name="equipement" id="eq_id" />
+                                           
                                             <label for="recipient-name" class="col-form-label">Dénomination:</label>
-                                             {% render_field form.name class="form-control" id="recipient-name" %}
-
+                                             {% render_field form.name class="form-control" id="name-eq" %}
                                             </div>
                                             <div class="form-group">
                                             <label for="message-text" class="col-form-label">Catégorie:</label>
-                                                {% render_field form.category class="form-control" id="recipient-name" %}
+                                                {% render_field form.category class="form-control"  %}
                                             <label for="message-text" class="col-form-label">Quantité:</label>
-                                            {% render_field form.number class="form-control" id="recipient-name" %}
+                                            {% render_field form.number class="form-control"  %}
                                         </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-                                    <button type="button" class="btn btn-primary">Éditer</button>
+                                    <button type="submit" class="btn btn-primary">Éditer</button>
                                 </div>
                             </form>
 
@@ -234,14 +236,25 @@
      <script src="{% static 'accounts/vertical/assets/pages/datatables.init.js' %}"></script>
 
     <script>
-        $(document).on('click', '#btn_delete', function() {
-            var ID = $(this).attr('data-id');
+        $(document).ready(function(){
+
+            $(document).on('click', '#btn_delete', function() {
+                var ID = $(this).attr('data-id');
+                
+                $('#eqpt_id').val(ID);
+
+                $('#delModal').modal('show');
+
+            });
             
-            $('#eqpt_id').val(ID);
+            $(document).on('click', '#btn_edit', function() {
+                var ID = $(this).attr('data-id');
+                $('#eq_id').val(ID);
 
-            $('#delModal').modal('show');
+                $('#editModal').modal('show');
 
-        });
+            });
+        })
     </script>
    
 {% endblock %}

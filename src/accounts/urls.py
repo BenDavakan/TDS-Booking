@@ -28,7 +28,10 @@ urlpatterns = [
          name='manager-edit-hotel'),
     path('manager/tableau-de-bord/',
          views_manager.manager_dashboard, name='manager-dash'),
-    
+
+    path('manager/hotel/equipement/<int:id>/editer',
+         views_manager.edit_hotel_eq, name='edit-hotel-eq'),
+
     path('manager/hotel/equipement/<int:id>/supprimer',
          views_manager.del_hotel_eq, name='del-eq'),
 
@@ -41,6 +44,10 @@ urlpatterns = [
          views_manager.manager_edit_chambre, name='manager-edit-chambre'),
     path('manager/chambres/<str:token>/details',
          views_manager.manager_chambre_details, name='manager-chambre'),
+    path('manager/chambres/<str:token>/ajouter-un-equipement',
+         views_manager.add_chambre_eq, name='add-chambre-eq'),
+    path('manager/chambres/equipement/<int:id>/supprimer',
+         views_manager.del_chambre_eq, name='del-chambre-eq'),
 
 
     path('manager/reservations/ajouter-une-reservation',

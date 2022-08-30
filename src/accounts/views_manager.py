@@ -16,7 +16,7 @@ from django.conf import settings
 from django.shortcuts import render
 from django.contrib import messages
 from django.urls import reverse
-from accounts.forms import AddChambreImg, AddHotelEp, AddHotelImg, AddPayement, CheckBooking, EditHotel, ManagerAddBooking, ManagerEditChambre
+from accounts.forms import AddChambreEp, AddChambreImg, AddHotelEp, AddHotelImg, AddPayement, CheckBooking, EditHotel, ManagerAddBooking, ManagerEditChambre
 from accounts.models import CustomUser, HotelManager
 from hotels.models import Chambre, Equipement, Equipement_Hotel, Hotel, Image_Chambre, Image_Hotel, Payement, Reservation
 
@@ -70,6 +70,13 @@ def del_hotel_eq(request, id):
 
     eq = Equipement_Hotel.objects.get(pk=request.POST['equipement'])
     eq.delete()
+    return redirect('manager-hotel')
+
+
+def edit_hotel_eq(request, id):
+
+    eq = Equipement_Hotel.objects.filter(
+        pk=request.POST['equipement']).update(name=request.POST['name'], number=request.POST['number'], category=request.POST['category'])
     return redirect('manager-hotel')
 
 
@@ -143,10 +150,10 @@ def manager_edit_chambre(request, token):
 
 def manager_chambre_details(request, token):
 
-    room = Chambre.objects.get(token=token)
+    room = get_object_or_404(Chambre, token=token)
     equipements = Equipement.objects.filter(chambre=room.id)
     imgs = Image_Chambre.objects.filter(chambre=room.id)
-
+    eq_form = AddChambreEp()
     if request.method == 'POST':
 
         token = get_random_string(length=60)
@@ -159,7 +166,7 @@ def manager_chambre_details(request, token):
     else:
         form = AddChambreImg()
 
-    return render(request, 'accounts/manager/chambres/details.html', {'room': room, 'equipements': equipements, 'form': form, 'imgs': imgs})
+    return render(request, 'accounts/manager/chambres/details.html', {'room': room, 'equipements': equipements, 'form': form, 'imgs': imgs, 'eq_form': eq_form})
 
 
 def del_chambre_img(request, token):
@@ -168,6 +175,19 @@ def del_chambre_img(request, token):
         img.image.delete()
     img.delete()
     return HttpResponseRedirect(reverse('manager-chambre', args=[img.chambre.token]))
+
+
+def add_chambre_eq(request, token):
+    chambre = Chambre.objects.get(token=token)
+    Equipement.objects.create(
+        name=request.POST['name'], chambre=chambre, number=request.POST['number'])
+    return HttpResponseRedirect(reverse('manager-chambre', args=[token]))
+
+
+def del_chambre_eq(request, id):
+    eq = Equipement.objects.get(pk=request.POST['eq-id'])
+    eq.delete()
+    return HttpResponseRedirect(reverse('manager-chambre', args=[eq.chambre.token]))
 
 
 def mes_paiements(request):
